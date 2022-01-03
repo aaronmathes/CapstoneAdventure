@@ -208,9 +208,12 @@
     };
 
     function MerchantEvent() {
-        //$.getJSON("../../Game/MerchantEvent", function (response) {
-           var gold = @Html.Raw(Json.Encode(Model.character.gold));
-        //})
+        var gold;
+
+        $.getJSON("../../Game/GetPurse", function (response) {
+            gold = response.gold;
+
+        })
          $.ajax({
             url: "../../Game/MerchantEvent",
             type: "POST",

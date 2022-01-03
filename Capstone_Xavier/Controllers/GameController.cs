@@ -242,6 +242,15 @@ namespace Capstone_Xavier.Controllers
 
             return _returnString;
         }
+        [HttpGet]
+        public ActionResult GetPurse()
+        {
+            GameModel game = (GameModel)Session["Game"];
+            CharacterModel character = game.character;
+            var _character = new { gold = character.gold.ToString() };
+
+            return Json(_character, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         //For getting the sellable items in inventory. Equipted cannot be sold
