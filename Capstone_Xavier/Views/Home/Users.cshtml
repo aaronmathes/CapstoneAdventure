@@ -34,30 +34,33 @@
 <br>
 
 
-    <div class="list">
-        
-        @foreach (CharacterModel ch in Model)
-        {
-            
-            <div class="list-item-character">
+<div class="list">
 
-                <div>
+    @foreach (CharacterModel ch in Model)
+    {
+        <div class="row" style="margin-right: 0px; margin-left: 0px;" >
+            <div class="col-sm-6">
+                <div class="list-item-character">
                     <p onclick="location.href='@Url.Action("Game", "Game", ch)'" style="cursor: pointer">@ch.name</p>
                     <h6 class="sub-num">@ch.level</h6>
-                    <button class="btn-change"  id="@ch.id" onclick="location.href='@Url.Action("UpdateCharacter", "User",  ch)'" ></button>
+                    <button class="btn-change" id="@ch.id" onclick="location.href='@Url.Action("UpdateCharacter", "User", ch)'"></button>
                     <button class="btn-remove" onclick="location.href='@Url.Action("RemoveCharacter", "User", ch)'"></button>
                 </div>
+                <div class="row" style="margin-right: 0px; margin-left: 0px;">
+                    <div class="info" style="margin-left: 2%;">@ch.className</div>
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <div class="info">
                     Health: @ch.health / @ch.maxHP
                     <br>
                     Xp: @ch.xp / @ch.maxXp
                 </div>
-                <p>@ch.className</p>
-
             </div>
-            <hr>
-        }
-    </div>
+        </div>
+        <hr>
+    }
+</div>
     <div>
         <button class="btn-user" id="User" onclick="location.href='@Url.Action("createCharacter", "User", null)'">Create Character</button>
         <label style="position: absolute; top:20vw; right:25vw;">Click the character name to play!</label>
