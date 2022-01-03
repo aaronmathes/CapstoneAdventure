@@ -9,9 +9,12 @@
     <div class="dropdown">
         <button onclick="dropDown()" class="dropBtn">More</button>
         <div id="myDropdown" class="dropdown-item">
-            <a>@Html.ActionLink("Home", "Index", "Home")</a>
-            <a>@Html.ActionLink("Register", "Register", "Home")</a>
-            <a>@Html.ActionLink("Login", "Login", "Home")</a>
+            <a onclick="location.href='@Url.Action("Index", "Home")'"> Home</a>
+            <a onclick="location.href='@Url.Action("Register", "Home")'"> Register</a>
+            <a onclick="location.href='@Url.Action("Login", "Home")'"> Login</a>
+            @*<a>@Html.ActionLink("Home", "Index", "Home")</a>*@
+            @*<a>@Html.ActionLink("Register", "Register", "Home")</a>*@
+            @*<a>@Html.ActionLink("Login", "Login", "Home")</a>*@
         </div>
     </div>
 </div>
