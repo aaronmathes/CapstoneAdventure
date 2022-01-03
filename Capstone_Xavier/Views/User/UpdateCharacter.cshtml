@@ -3,7 +3,25 @@
 @{
     ViewBag.Title = "UpdateCharacter";
 }
+<div class="nav-side">
+    <div class="dropdown">
+        <button onclick="dropDown()" class="dropBtn">More</button>
+        <div id="myDropdown" class="dropdown-item">
+            <a onclick="location.href='@Url.Action("Users", "Home")'">User Home</a>
+            <a onclick="location.href='@Url.Action("UserInfo", "User")'">Profile</a>
+            @{
+                string role = Session["Role"].ToString();
 
+                if (role == "1" || role == "2")
+                {
+                    <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
+                }
+            }
+            @*<a href="#">@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
+            <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a>
+        </div>
+    </div>
+</div>
 <h3>@ViewData["Title"]</h3>
 
 <div class="info-box">
@@ -18,7 +36,7 @@
 </div>
 @using (Html.BeginForm("UpdateCharacterInfo", "User", Model))
 {
-<div class="nav-side">
+<div class="nav-side2">
     <div class="input-list">
         <div class="input">
             <label>Character Name</label>
