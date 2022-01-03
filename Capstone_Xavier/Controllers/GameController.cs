@@ -30,6 +30,7 @@ namespace Capstone_Xavier.Controllers
             player.id = character.id;
             game.inventory = map.ItemBO_To_List(data.GetCharacterInventory(character.id));
 
+            player.className = _class.className;
             player.stamina = _class.classStamina;
             player.magica = _class.classMagica;
             player.damage = _class.classDamage;

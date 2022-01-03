@@ -10,9 +10,10 @@
     new AjaxOptions { UpdateTargetId = "Bag-List", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
 {
     <!--The character UI and stats-->
-    <div class="info-UI">
+    <div class="info-UI" style=" height: fit-content; padding-bottom: 1%;">
         <div style="width: 38%; height: 100%;  display:inline-block">
-            <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">@Model.character.name</h6>
+            <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Name: @Model.character.name</h6>
+            <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Class: @Model.character.className</h6>
             <button class="btn-user" style="width: 50%; margin-left: 1vw;" type="submit" onclick="OpenBag()">Bag</button>
         </div>
         <div class="container-bar" style="width: 60%;  float: right; vertical-align: middle;">
