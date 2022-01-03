@@ -30,6 +30,7 @@ namespace Capstone_Xavier.Controllers
             player.id = character.id;
             game.inventory = map.ItemBO_To_List(data.GetCharacterInventory(character.id));
 
+            player.className = _class.className;
             player.stamina = _class.classStamina;
             player.magica = _class.classMagica;
             player.damage = _class.classDamage;
@@ -240,6 +241,15 @@ namespace Capstone_Xavier.Controllers
             }
 
             return _returnString;
+        }
+        [HttpGet]
+        public ActionResult GetPurse()
+        {
+            GameModel game = (GameModel)Session["Game"];
+            CharacterModel character = game.character;
+            var _character = new { gold = character.gold.ToString() };
+
+            return Json(_character, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
