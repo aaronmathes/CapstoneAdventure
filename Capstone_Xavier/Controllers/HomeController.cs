@@ -50,7 +50,15 @@ namespace Capstone_Xavier.Controllers
                         UsersBO _user = data.FindUser(user);
                         CreateDefaultCharacter(_user.UserID);
 
-                        return RedirectToAction("Login", "Home");
+                        user = data.FindUser(user);
+                        Session["Username"] = user.Username;
+                        //user doesnt return password for security. Pass in login pass for use later.
+                        user.Password = register.password;
+                        Session["User"] = mapper.UserBO_To_Model(user);
+                        Session["Role"] = user.UserRole.ToString();
+                        Session["UserID"] = user.UserID;
+                        return RedirectToAction("Users", "Home");
+                        //return RedirectToAction("Login", "Home");
                     } else {
                         //If the password doesnt meet the requirements
                         register.alertType = 3;
