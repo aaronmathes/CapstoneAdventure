@@ -156,8 +156,9 @@
 }
 
 .alert-warning {
-    width: 33%;
+    width: 35%;
     border-radius: 6px;
+    padding-right: 1%;
     border: 3px solid saddlebrown;
 }
 
