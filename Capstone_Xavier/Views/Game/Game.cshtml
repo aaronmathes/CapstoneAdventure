@@ -39,8 +39,10 @@
     </div>
 </div>
 
+@*height: 183px; overflow-y: auto; border: 1px solid white;*@
+
 <!--Opened and used for a list of available regions to travel to.-->
-<div class="list-bag" id="list-regions" style="display: none">
+<div class="list-bag" id="list-regions" style="display: none;">
 
     @{
         foreach (RegionModel region in Model.regions)
@@ -61,10 +63,10 @@
 <!--Merchant Buttons. Called on merchant events-->
 <div id="MerchantBtns" class="btn-block" style="display: none;">
     <button class="btn-user" id="Buy" style="display: none;" onclick="closeSellBag()">Buy</button>
-    <button class="btn-user" id="Sell" onclick="openSellBag()" >Sell</button>
-    <button class="btn-user" id="btn-merchant"  onclick="LeaveMerchant()">Leave Merchant</button>
+    <button class="btn-user" id="Sell" onclick="openSellBag()">Sell</button>
+    <button class="btn-user" id="btn-merchant" onclick="LeaveMerchant()">Leave Merchant</button>
 </div>
-  
+
 
 <!--For combat events only. Shows during monster events-->
 <div id="ComabatBtn" class="btn-block" style="display: none;">
@@ -80,8 +82,8 @@
 </div>
 
 <!--For merchant events only. Refreshed every time the event is triggered-->
-<div id="merchant" class="info-box" style="left:55vw; height: 15vw; width:45vw; top: 7vw; display: none;" >
-    
+<div id="merchant" class="info-box" style="left:55vw; height: 15vw; width:45vw; top: 7vw; display: none;">
+
 </div>
 
 
@@ -243,7 +245,7 @@
 
         //For altering the bars and calling possible death events
         $.getJSON("../../Combat/CombatAction", { monsterHealth: mHealth, playerHealth: health, magica: magica, stamina: stamina, actionID: actionID }, function (response) {
-        
+
             if (response.action === 0) {//Monster or player flee events
 
                 var story = document.getElementById("text-UI");
@@ -279,10 +281,10 @@
                 if (response.Magica != null) {
                     var magicaIncrememnt = magica - response.Magica;
                     alterBar(magicaIncrememnt, playerMagica.id);
-                    
+
                 }
                 alterBar(increment, playerHBar.id);
-                
+
                 //used for altering the mosnterbar
                 var monsterHBar = document.getElementById("MHealth");
                 var monsterIncrement = monsterHBar.value - response.monsterH;
@@ -370,7 +372,7 @@
             cache: false,
             async: true,
             success: function (data) {
-            
+
                 var elem = document.getElementById("text-UI");
                 elem.innerHTML = elem.innerHTML.concat(data);
             }
@@ -385,7 +387,7 @@
             cache: false,
             async: true,
             success: function (data) {
-            
+
                 var elem = document.getElementById("text-UI");
                 elem.innerHTML = elem.innerHTML.concat(data);
 
@@ -403,7 +405,7 @@
             type: "Post",
             data: {},
             cache: false,
-            async: true, 
+            async: true,
             success: function (data) {
                 bag.innerHTML = data;
                 bag.style.display = "inline-block";
@@ -411,7 +413,7 @@
                 buyBtn.style.display = "inline-block";
             }
         });
-       
+
     }
 
     function closeSellBag() {
@@ -439,7 +441,7 @@
         var merchant = document.getElementById("merchant");
         var bag = document.getElementById("Bag-List");
 
-        defautlBtn.style.display = "inline-block"; 
+        defautlBtn.style.display = "inline-block";
         merchantBtn.style.display = "none";
         merchant.style.display = "none";
         bag.style.display = "none";
@@ -459,7 +461,7 @@
         } else if (itemType === 2) {
             bar = document.getElementById("Magica");
             value = bar.value;
-        } 
+        }
 
         $.getJSON("../../User/UseItem", { inventoryID: item, itemType: itemType, bar: value }, function (response) {
             var element;

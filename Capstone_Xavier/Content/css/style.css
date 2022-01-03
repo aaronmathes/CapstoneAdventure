@@ -544,14 +544,14 @@ button {
 }
 
 .list-bag {
-    border: 2px solid black;
+    border: 1px solid white;
     position: absolute;
     right: 0;
-    height: 150px;
+    height: 185px;
     width: 45vw;
     margin: 0;
-    top: 11vw;
-    overflow-y: scroll;
+    top: 215px;
+    overflow-y: auto;
     background-color: brown;
 }
 
