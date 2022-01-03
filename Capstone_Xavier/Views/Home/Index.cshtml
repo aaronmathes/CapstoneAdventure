@@ -20,8 +20,8 @@
         <div class="nav-side">
             <!--<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>-->
 
-            <button class="btn">@Html.ActionLink("Register","Register", "Home")</button>
-            <button class="btn">@Html.ActionLink("Login", "Login", "Home")</button>
+            <a onclick="location.href='@Url.Action("Register", "Home")'" class="btn">Register</a>
+            <a onclick="location.href='@Url.Action("Login", "Home")'" class="btn">Login</a>
             <br>
 
             <!--Dropdown menu-->
