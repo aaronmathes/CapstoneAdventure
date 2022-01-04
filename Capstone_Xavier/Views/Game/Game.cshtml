@@ -247,9 +247,9 @@
             cache: false,
             async: true,
             success: function (data) {
-                 var element = document.getElementById("text-UI")
-                        element.innerHTML = element.innerHTML.concat(data)
+                addHTMLToTextUI(data)
             }
+
         });
         };
 
@@ -275,6 +275,7 @@
             mHealth.max = response.monsterHealth;
             mHealth.value = response.monsterHealth;
 
+            
         })
     };
 
@@ -302,11 +303,18 @@
                 var defaultBtn = document.getElementById("defaultBtn");
                 defaultBtn.style.display = "none";
 
-                var elem = document.getElementById("text-UI");
-                elem.innerHTML = elem.innerHTML.concat("<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>After searching the area for a while you come across an old man carrying a large sack on his back. He looks to you with a crookedd smile."+
-                            "Care to browse my wares? Opening the sack you see a few items. Will you buy? Your purse: <strong>"+gold+" gold</strong></div><br>");
+                var merchantText = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>After searching the area for a while you come across an old man carrying a large sack on his back. He looks to you with a crookedd smile." +
+                    "Care to browse my wares? Opening the sack you see a few items. Will you buy? Your purse: <strong>" + gold + " gold</strong></div><br>";
+                addHTMLToTextUI(merchantText)
+
             }
         });
+    }
+
+    function addHTMLToTextUI(html) {
+        var elem = document.getElementById("text-UI");
+        elem.innerHTML = elem.innerHTML.concat(html);
+        elem.scrollTop = elem.scrollHeight;
     }
 
     //###############################/*Combat Actions*/########################
@@ -321,8 +329,7 @@
 
             if (response.action === 0) {//Monster or player flee events
 
-                var story = document.getElementById("text-UI");
-                story.innerHTML = story.innerHTML.concat(response.print);
+                addHTMLToTextUI(response.print)
 
                 //Change the ui back to travel form
                 var monsterUI = document.getElementById("MonsterUI");
@@ -336,8 +343,7 @@
                 //Call monster flee event
             } else {
                 //TODO-make seperate method
-                var story = document.getElementById("text-UI");
-                story.innerHTML = story.innerHTML.concat(response.print);
+                addHTMLToTextUI(response.print)
 
                 //used for altering the player bar
                 var playerHBar = document.getElementById("Health");
@@ -394,8 +400,7 @@
             cache: false,
             async: true,
             success: function (data) {
-                 var element = document.getElementById("text-UI")
-                element.innerHTML = element.innerHTML.concat(data)
+                addHTMLToTextUI(data)
 
                 //Change the ui back to travel form
                 var monsterUI = document.getElementById("MonsterUI");
@@ -418,8 +423,7 @@
             cache: false,
             async: true,
             success: function (data) {
-                 var element = document.getElementById("text-UI")
-                element.innerHTML = element.innerHTML.concat(data)
+                addHTMLToTextUI(data);
 
                 //Change the ui back to travel form
                 var monsterUI = document.getElementById("MonsterUI");
@@ -446,9 +450,8 @@
             cache: false,
             async: true,
             success: function (data) {
-
-                var elem = document.getElementById("text-UI");
-                elem.innerHTML = elem.innerHTML.concat(data);
+            
+                addHTMLToTextUI(data)
             }
         });
     }
@@ -461,9 +464,8 @@
             cache: false,
             async: true,
             success: function (data) {
-
-                var elem = document.getElementById("text-UI");
-                elem.innerHTML = elem.innerHTML.concat(data);
+            
+                addHTMLToTextUI(data);
 
                 closeSellBag();
             }
@@ -564,8 +566,7 @@
                 var bag = document.getElementById("Bag-List");
                 bag.style.display = "none";
 
-                var element = document.getElementById("text-UI")
-                element.innerHTML = element.innerHTML.concat(data)
+                addHTMLToTextUI(data)
             }
         });
     }
@@ -589,8 +590,7 @@
                         MerchantEvent();
                     }
                     else {
-                        var element = document.getElementById("text-UI")
-                        element.innerHTML = element.innerHTML.concat(data)
+                        addHTMLToTextUI(data)
                     }
                 }
             })
