@@ -115,13 +115,13 @@ namespace Capstone_Xavier.Controllers
         [MustBeLoggedIn]
         [HttpGet]
         public ActionResult Users() {
-            UserModel user = new UserModel();
             Mapper mapper = new Mapper();
             DBUse data = new DBUse();
             int userID = (int)Session["UserID"];
 
-            List<CharacterModel> characters = mapper.CharacterModel_To_List(data.GetCharacters(userID));
-             
+            var userCharacterBOs = data.GetCharacters(userID);
+
+            List<CharacterModel> characters = mapper.CharacterModel_To_List(userCharacterBOs);
 
             return View(characters);
         }

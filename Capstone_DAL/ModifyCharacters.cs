@@ -106,6 +106,7 @@ namespace Capstone_DAL
                                 _character.maxHP = (int)reader["MaxHP"];
                                 _character.Xp = (int)reader["characterXP"];
                                 _character.Class = (int)reader["class_ID"];
+                                _character.Gold = (int)reader["characterGold"];
 
                                 _returnList.Add(_character);
                             }
