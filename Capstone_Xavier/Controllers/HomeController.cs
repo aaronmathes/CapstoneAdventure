@@ -12,24 +12,25 @@ namespace Capstone_Xavier.Controllers
 
     public class HomeController : Controller
     {
+
         [HttpGet]
         public ActionResult Index()
         {
-
             return View();
         }
-        //---------------User Creation----------------------
+
+        #region register and login
 
         [HttpGet]
-        public ActionResult Register() {
-
+        public ActionResult Register()
+        {
             RegisterModel register = new RegisterModel();
-
             return View(register);
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterModel register) {
+        public ActionResult Register(RegisterModel register)
+        {
 
 
             if (ModelState.IsValid)
@@ -55,15 +56,16 @@ namespace Capstone_Xavier.Controllers
                 return RedirectToAction("Users", "Home");
 
             }
-            else {//For if the modelstate isnt valid
+            else
+            {//For if the modelstate isnt valid
                 return View(register);
             }
 
         }
-        //----------------User login---------------------
 
         [HttpGet]
-        public ActionResult Login() {
+        public ActionResult Login()
+        {
 
             LoginModel _loginModel = new LoginModel();
 
@@ -74,12 +76,13 @@ namespace Capstone_Xavier.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginModel login) {
+        public ActionResult Login(LoginModel login)
+        {
             Mapper mapper = new Mapper();
 
             UsersBO user = mapper.UILogin_To_BO(login);
             DBUse data = new DBUse();
-            
+
             if (ModelState.IsValid)
             {
                 user = data.FindUser(user);
@@ -89,7 +92,8 @@ namespace Capstone_Xavier.Controllers
                 {
                     return View(login);
                 }
-                else {
+                else
+                {
                     Session["Username"] = user.Username;
                     //user doesnt return password for security. Pass in login pass for use later.
                     user.Password = login.password;
@@ -100,11 +104,25 @@ namespace Capstone_Xavier.Controllers
                 }
 
             }
-            else {
+            else
+            {
                 return View(login);
             }
 
         }
+
+
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        #endregion register and login
+
 
         [MustBeLoggedIn]
         public ActionResult Test() {
@@ -127,13 +145,7 @@ namespace Capstone_Xavier.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult Logout() {
-            FormsAuthentication.SignOut();
-            Session.Abandon();
-    
-            return RedirectToAction("Index", "Home");
-        }
+       
 
         //-------------Misc-------------
         private bool ValidatePassword(string password) {

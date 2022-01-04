@@ -60,6 +60,7 @@
             <span class="icon-input"></span>
 
             @Html.EditorFor(UserModel => UserModel.password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
+            @Html.ValidationMessageFor(RegisterModel => RegisterModel.username, null, new { @class = "validation" })
 
         </div>
         <br>
@@ -68,6 +69,7 @@
             <span class="icon-input"></span>
 
             @Html.EditorFor(UserModel => UserModel.confirmPassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
+            @Html.ValidationMessageFor(RegisterModel => RegisterModel.username, null, new { @class = "validation" })
 
         </div>
         <br>
