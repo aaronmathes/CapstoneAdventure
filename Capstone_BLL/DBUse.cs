@@ -109,8 +109,9 @@ namespace Capstone_BLL
             Mapper mapper = new Mapper();
             ModifyCharacters character = new ModifyCharacters();
 
-             _returnList = mapper.CharacterDO_To_BOList(character.GetCharacterList(userID));
+            var characterList = character.GetCharacterList(userID);
 
+            _returnList = mapper.CharacterDO_To_BOList(characterList);
 
             return _returnList;
 
