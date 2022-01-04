@@ -63,8 +63,8 @@
 
 <!--Merchant Buttons. Called on merchant events-->
 <div id="MerchantBtns" class="btn-block" style="display: none;">
-    <button class="btn-user" id="Buy" style="display: none;" onclick="closeSellBag()">Buy</button>
-    <button class="btn-user" id="Sell" onclick="openSellBag()">Sell</button>
+    <button class="btn-user" id="SellClose" style="display: none;" onclick="closeSellBag()">Sell (Close Bag)</button>
+    <button class="btn-user" id="SellOpen" onclick="openSellBag()">Sell (Open Bag)</button>
     <button class="btn-user" id="btn-merchant" onclick="LeaveMerchant()">Leave Merchant</button>
 </div>
 
@@ -404,8 +404,8 @@
 
     function openSellBag() {
         var bag = document.getElementById("Bag-List");
-        var sellBtn = document.getElementById("Sell");
-        var buyBtn = document.getElementById("Buy");
+        var sellBtnOpen = document.getElementById("SellOpen");
+        var sellBtnClose = document.getElementById("SellClose");
         $.ajax({
             url: "../../Game/SellInventory",
             type: "Post",
@@ -415,8 +415,8 @@
             success: function (data) {
                 bag.innerHTML = data;
                 bag.style.display = "inline-block";
-                sellBtn.style.display = "none";
-                buyBtn.style.display = "inline-block";
+                sellBtnOpen.style.display = "none";
+                sellBtnClose.style.display = "inline-block";
             }
         });
 
