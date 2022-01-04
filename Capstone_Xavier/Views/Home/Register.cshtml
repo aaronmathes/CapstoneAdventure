@@ -35,13 +35,13 @@
             @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
         </div>
     }
-    else if (Model.alertType == 3)
+    <!--else if (Model.alertType == 3)
     {
         <div class="alert alert-warning alert-dismissible fade show">
-            Password is invalid. Passwords must contain at least 1 of the following. Capital letter. Number. Special character, and be between 8-20 characters
+            Password is invalid. Passwords must contain at least 1 of the following. Capital letter. Number. Special character, and be between 8-20 characters-->
             @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
-        </div>
-    }
+        <!--</div>
+    }-->
     <!--else if (Model.alertType == 4)
     {
         <div class="alert alert-warning alert-dismissible fade show">
@@ -55,22 +55,23 @@
             <label>Username</label>
             <span class="icon-input"></span>
             @Html.EditorFor(RegisterModel => RegisterModel.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
-            @if (Model.userValid == 1)
-            {
+            @*@if (Model.userValid == 1)
+            {*@
                 @Html.ValidationMessageFor(RegisterModel => RegisterModel.username, null, new { @class = "validation" })
                 <span class="icon-warning"></span>
-            }
+            @*}*@
         </div>
         <br>
         <div class="input">
             <label>Password</label>
             <span class="icon-input"></span>
             @Html.EditorFor(RegisterModel => RegisterModel.password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Enter Password." } })
-            @if (Model.passValid == 1)
-            {
-                @Html.ValidationMessageFor(RegisterModel => RegisterModel.password, null, new { @class = "validation" })
+            @*@if (Model.passValid == 1)
+        {*@
+            @*@Html.ValidationMessageFor(RegisterModel => RegisterModel.password, null, new { @class = "validation" })*@
+                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.password, "", new { @class = "validation" }).ToHtmlString()))
                 <span class="icon-warning"></span>
-            }
+            @*}*@
         </div>
         <br>
         <div class="input">
