@@ -85,7 +85,14 @@
         <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center" id="monsterName">Monster name</h6>
     </div>
     <div class="container-bar" style="width: 60%;  float: right; vertical-align: middle;">
-        <progress id="MHealth" class="Health" value="0" max="200"></progress>
+        <div class="progress" style="height: 2rem;border:2px solid black;">
+            <div class="progress-bar bg-danger" id="MHealth" role="progressbar" aria-valuenow="70"
+                 aria-valuemin="0" aria-valuemax="200" style="width:70%;">
+                <div id="MHealthDisplay" style="color:black;">
+                    HP
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -168,8 +175,10 @@
             Stamina: stamina,
             Magica: magica
         }
-        //used for setting the health bar
+        //Set Health progress-bar Health
         var h = document.getElementById("Health");
+        h.setAttribute('aria-valuemax', maxHP);
+        h.setAttribute('aria-valuenow', health);
         //calculate the health percentage
         let health_percent= (ob.hp / ob.maxhp)*100;
         let health_rounded = Math.round(health_percent);
@@ -178,10 +187,11 @@
         h.style.width = width_string;
         //h = ob.maxhp;
         var display = document.getElementById("HealthDisplay");
-        display.innerHTML = width_string;
+        let health_display = health + "/" + maxHP;
+        display.innerHTML = health_display;
         //aria-valuenow will be used to know the HP number, not percentage
-        let health_value = document.getElementById("Health").getAttribute('aria-valuenow');
-        health_value = ob.hp;
+        //let health_value = document.getElementById("Health").getAttribute('aria-valuenow');
+        //health_value = ob.hp;
         //used for setting the stamina bar
         var s = document.getElementById("Stamina");
         s.value = ob.Stamina;
@@ -196,31 +206,53 @@
 
     //For decreasing specific bar values based on amount and bar
     function alterBar(increment, element) {
-        let pb = document.getElementById(element);
+        var pb = document.getElementById(element);
         //used for calculating percentages
-        let max_health = pb.getAttribute('aria-valuemax');
-        let current_val = pb.getAttribute('aria-valuenow');
-        let new_val = h.getAttribute('aria-valuenow') - increment;
+        var max_health = parseInt(pb.getAttribute('aria-valuemax'));
+        console.log("max health: " + pb.getAttribute('aria-valuemax'));
+        var current_val = parseInt(pb.getAttribute('aria-valuenow'));
+        var new_val = parseInt(pb.getAttribute('aria-valuenow')) - parseInt(increment);
         //var i;
         var id = setInterval(animateBar, 80);
         function animateBar() {
-            if (current_val > new_val & current_val > 0) {
+            //console.log(current_val + ">" + new_val);
+            var current_val = parseInt(pb.getAttribute('aria-valuenow'));
+
+            if (current_val > new_val) {
                 //increment down one
                 current_val = current_val - 1;
+                //attributes need to be set
+                pb.setAttribute('aria-valuenow', current_val);
                 //calculate percent to view
                 let health_percent = (current_val / max_health) * 100;
                 let health_rounded = Math.round(health_percent);
-                let width_string = health_rounded.toString() + "%";
+                var width_string = health_rounded.toString() + "%";
                 //set calculated value to progress-bar
-                h.style.width = width_string;
-                console.log("percentage decreasing: " +width_string);
+                pb.style.width = width_string;
+                if (element == "Health") { //we will update the character's health
+                    let display = document.getElementById("HealthDisplay");
+                    let health_display = current_val + "/" + max_health;
+                    display.innerHTML = health_display;
+                }
+                if (element == "MHealth") { //we will update the monster's health
+                    let display = document.getElementById("MHealthDisplay");
+                    let health_display = current_val + "/" + max_health;
+                    display.innerHTML = health_display;
+                }
+                //console.log("percentage decreasing: " +width_string);
                 
             }
             else if (current_val == new_val) {
+                console.log("ClearInterval() called");
+                //if (element == "Health") { //we will update the character's health, throws undefined here
+                //    let display = document.getElementById("HealthDisplay");
+                //    display.innerHTML = width_string;
+                //}
                 clearInterval(id);
             }
             else {
                 console.log("Incrementation did not stop"); //current_val < new_val
+                clearInterval(id);
             }
         };
     };
@@ -232,13 +264,13 @@
         //var i;
         var id = setInterval(animateBar, 90);
         function animateBar() {
-            if (h.getAttribute('aria-valuenow') === min || h.getAttribute('aria-valuenow') === h.getAttribute('aira-valuemax')) {
+            if (h.getAttribute('aria-valuenow') === min || h.getAttribute('aria-valuenow') === h.getAttribute('aria-valuemax')) {
                 clearInterval(id);
             } else {
                 let health_value = h.getAttribute('aria-valuenow');
                 health_value = health_value + 1;
                 //calculate percentage to display value with bootstrap
-                let health_percent = (h.getAttribute('aria-valuenow') / h.getAttribute('aira-valuemax')) * 100;
+                let health_percent = (h.getAttribute('aria-valuenow') / h.getAttribute('aria-valuemax')) * 100;
                 let health_rounded = Math.round(health_percent);
                 let width_string = health_rounded.toString() + "%";
                 //set calculated value to progress-bar
@@ -284,8 +316,18 @@
             mName.innerHTML = response.monstername;
 
             var mHealth = document.getElementById("MHealth");
-            mHealth.max = response.monsterHealth;
-            mHealth.value = response.monsterHealth;
+            mHealth.setAttribute("aria-valuenow",response.monsterHealth);
+            mHealth.setAttribute("aria-valuemax", response.monsterHealth);
+            //calculate the health percentage
+            let health_percent = (response.monsterHealth / response.monsterHealth) * 100;
+            let health_rounded = Math.round(health_percent);
+            let width_string = health_rounded.toString() + "%";
+            //set calculated value to progress-bar
+            mHealth.style.width = width_string;
+            //h = ob.maxhp;
+            var display = document.getElementById("MHealthDisplay");
+            let health_display = response.monsterHealth + "/" + response.monsterHealth;
+            display.innerHTML = health_display;
 
             
         })
@@ -331,7 +373,7 @@
 
     //###############################/*Combat Actions*/########################
     function combatAction(actionID) {
-        var mHealth = document.getElementById("MHealth").value;
+        var mHealth = document.getElementById("MHealth").getAttribute('aria-valuenow')
         var health = document.getElementById("Health").getAttribute('aria-valuenow');
         var magica = document.getElementById("Magica").value;
         var stamina = document.getElementById("Stamina").value;
@@ -382,7 +424,7 @@
 
                 //used for altering the mosnterbar
                 var monsterHBar = document.getElementById("MHealth");
-                var monsterIncrement = monsterHBar.value - response.monsterH;
+                var monsterIncrement = monsterHBar.getAttribute("aria-valuenow") - response.monsterH;
 
                 if (increment < 0) {
                     increment = (increment - increment) - increment;
@@ -391,10 +433,11 @@
                 if (monsterIncrement < 0) {
                     monsterIncrement = (monsterIncrement - monsterIncrement) - monsterIncrement;
                 }
-
+                console.log("monsterIncrement:" + monsterIncrement);
+                console.log("monsterhealth: " + monsterHBar);
                 alterBar(monsterIncrement, monsterHBar.id);
 
-                if (monsterIncrement > monsterHBar.value) {
+                if (monsterIncrement > monsterHBar.getAttribute("aria-valuenow")) {
 
                     monsterDeathEvent(playerHealth - increment);
                 }
