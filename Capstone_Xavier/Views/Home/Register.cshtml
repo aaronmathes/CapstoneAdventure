@@ -21,20 +21,20 @@
 
 @using (Html.BeginForm("Register", "Home"))
 {
-    if (Model.alertType == 1)
+    <!--if (Model.alertType == 1)
     {
         <div class="alert alert-warning alert-dismissible fade show">
-            Invalid register. Please try again.
+            Invalid register. Please try again.-->
             @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
-        </div>
+        <!--</div>
     }
     else if (Model.alertType == 2)
     {
         <div class="alert alert-warning alert-dismissible fade show">
-            Username already exist. Please choose another name.
+            Username already exist. Please choose another name.-->
             @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
-        </div>
-    }
+        <!--</div>
+    }-->
     <!--else if (Model.alertType == 3)
     {
         <div class="alert alert-warning alert-dismissible fade show">
@@ -58,7 +58,7 @@
             @*@if (Model.userValid == 1)
             {*@
                 @Html.ValidationMessageFor(RegisterModel => RegisterModel.username, null, new { @class = "validation" })
-                <span class="icon-warning"></span>
+                @*<span class="icon-warning"></span>*@
             @*}*@
         </div>
         <br>
@@ -70,7 +70,7 @@
         {*@
             @*@Html.ValidationMessageFor(RegisterModel => RegisterModel.password, null, new { @class = "validation" })*@
                 @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.password, "", new { @class = "validation" }).ToHtmlString()))
-                <span class="icon-warning"></span>
+                @*<span class="icon-warning"></span>*@
             @*}*@
         </div>
         <br>
@@ -85,12 +85,10 @@
             @*</div>
         <div class="row">
             <div class="col-lg-4">*@
-            @if (Model.emailValid == 1)
-            {
-                    <span class="icon-warning"></span>
+           
+                    @*<span class="icon-warning"></span>*@
                     @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @class = "validation" }).ToHtmlString()))
-                
-            }
+
 
             @*</div>
         </div>*@

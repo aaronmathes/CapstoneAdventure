@@ -47,12 +47,15 @@ namespace Capstone_BLL
             Mapper mapper = new Mapper();
 
             UsersDO userDO = _user.GetUser(user.Username, user.Password);
-            if (userDO == null)
+            if (userDO == null ||userDO.Username == null || userDO.Password == null)
             {
-                return null;
+                UsersBO userBO = new UsersBO();
+                userBO.ErrorMessage = "Could not find User with that Username and Password";
+                return userBO;
             }
             else {
                 UsersBO _returnUser = mapper.UserDO_To_BO(userDO);
+                _returnUser.ErrorMessage = "";
                 return _returnUser;
             }
 
