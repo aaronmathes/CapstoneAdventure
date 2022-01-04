@@ -120,7 +120,7 @@
 
 <!--For combat events only. Shows during monster events-->
 <div id="ComabatBtn" class="btn-block" style="display: none;">
-    <button class="btn-user" id="Travel" onclick="combatAction(0)">Attack</button>
+    <button class="btn-user" onclick="combatAction(0)">Attack</button>
     <button class="btn-user" onclick="combatAction(1)">Defend</button>
     <button class="btn-user" onclick="combatAction(2)">Flee</button>
     <button class="btn-user" onclick="location.href='@Url.Action("Users", "Home")'">Exit</button>
@@ -196,20 +196,31 @@
 
     //For decreasing specific bar values based on amount and bar
     function alterBar(increment, element) {
-        var h = document.getElementById(element);
-        var min = h.getAttribute('aria-valuenow') - increment;
+        let pb = document.getElementById(element);
+        //used for calculating percentages
+        let max_health = pb.getAttribute('aria-valuemax');
+        let current_val = pb.getAttribute('aria-valuenow');
+        let new_val = h.getAttribute('aria-valuenow') - increment;
         //var i;
         var id = setInterval(animateBar, 80);
         function animateBar() {
-            if (h.getAttribute('aria-valuenow') === min || h.getAttribute('aria-valuenow') === 0) {
-                clearInterval(id);
-            } else {
-                h.getAttribute('aria-valuenow')--;
-                let health_percent = (h.getAttribute('aria-valuenow') / maxHP) * 100;
+            if (current_val > new_val & current_val > 0) {
+                //increment down one
+                current_val = current_val - 1;
+                //calculate percent to view
+                let health_percent = (current_val / max_health) * 100;
                 let health_rounded = Math.round(health_percent);
                 let width_string = health_rounded.toString() + "%";
                 //set calculated value to progress-bar
                 h.style.width = width_string;
+                console.log("percentage decreasing: " +width_string);
+                
+            }
+            else if (current_val == new_val) {
+                clearInterval(id);
+            }
+            else {
+                console.log("Incrementation did not stop"); //current_val < new_val
             }
         };
     };
@@ -221,12 +232,13 @@
         //var i;
         var id = setInterval(animateBar, 90);
         function animateBar() {
-            if (h.getAttribute('aria-valuenow') === min || h.getAttribute('aria-valuenow') === h.max) {
+            if (h.getAttribute('aria-valuenow') === min || h.getAttribute('aria-valuenow') === h.getAttribute('aira-valuemax')) {
                 clearInterval(id);
             } else {
-                h.getAttribute('aria-valuenow')++;
+                let health_value = h.getAttribute('aria-valuenow');
+                health_value = health_value + 1;
                 //calculate percentage to display value with bootstrap
-                let health_percent = (h.getAttribute('aria-valuenow') / maxHP) * 100;
+                let health_percent = (h.getAttribute('aria-valuenow') / h.getAttribute('aira-valuemax')) * 100;
                 let health_rounded = Math.round(health_percent);
                 let width_string = health_rounded.toString() + "%";
                 //set calculated value to progress-bar
@@ -347,12 +359,14 @@
 
                 //used for altering the player bar
                 var playerHBar = document.getElementById("Health");
+                console.log("playerHBar:"+playerHBar);
                 //var health = document.getElementById("Health").getAttribute('aria-valuenow');
                 var playerStamina = document.getElementById("Stamina");
                 var playerMagica = document.getElementById("Magica");
 
 
                 var playerHealth = playerHBar.getAttribute('aria-valuenow');
+                console.log("playerHealth:" + playerHealth);
                 var increment = playerHealth - response.playerH;
                 if (response.Stamina != null) {
                     var staminaIncrement = stamina - response.Stamina;
@@ -363,6 +377,7 @@
                     alterBar(magicaIncrememnt, playerMagica.id);
 
                 }
+                console.log("alterBar(" + increment + "," + playerHBar.id + ")");
                 alterBar(increment, playerHBar.id);
 
                 //used for altering the mosnterbar
