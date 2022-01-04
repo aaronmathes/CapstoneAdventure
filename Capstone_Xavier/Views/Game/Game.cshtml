@@ -424,12 +424,12 @@
 
     function closeSellBag() {
         var bag = document.getElementById("Bag-List");
-        var sellBtn = document.getElementById("Sell");
-        var buyBtn = document.getElementById("Buy");
+        var sellBtnOpen = document.getElementById("SellOpen");
+        var sellBtnClose = document.getElementById("SellClose");
 
         bag.style.display = "none";
-        sellBtn.style.display = "inline-block";
-        buyBtn.style.display = "none";
+        sellBtnOpen.style.display = "inline-block";
+        sellBtnClose.style.display = "none";
     }
 
     function OpenBag() {
