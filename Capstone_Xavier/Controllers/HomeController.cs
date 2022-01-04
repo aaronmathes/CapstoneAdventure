@@ -9,6 +9,7 @@ namespace Capstone_Xavier.Controllers
     using System.Web.Mvc;
     using System.Web.Security;
 
+
     public class HomeController : Controller
     {
         [HttpGet]
@@ -81,6 +82,10 @@ namespace Capstone_Xavier.Controllers
                     register.passValid = 1;
                 }
                 if (register.email == null) {
+                    register.emailValid = 1;
+                }
+                else
+                {
                     register.emailValid = 1;
                 }
                 register.alertType = 1;

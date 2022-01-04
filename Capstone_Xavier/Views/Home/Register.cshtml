@@ -13,8 +13,8 @@
             <a onclick="location.href='@Url.Action("Login", "Home")'"> Login</a>
             <a onclick="location.href='@Url.Action("FAQS", "Home")'"> FAQS</a>
             @*<a>@Html.ActionLink("Home", "Index", "Home")</a>
-            <a>@Html.ActionLink("Login", "Login", "Home")</a>
-            <a>@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
+                <a>@Html.ActionLink("Login", "Login", "Home")</a>
+                <a>@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
         </div>
     </div>
 </div>
@@ -42,6 +42,13 @@
             @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
         </div>
     }
+    <!--else if (Model.alertType == 4)
+    {
+        <div class="alert alert-warning alert-dismissible fade show">
+            Email is invalid. Emails must be in the form letters@letters.ending. (example@email.com)-->
+    @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
+    <!--</div>
+    }-->
 
     <div class="input-list">
         <div class="input">
@@ -67,18 +74,33 @@
         </div>
         <br>
         <div class="input">
+            @*<div class="row">*@
             <label>Email</label>
             <span class="icon-input"></span>
-            @Html.EditorFor(RegisterModel => RegisterModel.email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Email" } })
+            @Html.EditorFor(RegisterModel => RegisterModel.email, new { htmlAttributes = new { @type = "text", @class = "form-control", @placeholder = "Enter Email" } })
+            <br />
+            @*@if (Model.emailValid == 1)
+        {*@
+            @*</div>
+        <div class="row">
+            <div class="col-lg-4">*@
             @if (Model.emailValid == 1)
             {
-                @Html.ValidationMessageFor(RegisterModel => RegisterModel.email, null, new { @class = "validation" })
-                <span class="icon-warning"></span>
+                    <span class="icon-warning"></span>
+                    @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @class = "validation" }).ToHtmlString()))
+                
             }
 
+            @*</div>
+        </div>*@
+
         </div>
+        
     </div>
 
+    @*@Html.ValidationMessageFor(RegisterModel => RegisterModel.password, null, new { @class = "validation" })*@
+    @**@
+    @*}*@
 
     <button class="btn-user" type="submit">Submit</button>
     <button class="btn-user" type="reset">Clear</button>
