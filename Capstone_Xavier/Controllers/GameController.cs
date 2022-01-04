@@ -309,6 +309,8 @@ namespace Capstone_Xavier.Controllers
             DBUse data = new DBUse();
             GameModel game = (GameModel)Session["Game"];
 
+            //here is where text about not having any sellable items would go 
+
             data.RemoveItemFromInventory(itemID);
             game.character.gold  += itemPrice;
             data.UpdateUserCharacter(map.CharacterModel_To_BO(game.character));

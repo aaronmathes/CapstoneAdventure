@@ -381,12 +381,22 @@
             async: true,
             success: function (data) {
             
-                addHTMLToTextUI(data)
+                addHTMLToTextUI(data);
+                var bag = document.getElementById("Bag-List");
+                
+                if (bag.style.display != "none") {
+                    openSellBag();
+                    bag.scrollTo(0, bag.scrollHeight+100000);
+                }
+
             }
         });
     }
 
     function SellItem(item, price) {
+        var bag = document.getElementById("Bag-List");
+        var sellBtnOpen = document.getElementById("SellOpen");
+        var sellBtnClose = document.getElementById("SellClose");
         $.ajax({
             url: "../../Game/SellEvent",
             type: "POST",
@@ -396,10 +406,23 @@
             success: function (data) {
             
                 addHTMLToTextUI(data);
-
+                /*openSellBag();*/
                 closeSellBag();
             }
         });
+        //$.ajax({
+        //    url: "../../Game/SellInventory",
+        //    type: "POST",
+        //    data: {},
+        //    cache: false,
+        //    async: true,
+        //    success: function (data) {
+        //        bag.innerHTML = data;
+        //        bag.style.display = "inline-block";
+        //        sellBtnOpen.style.display = "none";
+        //        sellBtnClose.style.display = "inline-block";
+        //    }
+        //});
     }
 
     function openSellBag() {
