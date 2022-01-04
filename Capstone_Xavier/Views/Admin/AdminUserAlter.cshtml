@@ -4,7 +4,7 @@
     ViewBag.Title = "AdminUserAlter";
 }
 
-<h3>Alter User @Model.roleID</h3>
+<h3>Alter User</h3>
 
 <div class="nav-side" style="margin: 2vw;">
     <div class="dropdown">
@@ -27,7 +27,7 @@
 </div>
 <br>
 
-<div class="info-box" style="top: 12vw; height: 15vw;">
+@*<div class="info-box" style="top: 12vw; height: 15vw;">
     <label>Name</label>
     <p class="c-info">@Model.username</p>
     <label>Email</label>
@@ -48,11 +48,11 @@
 <div class="" style="display: inline-block; float: left; left: 13vw; top: 28vw; position: absolute;">
     <button class="btn-user" id="MButton" onclick="Update()">Update User</button>
     <button class="btn-user" id="Toggle" onclick="Delete()">Remove</button>
-</div>
+</div>*@
 
 @using (Html.BeginForm("UpdateUser", "Admin", Model))
 {
-<div id="Update" class="nav-side" style="top: 4vw; display: none;">
+<div id="Update" class="nav-side" style="top: 4vw;">
     <div class="input-list">
 
         <div class="input">
@@ -87,20 +87,22 @@
 
         </div>
         <br>
-            <div class="input">
-                <label>Confirm Password</label>
-                <span class="icon-input"></span>
+        <div class="input">
+            <label>Confirm Password</label>
+            <span class="icon-input"></span>
 
-                @Html.DropDownListFor(Model => Model.roleID, new SelectList(Model.roles, "roleID", "roleName"), new { @id = "Roles", @class = "form-control" })
-                <span>Change Role?: </span> @Html.CheckBoxFor(UserModel => UserModel.changeRole, false)
+            @Html.DropDownListFor(Model => Model.roleID, new SelectList(Model.roles, "roleID", "roleName"), new { @id = "Roles", @class = "form-control" })
+            <span>Change Role?: </span> @Html.CheckBoxFor(UserModel => UserModel.changeRole, false)
 
-            </div>
-            <br>
-        
+        </div>
+        <br>
+        @Html.Hidden(Model.roleID.ToString())
 
     </div>
 
-    <button type="submit" class="btn-user" onclick="">Submit</button>
+    <button type="submit" class="btn-user" onclick="">Update</button>
+    <button type="submit" class="btn-user" onclick="">Remove</button>
+
 </div>
 
     }
@@ -116,9 +118,11 @@
 </div>
 
 
-<script>
+@*<script>
+
     //For toggling the update user password
-    function Update() {
+    function Update()
+    {
         var update = document.getElementById("Update");
         var warning = document.getElementById("Warning");
 
@@ -131,7 +135,8 @@
     }
 
     //For toggling the remove confirm
-    function Delete() {
+    function Delete()
+    {
         var warning = document.getElementById("Warning");
         var update = document.getElementById("Update");
         if (warning.style.display == "none") {
@@ -143,7 +148,8 @@
     }
 
     //For toggling the update user role
-    function ChangeRole() {
+    function ChangeRole()
+    {
         var role = document.getElementById("Roles");
 
         if (role.style.display === "none") {
@@ -151,10 +157,8 @@
         } else {
             role.style.display = "none";
         }
-
-
     }
 
-</script>
+</script>*@
 
 
