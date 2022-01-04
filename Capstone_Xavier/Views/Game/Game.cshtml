@@ -385,12 +385,14 @@
                 var bag = document.getElementById("Bag-List");
                 
                 if (bag.style.display != "none") {
-                    openSellBag();
-                    bag.scrollTo(0, bag.scrollHeight+100000);
+                    openSellBagScroll();
+                    /*bag.scrollTo(0, bag.scrollHeight+100000);*/
+                    /*bag.scrollTop = bag.scrollHeight;*/
                 }
 
             }
-        });
+         });
+        
     }
 
     function SellItem(item, price) {
@@ -407,7 +409,7 @@
             
                 addHTMLToTextUI(data);
                 /*openSellBag();*/
-                closeSellBag();
+               /* closeSellBag();*/
             }
         });
         //$.ajax({
@@ -442,6 +444,29 @@
                 sellBtnClose.style.display = "inline-block";
             }
         });
+
+    }
+    function openSellBagScroll() {
+        var bag = document.getElementById("Bag-List");
+        var sellBtnOpen = document.getElementById("SellOpen");
+        var sellBtnClose = document.getElementById("SellClose");
+        $.ajax({
+            url: "../../Game/SellInventory",
+            type: "Post",
+            data: {},
+            cache: false,
+            async: true,
+            success: function (data) {
+                bag.innerHTML = data;
+                bag.style.display = "inline-block";
+                sellBtnOpen.style.display = "none";
+                sellBtnClose.style.display = "inline-block";
+                bag.scrollTop = bag.scrollHeight;
+                
+            }
+        });
+        //var bag = document.getElementById("Bag-List");
+        //bag.scrollTop = bag.scrollHeight;
 
     }
 
