@@ -21,85 +21,31 @@
 
 @using (Html.BeginForm("Register", "Home"))
 {
-    <!--if (Model.alertType == 1)
-    {
-        <div class="alert alert-warning alert-dismissible fade show">
-            Invalid register. Please try again.-->
-            @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
-        <!--</div>
-    }
-    else if (Model.alertType == 2)
-    {
-        <div class="alert alert-warning alert-dismissible fade show">
-            Username already exist. Please choose another name.-->
-            @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
-        <!--</div>
-    }-->
-    <!--else if (Model.alertType == 3)
-    {
-        <div class="alert alert-warning alert-dismissible fade show">
-            Password is invalid. Passwords must contain at least 1 of the following. Capital letter. Number. Special character, and be between 8-20 characters-->
-            @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
-        <!--</div>
-    }-->
-    <!--else if (Model.alertType == 4)
-    {
-        <div class="alert alert-warning alert-dismissible fade show">
-            Email is invalid. Emails must be in the form letters@letters.ending. (example@email.com)-->
-    @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
-    <!--</div>
-    }-->
+
 
     <div class="input-list">
         <div class="input">
             <label>Username</label>
             <span class="icon-input"></span>
             @Html.EditorFor(RegisterModel => RegisterModel.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
-            @*@if (Model.userValid == 1)
-            {*@
-                @Html.ValidationMessageFor(RegisterModel => RegisterModel.username, null, new { @class = "validation" })
-                @*<span class="icon-warning"></span>*@
-            @*}*@
+            @Html.ValidationMessageFor(RegisterModel => RegisterModel.username, null, new { @class = "validation" })
         </div>
         <br>
         <div class="input">
             <label>Password</label>
             <span class="icon-input"></span>
             @Html.EditorFor(RegisterModel => RegisterModel.password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Enter Password." } })
-            @*@if (Model.passValid == 1)
-        {*@
-            @*@Html.ValidationMessageFor(RegisterModel => RegisterModel.password, null, new { @class = "validation" })*@
-                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.password, "", new { @class = "validation" }).ToHtmlString()))
-                @*<span class="icon-warning"></span>*@
-            @*}*@
+            @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.password, "", new { @class = "validation" }).ToHtmlString()))
         </div>
         <br>
         <div class="input">
-            @*<div class="row">*@
             <label>Email</label>
             <span class="icon-input"></span>
             @Html.EditorFor(RegisterModel => RegisterModel.email, new { htmlAttributes = new { @type = "text", @class = "form-control", @placeholder = "Enter Email" } })
             <br />
-            @*@if (Model.emailValid == 1)
-        {*@
-            @*</div>
-        <div class="row">
-            <div class="col-lg-4">*@
-           
-                    @*<span class="icon-warning"></span>*@
-                    @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @class = "validation" }).ToHtmlString()))
-
-
-            @*</div>
-        </div>*@
-
+            @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @class = "validation" }).ToHtmlString()))
         </div>
-        
     </div>
-
-    @*@Html.ValidationMessageFor(RegisterModel => RegisterModel.password, null, new { @class = "validation" })*@
-    @**@
-    @*}*@
 
     <button class="btn-user" type="submit">Submit</button>
     <button class="btn-user" type="reset">Clear</button>

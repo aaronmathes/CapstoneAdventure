@@ -39,56 +39,23 @@ namespace Capstone_Xavier.Controllers
                 UsersBO user = mapper.UIRegister_To_BO(register);
                 DBUse data = new DBUse();
 
-                //For checking if the username already exist
-                //if (data.FindUsername(register.username) == false)
-                //{
-                //    //For validating passwords. 
-                //    if (ValidatePassword(register.password)) {
-                        data.AddUser(user);
-                        LoginModel login = new LoginModel();
-                        //login.alertType = 3;
-                        //For getting the userdata in creating the default character to use
-                        UsersBO _user = data.FindUser(user);
-                        CreateDefaultCharacter(_user.UserID);
+                data.AddUser(user);
+                LoginModel login = new LoginModel();
+                //For getting the userdata in creating the default character to use
+                UsersBO _user = data.FindUser(user);
+                CreateDefaultCharacter(_user.UserID);
 
-                        user = data.FindUser(user);
-                        Session["Username"] = user.Username;
-                        //user doesnt return password for security. Pass in login pass for use later.
-                        user.Password = register.password;
-                        Session["User"] = mapper.UserBO_To_Model(user);
-                        Session["Role"] = user.UserRole.ToString();
-                        Session["UserID"] = user.UserID;
-                        return RedirectToAction("Users", "Home");
-                        //return RedirectToAction("Login", "Home");
-                    //} else {
-                    //    //If the password doesnt meet the requirements
-                    //    register.alertType = 3;
-                    //    return View(register);
-                    //}
-
-                //}
-                //else {
-                //    //If the username already exist in the database
-                //    register.alertType = 2;
-                //    return View(register);
-                //}
+                user = data.FindUser(user);
+                Session["Username"] = user.Username;
+                //user doesnt return password for security. Pass in login pass for use later.
+                user.Password = register.password;
+                Session["User"] = mapper.UserBO_To_Model(user);
+                Session["Role"] = user.UserRole.ToString();
+                Session["UserID"] = user.UserID;
+                return RedirectToAction("Users", "Home");
 
             }
             else {//For if the modelstate isnt valid
-                //if (register.username == null) {
-                //    register.userValid = 1;
-                //}
-                //if (register.password == null) {
-                //    register.passValid = 1;
-                //}
-                //if (register.email == null) {
-                //    register.emailValid = 1;
-                //}
-                //else
-                //{
-                //    register.emailValid = 1;
-                //}
-                //register.alertType = 1;
                 return View(register);
             }
 
@@ -117,13 +84,7 @@ namespace Capstone_Xavier.Controllers
             {
                 user = data.FindUser(user);
                 login.alertMessage = user.ErrorMessage;
-                //if (user.Username == null )
-                //{
 
-                //    login.alertType = 2;
-                //    return View(login);
-                //}
-                //RIP OUT ALERT TYPES!!
                 if (login.alertMessage != "" || login.alertMessage != null)
                 {
                     return View(login);
@@ -140,7 +101,6 @@ namespace Capstone_Xavier.Controllers
 
             }
             else {
-                //login.alertType = 1;
                 return View(login);
             }
 

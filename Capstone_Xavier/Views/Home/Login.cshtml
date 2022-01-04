@@ -23,27 +23,7 @@
 </div>
 @using (Html.BeginForm("Login", "Home"))
 {
-    <!--if (Model.alertType == 1)
-    {
-        <div class="alert alert-warning alert-dismissible fade show">
-            Invalid Login. Please try again.-->
-            @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
-        <!--</div>
-    }
-    else if (Model.alertType == 2)
-    {
-        <div class="alert alert-warning alert-dismissible fade show">
-            Username and password fields are required.-->
-            @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
-        <!--</div>
-    }
-    else if (Model.alertType == 3)
-    {
-        <div class="alert alert-warning alert-dismissible fade show">
-            @Model.alertMessage-->
-            @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
-        <!--</div>
-    }-->
+
     <label for="error" id="error" class="validation">@Model.alertMessage</label>
     <div class="input-list">
         <div class="input">
