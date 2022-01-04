@@ -85,7 +85,7 @@ namespace Capstone_Xavier.Controllers
                 user = data.FindUser(user);
                 login.alertMessage = user.ErrorMessage;
 
-                if (login.alertMessage != "" || login.alertMessage != null)
+                if (login.alertMessage != "")
                 {
                     return View(login);
                 }
