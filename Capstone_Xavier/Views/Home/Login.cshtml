@@ -16,33 +16,21 @@
             <a onclick="location.href='@Url.Action("Register", "Home")'"> Register</a>
             <a onclick="location.href='@Url.Action("FAQS", "Home")'"> FAQS</a>
             @*<a>@Html.ActionLink("Register", "Register", "Home")</a>
-            <a>@Html.ActionLink("Home", "Index", "Home")</a>
-            <a href="#">@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
+                <a>@Html.ActionLink("Home", "Index", "Home")</a>
+                <a href="#">@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
         </div>
     </div>
 </div>
 @using (Html.BeginForm("Login", "Home"))
 {
-    if (Model.alertType == 1)
-    {
-        <div class="alert alert-warning alert-dismissible fade show">
-            Invalid Login. Please try again.
-            @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
-        </div>
-    }
-    else if (Model.alertType == 2)
-    {
-        <div class="alert alert-warning alert-dismissible fade show">
-            Username and password fields are required.
-            @*<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>*@
-        </div>
-    }
 
+    <label for="error" id="error" class="validation">@Model.alertMessage</label>
     <div class="input-list">
         <div class="input">
             <label>Username</label>
             <span class="icon-input"></span>
             @Html.EditorFor(LoginModel => LoginModel.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
+            @Html.ValidationMessageFor(LoginModel => LoginModel.username, null, new { @class = "validation" })
 
         </div>
         <br>
@@ -50,6 +38,7 @@
             <label>Password</label>
             <span class="icon-input"></span>
             @Html.EditorFor(LoginModel => LoginModel.password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Enter Password." } })
+            @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(LoginModel => LoginModel.password, "", new { @class = "validation" }).ToHtmlString()))
         </div>
     </div>
     <button class="btn-user" type="submit">Submit</button>

@@ -17,6 +17,7 @@ namespace Capstone_BLL.BusinessObjects
         private string password;
         private string email;
 
+        public string ErrorMessage { get; set; }
         public string Email {
             get { return email; }
             set { email = value; }
