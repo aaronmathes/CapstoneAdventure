@@ -365,7 +365,7 @@
 
         $.getJSON("../../Game/GetPurse", function (response) {
             gold = response.gold;
-            console.log("getJSON response.gold: " + response.gold);
+            //console.log("getJSON response.gold: " + response.gold);
             console.log("getJSON gold: " + gold);
 
         })
@@ -377,6 +377,9 @@
             async: true,
             success: function (data) {
                 console.log("ajax gold: " + gold);
+                if (gold == "undefined") {
+                    console.log("ajax gold: " + gold);
+                }
                 var merchantBox = document.getElementById("merchant");
                 merchantBox.style.display = "inline-block";
                 merchantBox.innerHTML = data;

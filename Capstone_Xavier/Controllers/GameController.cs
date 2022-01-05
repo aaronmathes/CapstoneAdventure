@@ -215,12 +215,13 @@ namespace Capstone_Xavier.Controllers
 
         //Used for the merchant event. Allows the user to purchase goods
         [HttpPost]
-        public string MerchantEvent()
+        public Dictionary<string,string> MerchantEvent()
         {
-            //System.Threading.Thread.Sleep(30);
+            Dictionary<string, string> returnvalues = new Dictionary<string, string>();
             DBUse data = new DBUse();
             Mapper map = new Mapper();
-            string _returnString = "";
+            //string _returnString = "";
+            returnvalues.Add("_returnString","");
             List<ItemModel> list = new List<ItemModel>();
             Random rand = new Random();
             int inven = rand.Next(6);
@@ -238,10 +239,10 @@ namespace Capstone_Xavier.Controllers
 
                 //return string HTML. Used for list of items
                 string temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats + "</div><button class='btn-user'style='display: inline-block; float: right;' onclick='buy(" + item.itemID.ToString() + "," + item.goldPrice.ToString() + ")'>Buy</button></div><br>";
-                _returnString = _returnString + temp;
+                returnvalues["_returnString"] = returnvalues["_returnString"] + temp;
             }
 
-            return _returnString;
+            return returnvalues;
         }
         [HttpGet]
         public ActionResult GetPurse()
