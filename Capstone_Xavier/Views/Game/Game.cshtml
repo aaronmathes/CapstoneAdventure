@@ -40,10 +40,26 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <progress id="Stamina" value="20" max="60"></progress>
+                        <div class="progress" style="height: 2rem;border:2px solid black;">
+                            <div class="progress-bar bg-success" id="Stamina" role="progressbar" aria-valuenow="20"
+                                 aria-valuemin="0" aria-valuemax="60" style="width:33%;">
+                                <div id="StaminaDisplay" style="color:black;">
+                                    STAMINA
+                                </div>
+                            </div>
+                        </div>
+                        @*<progress id="Stamina" value="20" max="60"></progress>*@
                     </div>
                     <div class="col-6">
-                        <progress id="Magica" value="10" max="60"></progress>
+                        <div class="progress" style="height: 2rem;border:2px solid black;">
+                            <div class="progress-bar progress-bar-info" id="Magica" role="progressbar" aria-valuenow="10"
+                                 aria-valuemin="0" aria-valuemax="60" style="width:15%;">
+                                <div id="MagicaDisplay" style="color:black;">
+                                    MAGICA
+                                </div>
+                            </div>
+                        </div>
+                        @*<progress id="Magica" value="10" max="60"></progress>*@
                     </div>
                 </div>
             </div>
@@ -194,13 +210,23 @@
         //health_value = ob.hp;
         //used for setting the stamina bar
         var s = document.getElementById("Stamina");
-        s.value = ob.Stamina;
-        s.max = ob.Stamina;
+        s.setAttribute('aria-valuemax', stamina);
+        s.setAttribute('aria-valuenow', stamina);
+        s.style.width = "100%";
+        var sdisplay = document.getElementById("StaminaDisplay");
+        let stamina_display = stamina + "/" + stamina;
+        sdisplay.innerHTML = stamina_display;
 
         //used for setting the magica bar
         var m = document.getElementById("Magica");
-        m.max = ob.Magica;
-        m.value = ob.Magica;
+        m.setAttribute('aria-valuemax', magica);
+        m.setAttribute('aria-valuenow', magica);
+        m.style.width = "100%";
+        var mdisplay = document.getElementById("MagicaDisplay");
+        let magica_display = magica + "/" + magica;
+        mdisplay.innerHTML = magica_display;
+        //m.max = ob.Magica;
+        //m.value = ob.Magica;
     });
     //########################/*Misc and UI*/#######################################
 
@@ -374,10 +400,10 @@
 
     //###############################/*Combat Actions*/########################
     function combatAction(actionID) {
-        var mHealth = document.getElementById("MHealth").getAttribute('aria-valuenow')
+        var mHealth = document.getElementById("MHealth").getAttribute('aria-valuenow');
         var health = document.getElementById("Health").getAttribute('aria-valuenow');
-        var magica = document.getElementById("Magica").value;
-        var stamina = document.getElementById("Stamina").value;
+        var magica = document.getElementById("Magica").getAttribute('aria-valuenow');
+        var stamina = document.getElementById("Stamina").getAttribute('aria-valuenow');
 
         //For altering the bars and calling possible death events
         $.getJSON("../../Combat/CombatAction", { monsterHealth: mHealth, playerHealth: health, magica: magica, stamina: stamina, actionID: actionID }, function (response) {
@@ -409,7 +435,7 @@
 
 
                 var playerHealth = playerHBar.getAttribute('aria-valuenow');
-                console.log("playerHealth:" + playerHealth);
+                //console.log("playerHealth:" + playerHealth);
                 var increment = playerHealth - response.playerH;
                 if (response.Stamina != null) {
                     var staminaIncrement = stamina - response.Stamina;
@@ -438,11 +464,11 @@
                 console.log("monsterhealth: " + monsterHBar);
                 alterBar(monsterIncrement, monsterHBar.id);
 
-                if (monsterIncrement > monsterHBar.getAttribute("aria-valuenow")) {
+                if (monsterIncrement >= monsterHBar.getAttribute("aria-valuenow")) {
 
                     monsterDeathEvent(playerHealth - increment);
                 }
-                if (increment > playerHBar.getAttribute('aria-valuenow')) {
+                if (increment >= playerHBar.getAttribute('aria-valuenow')) {
                     playerDeathEvent();
 
                 }
