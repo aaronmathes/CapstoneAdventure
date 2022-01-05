@@ -36,31 +36,38 @@
 
 <div class="list">
 
-    @foreach (CharacterModel ch in Model)
+    @for (int i =0; i < Model.Count; i++)
     {
-        <div class="row" style="margin-right: 0px; margin-left: 0px;">
-            <div class="col-sm-6">
-                <div class="list-item-character">
-                    <p onclick="location.href='@Url.Action("Game", "Game", ch)'" style="cursor: pointer">@ch.name</p>
-                    <h6 class="sub-num">@ch.level</h6>
-                    <button class="btn-change" id="@ch.id" onclick="location.href='@Url.Action("UpdateCharacter", "User", ch)'"></button>
-                    <button class="btn-remove" id="CharacterRemoveButton" onclick="DeleteCharacterAlert('@ch.name')"></button> @*onclick="location.href='@Url.Action("RemoveCharacter", "User", ch)'*@
+        <div id="@Model[i].id">
+            <div class="row" style="margin-right: 0px; margin-left: 0px;">
+                <div class="col-sm-6">
+                    <div class="list-item-character">
+                        <p onclick="location.href='@Url.Action("Game", "Game", Model[i])'" style="cursor: pointer">@Model[i].name</p>
+                        <h6 class="sub-num">@Model[i].level</h6>
+                        <button class="btn-change" id="@Model[i].id" onclick="location.href='@Url.Action("UpdateCharacter", "User", Model[i])'"></button>
+                        <button class="btn-remove" id="CharacterRemoveButton" onclick="DeleteCharacterAlert('@Model[i].name', '@Model[i].id')"></button> @*onclick="location.href='@Url.Action("RemoveCharacter", "User", ch)'*@
+                        @*var i = ;*@
+                        @*<button onclick="location.href='@Url.Action("RemoveCharacter", "User", i)'"></button>*@
+
+                    </div>
+                    <div class="row" style="margin-right: 0px; margin-left: 0px;">
+                        <div class="info" style="margin-left: 2%;">@Model[i].className</div>
+                    </div>
                 </div>
-                <div class="row" style="margin-right: 0px; margin-left: 0px;">
-                    <div class="info" style="margin-left: 2%;">@ch.className</div>
+                <div class="col-sm-6">
+                    <div class="info">
+                        Health: @Model[i].health / @Model[i].maxHP
+                        <br>
+                        Xp: @Model[i].xp / @Model[i].maxXp
+                        <br>
+                        Gold: @Model[i].gold
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="info">
-                    Health: @ch.health / @ch.maxHP
-                    <br>
-                    Xp: @ch.xp / @ch.maxXp
-                    <br>
-                    Gold: @ch.gold
-                </div>
-            </div>
+            <hr>
         </div>
-        <hr>
+        
+        
     }
 </div>
 
@@ -74,11 +81,11 @@
 </div>
 
 <script type="text/javascript">
-    function DeleteCharacterAlert(name) {
+    function DeleteCharacterAlert(name, id) {
         $.ajax({
             url: "../../User/DeleteAlert",
             type: "Post",
-            data: { name: name },
+            data: { name: name, id: id},
             cache: false,
             async: true,
             success: function (data) {
@@ -97,6 +104,33 @@
         console.log(alert.innerHTML);
         alert.style.display = "none";
 
+    }
+    function removeCharacter(id) {
+        console.log(id);
+        //<!--var button = document.getElementById("delete");
+        //var id = charId;
+         @*button.onclick = "location.href='@Url.Action("RemoveCharacter", "User", Model[id] )'"-->*@ 
+        @*button.onclick = "location.href='@Url.Action("RemoveCharacter", "User", cha )'"*@
+
+        $.ajax({
+            url: "../../User/RemoveCharacter",
+            type: "Post",
+            data: { characterId: id },
+            cache: false,
+            async: true,
+            success: function (data) {
+                console.log(id);
+                var list = document.getElementById(data);
+                list.style.display = "none";
+                var alert = document.getElementById("deleteAlert");
+                alert.style.display = "none";
+                //var alert = document.getElementById("deleteAlert");
+                ///*console.log("deleteAlert");*/
+                //alert.style.display = "inline-block";
+                //alert.innerHTML = data;
+                //console.log(data);
+            }
+        });
     }
 </script>
 

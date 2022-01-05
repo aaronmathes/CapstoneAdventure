@@ -111,15 +111,31 @@ namespace Capstone_Xavier.Controllers
 
         }
 
-        public ActionResult RemoveCharacter(CharacterModel character)
+        //public ActionResult RemoveCharacter(CharacterModel character)
+        //{
+        //    DBUse data = new DBUse();
+        //    int id = character.id;
+        //    int userID = int.Parse(Session["UserID"].ToString());
+
+        //    data.RemoveCharacter(id, userID);
+
+        //    return RedirectToAction("Users", "Home");
+        //}
+
+        public string RemoveCharacter(string characterId)
         {
+            string _returnstring = "";
             DBUse data = new DBUse();
-            int id = character.id;
+            int id = Int32.Parse(characterId);
             int userID = int.Parse(Session["UserID"].ToString());
 
             data.RemoveCharacter(id, userID);
 
-            return RedirectToAction("Users", "Home");
+            _returnstring = characterId;
+            return _returnstring;
+
+
+            //return RedirectToAction("Users", "Home");
         }
 
         [MustBeLoggedIn]
@@ -410,10 +426,10 @@ namespace Capstone_Xavier.Controllers
         }
 
         [HttpPost]
-        public string DeleteAlert(string name)
+        public string DeleteAlert(string name, int id, CharacterModel ch)
         {
             string _returnstring = "Are you sure you wish to delete " + name + "?" +
-               "<br/> <button class='btn-user' id='delete' style='display: inline-block; font-size: .9em; margin-right: 3%; background-color: #f0eb37;' onclick='location.href='@Url.Action('RemoveCharacter', 'User', ch)''> Delete " + name + "</button>" +
+               "<br/> <button class='btn-user' id='delete' style='display: inline-block; font-size: .9em; margin-right: 3%; background-color: #f0eb37;' onclick=removeCharacter(" + id + ")> Delete " + name + "</button>" +
                "<button class='btn-user' id='deleteCancel' style='display: inline-block; font-size: 1em; font-size: .9em; margin-right: 3%; background-color: #4442f2;' onclick='cancelDelete()'>Cancel</button>";
             return _returnstring;
         }
