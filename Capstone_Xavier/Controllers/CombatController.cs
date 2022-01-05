@@ -158,7 +158,7 @@ namespace Capstone_Xavier.Controllers
                 if (chance > 15)
                 {
                     endID = 1;
-                    story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> You scared the monster into quick submisstion. Scared or not interested in fighting, the mosnter flees from you.</div><br>";
+                    story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> You scared the monster into quick submission. Scared or not interested in fighting, the monster flees from you.</div><br>";
                     
                 }
                 else {//flee unsucessful
@@ -175,7 +175,7 @@ namespace Capstone_Xavier.Controllers
                 
                 mHealth = mHealth - damage;
                 if (actionID == 1) {
-                    story = story + "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'>You manage to strike the mosnter doing " + damage.ToString() + " damage." +
+                    story = story + "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'>You manage to strike the monster doing " + damage.ToString() + " damage." +
                               "but the " + monster.monsterName + "was ready and attacks you doing " + monsterDamage.ToString() + "damage.</div><br>";
                 } else if (actionID == -1) {
                     story = story + "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The monster attempted to flee, but you easily keep up. With this advantage you strike for " + damage.ToString() + "damage."+
@@ -264,7 +264,7 @@ namespace Capstone_Xavier.Controllers
                 if (actionID == 1)
                 {
                     story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'>You raise your defense in hopes to deflect damage," +
-                              " but the " + monster.monsterName + " is unrelenting and attacks you for " + monsterDamage.ToString() + "damage.</div><br>";
+                              " but the " + monster.monsterName + " is unrelenting and attacks you for " + monsterDamage.ToString() + " damage.</div><br>";
                 }
                 else if (actionID == -1)
                 {
@@ -277,7 +277,7 @@ namespace Capstone_Xavier.Controllers
             if (actionID == 2)
             {
                 mHealth += 10;
-                story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The beast gets defensive protecting itself and manages to heal a small amount of health (+10)</div><br>";
+                story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The beast gets defensive protecting itself and manages to heal a small amount of health,too. (+10)</div><br>";
             }
 
             var _return = new { action = endID, print = story, monsterH = mHealth, playerH = health };
