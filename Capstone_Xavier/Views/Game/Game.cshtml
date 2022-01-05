@@ -388,8 +388,6 @@ new AjaxOptions { UpdateTargetId = "Bag-List", InsertionMode = InsertionMode.Rep
                 var bag = document.getElementById("Bag-List");
                 if (bag.style.display != "none") {
                     openSellBagScroll();
-                    /*bag.scrollTo(0, bag.scrollHeight+100000);*/
-                    /*bag.scrollTop = bag.scrollHeight;*/
                 }
 
             }
@@ -414,7 +412,6 @@ new AjaxOptions { UpdateTargetId = "Bag-List", InsertionMode = InsertionMode.Rep
                     openSellBagScroll();
                     console.log(bag.innerHTML);
                 }
-               /* closeSellBag();*/
             }
         });
     }
@@ -434,9 +431,6 @@ new AjaxOptions { UpdateTargetId = "Bag-List", InsertionMode = InsertionMode.Rep
                 bag.style.display = "inline-block";
                 sellBtnOpen.style.display = "none";
                 sellBtnClose.style.display = "inline-block";
-                @*console.log(@Model.BagOpened);*@
-                //$('#BagOpened').val = true;
-                //h = true;
             }
         });
 
@@ -457,14 +451,8 @@ new AjaxOptions { UpdateTargetId = "Bag-List", InsertionMode = InsertionMode.Rep
                 sellBtnOpen.style.display = "none";
                 sellBtnClose.style.display = "inline-block";
                 bag.scrollTop = bag.scrollHeight;
-
-                //$('#BagOpened').val = true;
-                //h = true;
             }
         });
-        //var bag = document.getElementById("Bag-List");
-        //bag.scrollTop = bag.scrollHeight;
-
     }
 
     function closeSellBag() {
@@ -475,8 +463,6 @@ new AjaxOptions { UpdateTargetId = "Bag-List", InsertionMode = InsertionMode.Rep
         bag.style.display = "none";
         sellBtnOpen.style.display = "inline-block";
         sellBtnClose.style.display = "none";
-        //$('#BagOpened').val = false;
-        //h = false;
     }
 
     function OpenBag() {
@@ -496,8 +482,6 @@ new AjaxOptions { UpdateTargetId = "Bag-List", InsertionMode = InsertionMode.Rep
                 elem.innerHTML = data;
                 if (elem.style.display === "none") { //if the bag is closed
                     elem.style.display = "inline-block"; //display bag
-                    /*$('#BagOpened').val = true;*/
-                   /* h = true;*/
                 } else { //if the bag is open
                     if (sellBtnClose.style.display != "none") { //if the sell close bag button is displayed
                         sellBtnClose.style.display = "none"; //hide that button
@@ -508,8 +492,6 @@ new AjaxOptions { UpdateTargetId = "Bag-List", InsertionMode = InsertionMode.Rep
                         }
                     }
                     elem.style.display = "none";
-                    //$('#BagOpened').val = false;
-                    //h = false;
                 }
             }
         });
@@ -526,8 +508,6 @@ new AjaxOptions { UpdateTargetId = "Bag-List", InsertionMode = InsertionMode.Rep
         merchant.style.display = "none";
         closeSellBag();
         bag.style.display = "none";
-        /*Session["Game"].OpenBag = false;*/
-        /*$('#BagOpened').val = false;*/
     }
 
     //For using Potions or buff items.
