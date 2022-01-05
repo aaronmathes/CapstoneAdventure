@@ -35,50 +35,45 @@
 
 
 <div class="list">
-
-    @for (int i =0; i < Model.Count; i++)
+    @foreach (CharacterModel ch in Model)
     {
-        <div id="@Model[i].id">
-            <div class="row" style="margin-right: 0px; margin-left: 0px;">
-                <div class="col-sm-6">
-                    <div class="list-item-character">
-                        <p onclick="location.href='@Url.Action("Game", "Game", Model[i])'" style="cursor: pointer">@Model[i].name</p>
-                        <h6 class="sub-num">@Model[i].level</h6>
-                        <button class="btn-change" id="@Model[i].id" onclick="location.href='@Url.Action("UpdateCharacter", "User", Model[i])'"></button>
-                        <button class="btn-remove" id="CharacterRemoveButton" onclick="DeleteCharacterAlert('@Model[i].name', '@Model[i].id')"></button> @*onclick="location.href='@Url.Action("RemoveCharacter", "User", ch)'*@
-                        @*var i = ;*@
-                        @*<button onclick="location.href='@Url.Action("RemoveCharacter", "User", i)'"></button>*@
-
-                    </div>
-                    <div class="row" style="margin-right: 0px; margin-left: 0px;">
-                        <div class="info" style="margin-left: 2%;">@Model[i].className</div>
-                    </div>
+    <div id="@ch.id">
+        <div class="row" style="margin-right: 0px; margin-left: 0px;">
+            <div class="col-sm-6">
+                <div class="list-item-character">
+                    <p onclick="location.href='@Url.Action("Game", "Game", ch)'" style="cursor: pointer">@ch.name</p>
+                    <h6 class="sub-num">@ch.level</h6>
+                    <button class="btn-change" id="@ch.id" onclick="location.href='@Url.Action("UpdateCharacter", "User", ch)'"></button>
+                    <button class="btn-remove" id="CharacterRemoveButton" onclick="DeleteCharacterAlert('@ch.name', '@ch.id')"></button>
                 </div>
-                <div class="col-sm-6">
-                    <div class="info">
-                        Health: @Model[i].health / @Model[i].maxHP
-                        <br>
-                        Xp: @Model[i].xp / @Model[i].maxXp
-                        <br>
-                        Gold: @Model[i].gold
-                    </div>
+                <div class="row" style="margin-right: 0px; margin-left: 0px;">
+                    <div class="info" style="margin-left: 2%;">@ch.className</div>
                 </div>
             </div>
-            <hr>
+            <div class="col-sm-6">
+                <div class="info">
+                    Health: @ch.health / @ch.maxHP
+                    <br>
+                    Xp: @ch.xp / @ch.maxXp
+                    <br>
+                    Gold: @ch.gold
+                </div>
+            </div>
         </div>
-        
-        
+        <hr>
+    </div>
     }
 </div>
 
 <div id="deleteAlert" style="display: none; position: fixed; right: 40vw; top: 17vw; font-size: 1.5rem; width: fit-content; padding: 2%; background-color: palegoldenrod; background-image: linear-gradient(#ee3f3f, #961111); border-radius: 12px; ">
-    
+
 </div>
 
 <div>
     <button class="btn-user" id="User" onclick="location.href='@Url.Action("createCharacter", "User", null)'">Create Character</button>
     <label style="position: absolute; top:20vw; right:25vw;">Click the character name to play!</label>
 </div>
+
 
 <script type="text/javascript">
     function DeleteCharacterAlert(name, id) {
@@ -109,7 +104,7 @@
         console.log(id);
         //<!--var button = document.getElementById("delete");
         //var id = charId;
-         @*button.onclick = "location.href='@Url.Action("RemoveCharacter", "User", Model[id] )'"-->*@ 
+         @*button.onclick = "location.href='@Url.Action("RemoveCharacter", "User", Model[id] )'"-->*@
         @*button.onclick = "location.href='@Url.Action("RemoveCharacter", "User", cha )'"*@
 
         $.ajax({
@@ -132,5 +127,5 @@
             }
         });
     }
-</script>
+        </script>
 
