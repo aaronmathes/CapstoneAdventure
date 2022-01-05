@@ -60,8 +60,10 @@ namespace Capstone_DAL
                         command.Parameters.AddWithValue("@parm_password", SqlDbType.NVarChar).Value = password;
 
                         using (SqlDataReader reader = command.ExecuteReader()) {
-                            while (reader.Read()) {
+                            while (reader.Read())
+                            {
                                 _returnUser.Username = reader["userName"].ToString();
+                                //_returnUser.Password = reader["password"]
                                 _returnUser.UserID = (int)reader["user_ID"];
                                 _returnUser.UserRole = (int)reader["role_FK"];
                                 _returnUser.Email = reader["Email"].ToString();
