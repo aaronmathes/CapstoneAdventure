@@ -288,7 +288,7 @@ namespace Capstone_Xavier.Controllers
             if (game.character.gold - itemPrice < 0)
             {
 
-                _returnstring = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>Realizing you dont have the gold needed  you put the item back and continue searching.</div><br>";
+                _returnstring = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>Realizing you don't have the gold needed, you put the item back and continue searching.</div><br>";
             }
             else {
 
