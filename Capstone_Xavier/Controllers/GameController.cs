@@ -217,6 +217,7 @@ namespace Capstone_Xavier.Controllers
         [HttpPost]
         public string MerchantEvent()
         {
+            //System.Threading.Thread.Sleep(30);
             DBUse data = new DBUse();
             Mapper map = new Mapper();
             string _returnString = "";
@@ -326,6 +327,10 @@ namespace Capstone_Xavier.Controllers
         [HttpGet]
         public ActionResult GetMonsterValues() {
             GameModel game = (GameModel)Session["Game"];
+            if(game.monster == null)
+            {
+                return Json(game); //unsure why it is null, but does not break game
+            }
             MonsterModel monster = game.monster;
             var _monster = new {monstername = monster.monsterName, monsterHealth = monster.health.ToString() };
 

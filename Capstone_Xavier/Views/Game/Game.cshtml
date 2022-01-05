@@ -102,8 +102,8 @@
     </div>
     <div class="container-bar" style="width: 60%;  float: right; vertical-align: middle;">
         <div class="progress" style="height: 2rem;border:2px solid black;">
-            <div class="progress-bar bg-danger" id="MHealth" role="progressbar" aria-valuenow="70"
-                 aria-valuemin="0" aria-valuemax="200" style="width:70%;">
+            <div class="progress-bar bg-danger" id="MHealth" role="progressbar" aria-valuenow="200"
+                 aria-valuemin="0" aria-valuemax="200" style="width:100%;">
                 <div id="MHealthDisplay" style="color:black;">
                     HP
                 </div>
@@ -365,6 +365,8 @@
 
         $.getJSON("../../Game/GetPurse", function (response) {
             gold = response.gold;
+            console.log("getJSON response.gold: " + response.gold);
+            console.log("getJSON gold: " + gold);
 
         })
          $.ajax({
@@ -374,6 +376,7 @@
             cache: false,
             async: true,
             success: function (data) {
+                console.log("ajax gold: " + gold);
                 var merchantBox = document.getElementById("merchant");
                 merchantBox.style.display = "inline-block";
                 merchantBox.innerHTML = data;
@@ -383,7 +386,7 @@
 
                 var defaultBtn = document.getElementById("defaultBtn");
                 defaultBtn.style.display = "none";
-
+                
                 var merchantText = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>After searching the area for a while you come across an old man carrying a large sack on his back. He looks to you with a crookedd smile." +
                     "Care to browse my wares? Opening the sack you see a few items. Will you buy? Your purse: <strong>" + gold + " gold</strong></div><br>";
                 addHTMLToTextUI(merchantText)
