@@ -213,7 +213,7 @@
         var current_val = parseInt(pb.getAttribute('aria-valuenow'));
         var new_val = parseInt(pb.getAttribute('aria-valuenow')) - parseInt(increment);
         //var i;
-        var id = setInterval(animateBar, 80);
+        var id = setInterval(animateBar, 20);
         function animateBar() {
             //console.log(current_val + ">" + new_val);
             var current_val = parseInt(pb.getAttribute('aria-valuenow'));
@@ -251,7 +251,8 @@
                 clearInterval(id);
             }
             else {
-                console.log("Incrementation did not stop"); //current_val < new_val
+                console.log("Incrementation did not stop");
+                console.log("Current_val:" + current_val + ".New_val:" + new_val);//current_val < new_val
                 clearInterval(id);
             }
         };
