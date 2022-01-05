@@ -92,7 +92,6 @@
                 <span class="icon-input"></span>
 
                 @Html.DropDownListFor(Model => Model.roleID, new SelectList(Model.roles, "roleID", "roleName"), new { @id = "Roles", @class = "form-control" })
-                <span>Change Role?: </span> @Html.CheckBoxFor(UserModel => UserModel.changeRole, false)
 
             </div>
             <br>

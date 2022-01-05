@@ -26,5 +26,8 @@ namespace Capstone_Xavier.Models
 
         public bool initiave { get; set; }
 
+        public bool BagOpened { get; set; } = false;
+        public string FormMethodExecute { get; set; }
+        public string FormMethodController { get; set; }
     }
 }

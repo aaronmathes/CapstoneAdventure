@@ -311,6 +311,7 @@ namespace Capstone_Xavier.Controllers
         public string BuyEvent(int itemID, int itemPrice)
         {
             string _returnstring = "";
+            
             Mapper map = new Mapper();
             DBUse data = new DBUse();
             GameModel game = (GameModel)Session["Game"];
@@ -328,11 +329,13 @@ namespace Capstone_Xavier.Controllers
                 _returnstring = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>Holding the " + itemPrice.ToString() + "gold coins out you see the old man greedily grab the shiny coins cackling soflty. He allows you to grab the item and looks at you once again. Will that be all? Your purse: <strong>" + game.character.gold.ToString() + "gold</strong></div><br>";
 
             }
+            
             return _returnstring;
         }
 
         [HttpPost]
-        public string SellEvent(int itemID, int itemPrice) {
+        public string SellEvent(int itemID, int itemPrice)
+        {
             string _returnstring = "";
             Mapper map = new Mapper();
             DBUse data = new DBUse();
@@ -348,7 +351,51 @@ namespace Capstone_Xavier.Controllers
 
             return _returnstring;
         }
+        public string GetCharacterInventory()
+        {
+            //return "Test string" + character.name;
+            string _returnString = "";
+            Mapper map = new Mapper();
+            DBUse data = new DBUse();
+            GameModel game = (GameModel)Session["Game"];
 
+                List<ItemModel> list = map.ItemBO_To_List(data.GetCharacterInventory(game.character.id));
+                for (int i = 0; i < list.Count; i++)
+                {
+                    ItemModel item = list[i];
+                    string stats = GetStatsString(item);
+                    string temp = "";
+                    if (item.itemType == (int)ItemTypes.Armor || item.itemType == (int)ItemTypes.Weapons)//If the item is armor or a weapon
+                    {
+                        if (item.isEquipted == 1)//If the item is equipted. 0: Not , 1: Equipted
+                        {
+                            temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats
+                       + "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='UseNonCosumable(" + item.inventoryID + ","
+                       + item.itemType.ToString() + ")'>Unequip</button></div><br>";
+                        }
+                        else
+                        {
+                            temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats
+                       + "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='UseNonCosumable(" + item.inventoryID + ","
+                       + item.itemType.ToString() + ")'>Equip</button></div><br>";
+                        }
+                    }
+                    else
+                    {
+                        temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats
+                        + "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='UseItem(" + item.inventoryID + ","
+                        + item.itemType.ToString() + ")'>Use</button></div><br>";
+                    }
+
+                    //return string HTML. Used for list of items
+
+                    _returnString = _returnString + temp;
+                }
+
+                return _returnString;
+            
+
+        }
         //----------------Misc---------------------
 
         //Used to get the current monster values for use.

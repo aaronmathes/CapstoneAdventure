@@ -12,7 +12,6 @@ namespace Capstone_Xavier.Models
     {
         public int userID { get; set; }
         public int roleID { get; set; }
-        public bool changeRole { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public string confirmPassword { get; set; }
