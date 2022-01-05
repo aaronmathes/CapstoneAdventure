@@ -48,22 +48,22 @@
         </div>
     </div>
 </div>
-<div>
-    @using (Ajax.BeginForm("GetClasses", "User", null,
-    new AjaxOptions { UpdateTargetId = "Classes", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
-    {
-        <div style="height: 100px; width: 250px; position: absolute; top: 15vw;">
+@*<div>*@
+    @*@using (Ajax.BeginForm("GetClasses", "User", null,*@
+    @*new AjaxOptions { UpdateTargetId = "Classes", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
+    {*@
+        @*<div style="height: 100px; width: 250px; position: absolute; top: 15vw;">
             <button type="submit" class="btn-user" style="top: -15px; position: relative">Get Class Info</button>
-            <label style="display: inline-block;position: absolute; right: -5vw; top: -3vw">Choose a class and click the button to see their stats.</label>
-            @Html.DropDownListFor(Ajax => Ajax.classID, new SelectList(Model.classes, "classID", "className"), new { @id = "classID", @class = "form-control", @type = "submit", @role = "button" })
-        </div>
+            <label style="display: inline-block;position: absolute; right: -5vw; top: -3vw">Choose a class and click the button to see their stats.</label>*@
+            @*@Html.DropDownListFor(Ajax => Ajax.classID, new SelectList(Model.classes, "classID", "className") ,htmlAttributes: new { @id = "classID_old", @class = "form-control", @type = "submit", @role = "button", @onclick= "displayClassInfo()"}*@)
+        @*</div>
 
         <div id="Classes" class="info-box-alt">
 
         </div>
     }
-</div>
-
+</div>*@
+<div id="Classes" class="info-box-alt"></div>
 <div>
     @using (Html.BeginForm("CreateNewCharacter", "User"))
     {
@@ -81,7 +81,7 @@
                     <label>Class</label>
                     <span class="icon-input"></span>
 
-                    @Html.DropDownListFor(Model => Model.classID, new SelectList(Model.classes, "classID", "className"), new { @id = "classID", @class = "form-control" })
+                    @Html.DropDownListFor(Model => Model.classID, new SelectList(Model.classes, "classID", "className"), htmlAttributes: new { @id = "classID", @class = "form-control", @onchange = "displayClassInfo()", @onclick="displayClassInfo()"})
 
                 </div>
             </div>
@@ -91,4 +91,21 @@
 
     }
 </div>
+
+<script type="text/javascript">
+    function displayClassInfo() {
+        var x = document.getElementById("classID").value;
+        $.ajax({
+            url: "/User/GetClasses",
+            type: "POST",
+            data: { classID: x },
+            async: true,
+            success: function (data) {
+                var textout = document.getElementById("Classes");
+                @*console.log(data);*@
+                textout.innerHTML = data;
+            }
+        })
+    };
+</script>
 
