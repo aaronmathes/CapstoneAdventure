@@ -408,5 +408,14 @@ namespace Capstone_Xavier.Controllers
 
             return _returnString;
         }
+
+        [HttpPost]
+        public string DeleteAlert(string name)
+        {
+            string _returnstring = "Are you sure you wish to delete " + name + "?" +
+               "<br/> <button class='btn-user' id='delete' style='display: inline-block; font-size: .9em; margin-right: 3%; background-color: #f0eb37;' onclick='location.href='@Url.Action('RemoveCharacter', 'User', ch)''> Delete " + name + "</button>" +
+               "<button class='btn-user' id='deleteCancel' style='display: inline-block; font-size: 1em; font-size: .9em; margin-right: 3%; background-color: #4442f2;' onclick='cancelDelete()'>Cancel</button>";
+            return _returnstring;
+        }
     }
 }
