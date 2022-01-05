@@ -205,7 +205,7 @@ namespace Capstone_Xavier.Controllers
             GameModel game = (GameModel)Session["Game"];
             int userID = int.Parse(Session["UserID"].ToString());
 
-            _returnString = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> Althought you fought with all your strenght the monster gained the uppder hand. " +
+            _returnString = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> Although you fought with all your strength the monster gained the upper hand. " +
                             "without mercy or pity the beast strikes you down. As you turn to dust with your final breath your save data is deleted forever and your story is forgotten.</div><br>";
 
             data.RemoveCharacter(game.character.id, userID);
@@ -315,7 +315,7 @@ namespace Capstone_Xavier.Controllers
             game.character.gold  += itemPrice;
             data.UpdateUserCharacter(map.CharacterModel_To_BO(game.character));
             game.inventory = map.ItemBO_To_List(data.GetCharacterInventory(game.character.id));
-            _returnstring = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>The greedy man holds out the gold grudginly quickly swiping the item from you. Your purse <strong>"+game.character.gold+"gold</strong></div><br>";
+            _returnstring = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>The greedy man holds out the gold grudgingly quickly swiping the item from you. Your purse <strong>"+game.character.gold+"gold</strong></div><br>";
 
             return _returnstring;
         }
