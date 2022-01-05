@@ -80,10 +80,9 @@ namespace Capstone_Xavier.Controllers
                 else {
                     user.alertType = 2;
                 }
-
-            if (user.changeRole == true) {
+                            
                 data.ChangeUserRole(user.userID, user.roleID);
-            }
+            
 
             return RedirectToAction("Admin", "Admin");
         }
