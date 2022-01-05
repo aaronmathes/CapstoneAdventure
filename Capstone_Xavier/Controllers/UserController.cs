@@ -19,7 +19,8 @@ namespace Capstone_Xavier.Controllers
     {
         [MustBeLoggedIn]
         [HttpGet]
-        public ActionResult UserInfo() {
+        public ActionResult UserInfo()
+        {
             DBUse data = new DBUse();
             Mapper map = new Mapper();
             UserModel user = (UserModel)Session["User"];
@@ -28,15 +29,18 @@ namespace Capstone_Xavier.Controllers
         }
 
         [HttpPost]
-        public ActionResult UserInfo(UserModel user) {
+        public ActionResult UserInfo(UserModel user)
+        {
             Mapper map = new Mapper();
             DBUse data = new DBUse();
             UserModel _user = (UserModel)Session["User"];
 
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 user.userID = (int)Session["UserID"];
 
-                if (user.username == null) {
+                if (user.username == null)
+                {
                     user.username = _user.username;
                 }
 
@@ -44,8 +48,10 @@ namespace Capstone_Xavier.Controllers
                 {
                     user.password = _user.password;
                 }
-                else {
-                    if (user.password != user.confirmPassword) {
+                else
+                {
+                    if (user.password != user.confirmPassword)
+                    {
                         //TODO- return warning
                         user.password = _user.password;
                     }
@@ -57,12 +63,13 @@ namespace Capstone_Xavier.Controllers
             }
             return View((UserModel)Session["User"]);
         }
-       
+
         //---------------------Character Manipulation----------------------------------
 
         [MustBeLoggedIn]
         [HttpGet]
-        public ActionResult UpdateCharacter(CharacterModel character) {
+        public ActionResult UpdateCharacter(CharacterModel character)
+        {
             DBUse data = new DBUse();
             Mapper map = new Mapper();
 
@@ -74,7 +81,8 @@ namespace Capstone_Xavier.Controllers
 
         [HttpPost]
         //For updating the selected character from the updateCharacter UI
-        public ActionResult UpdateCharacterInfo(CharacterModel character) {
+        public ActionResult UpdateCharacterInfo(CharacterModel character)
+        {
             DBUse data = new DBUse();
             Mapper map = new Mapper();
             ClassModel _class = new ClassModel();
@@ -88,7 +96,7 @@ namespace Capstone_Xavier.Controllers
                 character.maxHP = _class.baseHP;
                 character.stamina = _class.classStamina;
                 character.magica = _class.classMagica;
-                
+
 
                 data.UpdateUserCharacter(map.CharacterModel_To_BO(character));
 
@@ -96,13 +104,15 @@ namespace Capstone_Xavier.Controllers
 
                 return RedirectToAction("Users", "Home");
             }
-            else {
+            else
+            {
                 return RedirectToAction("Users", "Home");
             }
-            
+
         }
 
-        public ActionResult RemoveCharacter(CharacterModel character) {
+        public ActionResult RemoveCharacter(CharacterModel character)
+        {
             DBUse data = new DBUse();
             int id = character.id;
             int userID = int.Parse(Session["UserID"].ToString());
@@ -114,7 +124,8 @@ namespace Capstone_Xavier.Controllers
 
         [MustBeLoggedIn]
         [HttpGet]
-        public ActionResult CreateCharacter() {
+        public ActionResult CreateCharacter()
+        {
 
             DBUse data = new DBUse();
             Mapper map = new Mapper();
@@ -126,7 +137,8 @@ namespace Capstone_Xavier.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateNewCharacter(CharacterModel character) {
+        public ActionResult CreateNewCharacter(CharacterModel character)
+        {
             DBUse data = new DBUse();
             Mapper map = new Mapper();
             if (ModelState.IsValid)
@@ -140,19 +152,21 @@ namespace Capstone_Xavier.Controllers
 
                 return RedirectToAction("Users", "Home");
             }
-            else {
+            else
+            {
                 return RedirectToAction("Users", "Home");
             }
-            
+
         }
 
 
-        
-    //----------------Game Data: Set due to action type--------------------
-             
-             //for getting all the different class types on character creation.
+
+        //----------------Game Data: Set due to action type--------------------
+
+        //for getting all the different class types on character creation.
         [HttpPost]
-        public string GetClasses(string classID) {
+        public string GetClasses(string classID)
+        {
             DBUse data = new DBUse();
             Mapper map = new Mapper();
             int id = int.Parse(classID);
@@ -163,16 +177,16 @@ namespace Capstone_Xavier.Controllers
 
             string _return = "<h6>" + _class.className + "</h6>"
                 + "<div class='seperator'><label> Health </label>" +
-                " <p> " + _class.baseHP.ToString() + "</p> "+ 
-                "</div> " + "<div class='seperator'> "+
-                "<label> Magica </label>"+
-                " <p>"+ _class.classMagica.ToString() +" </p>"+
+                " <p> " + _class.baseHP.ToString() + "</p> " +
+                "</div> " + "<div class='seperator'> " +
+                "<label> Magica </label>" +
+                " <p>" + _class.classMagica.ToString() + " </p>" +
                 "</div>" + "<div class='seperator'> " +
                 "<label> Stamina </label>" +
                 " <p>" + _class.classStamina.ToString() + " </p>" +
                 "</div>" + "<hr>" + "<div class='class'>" +
                 "<label style='display: block'>Weapons</label>" +
-                "<p> Weapons available to this class are: " + _classWeapons +"</p>" +
+                "<p> Weapons available to this class are: " + _classWeapons + "</p>" +
                 "</div>";
 
 
@@ -181,77 +195,91 @@ namespace Capstone_Xavier.Controllers
         }
 
         //For finding what weapoins are available the the character class
-        private string GetClassWeapons(int classID) {
+        private string GetClassWeapons(int classID)
+        {
             string _returnString = "";
-            string[] weaponTypes = new string[] { "Daggers","Short Swords", "Swords","Hammers/Maces", "Axes", "Staves","Scrolls/Books","Bows/Thrown" };
+            string[] weaponTypes = new string[] { "Daggers", "Short Swords", "Swords", "Hammers/Maces", "Axes", "Staves", "Scrolls/Books", "Bows/Thrown" };
             int[] classWeapons = new int[3];
             //TODO enums
-            switch (classID) {
+            switch (classID)
+            {
                 case (int)Classes.Hunter:
-                    classWeapons = new int[]{ 1, 2, 8};
+                    classWeapons = new int[] { 1, 2, 8 };
                     break;
                 case (int)Classes.Warrior:
-                    classWeapons = new int[] {3,4,5 };
+                    classWeapons = new int[] { 3, 4, 5 };
                     break;
                 case (int)Classes.Thief:
-                    classWeapons = new int[] {1, 7, 8 };
+                    classWeapons = new int[] { 1, 7, 8 };
                     break;
                 case (int)Classes.Mage:
-                    classWeapons = new int[] {6,7,1 };
+                    classWeapons = new int[] { 6, 7, 1 };
                     break;
                 case (int)Classes.Paladin:
-                    classWeapons = new int[] {3,4,7 };
+                    classWeapons = new int[] { 3, 4, 7 };
                     break;
                 case (int)Classes.Ranger:
-                    classWeapons = new int[] { 1,3,8};
+                    classWeapons = new int[] { 1, 3, 8 };
                     break;
             }
 
-            _returnString = weaponTypes[classWeapons[0]-1].ToString() + ", " + weaponTypes[classWeapons[1]-1].ToString() + " and " + weaponTypes[classWeapons[2]-1].ToString();
+            _returnString = weaponTypes[classWeapons[0] - 1].ToString() + ", " + weaponTypes[classWeapons[1] - 1].ToString() + " and " + weaponTypes[classWeapons[2] - 1].ToString();
 
             return _returnString;
         }
 
         //For getting the full inventory of the current character. Used in a ajax function
         [HttpPost]
-        public string GetCharacterInventory(CharacterModel character) {
+        public string GetCharacterInventory(CharacterModel character)
+        {
             //return "Test string" + character.name;
-            string _returnString = "";
+
+            //string _returnString = "";
             Mapper map = new Mapper();
             DBUse data = new DBUse();
+            GameModel game = (GameModel)Session["Game"];
+            //if (bagOpened == true)
+            //{
+            return SellInventory();
+            //}
+            //else
+            //{
+            //List<ItemModel> list = map.ItemBO_To_List(data.GetCharacterInventory(character.id));
+            //    for (int i = 0; i < list.Count; i++)
+            //    {
+            //        ItemModel item = list[i];
+            //        string stats = GetStatsString(item);
+            //        string temp = "";
+            //        if (item.itemType == (int)ItemTypes.Armor || item.itemType == (int)ItemTypes.Weapons)//If the item is armor or a weapon
+            //        {
+            //            if (item.isEquipted == 1)//If the item is equipted. 0: Not , 1: Equipted
+            //            {
+            //                temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats
+            //           + "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='UseNonCosumable(" + item.inventoryID + ","
+            //           + item.itemType.ToString() + ")'>Unequipt</button></div><br>";
+            //            }
+            //            else
+            //            {
+            //                temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats
+            //           + "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='UseNonCosumable(" + item.inventoryID + ","
+            //           + item.itemType.ToString() + ")'>Equipt</button></div><br>";
+            //            }
+            //        }
+            //        else
+            //        {
+            //            temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats
+            //            + "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='UseItem(" + item.inventoryID + ","
+            //            + item.itemType.ToString() + ")'>Use</button></div><br>";
+            //        }
 
-            List<ItemModel> list = map.ItemBO_To_List(data.GetCharacterInventory(character.id));
-            for (int i = 0; i < list.Count; i++) {
-                ItemModel item = list[i];
-                string stats = GetStatsString(item);
-                string temp = "";
-                if (item.itemType == (int)ItemTypes.Armor || item.itemType == (int)ItemTypes.Weapons)//If the item is armor or a weapon
-                {
-                    if (item.isEquipted == 1)//If the item is equipted. 0: Not , 1: Equipted
-                    {
-                        temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats
-                   + "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='UseNonCosumable(" + item.inventoryID + ","
-                   + item.itemType.ToString() + ")'>Unequipt</button></div><br>";
-                    }
-                    else
-                    {
-                        temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats
-                   + "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='UseNonCosumable(" + item.inventoryID + ","
-                   + item.itemType.ToString() + ")'>Equipt</button></div><br>";
-                    }
-                }
-                else {
-                    temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats
-                    + "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='UseItem(" + item.inventoryID + ","
-                    + item.itemType.ToString() + ")'>Use</button></div><br>";
-                }
+            //        //return string HTML. Used for list of items
 
-                //return string HTML. Used for list of items
-                 
-                _returnString = _returnString + temp;
-            }
+            //        _returnString = _returnString + temp;
+            //    }
 
-            return _returnString;
+            //    return _returnString;
+            //}
+
         }
 
         //For explaining items on the UI. Checks item type and returns the appropriate values.
@@ -302,28 +330,32 @@ namespace Capstone_Xavier.Controllers
         }
 
         [HttpGet]
-        public ActionResult UseItem(int inventoryID, int itemType, int bar) {
+        public ActionResult UseItem(int inventoryID, int itemType, int bar)
+        {
             int barID = 0;
             int modifier = 0;
             int increment;
             DBUse data = new DBUse();
             Mapper map = new Mapper();
             GameModel game = (GameModel)Session["Game"];
-            List<ItemModel> list =  map.ItemBO_To_List(data.GetCharacterInventory(game.character.id));
+            List<ItemModel> list = map.ItemBO_To_List(data.GetCharacterInventory(game.character.id));
             ItemModel item = new ItemModel();
 
-            foreach (ItemModel _item in list) {
+            foreach (ItemModel _item in list)
+            {
                 if (_item.inventoryID != inventoryID)
                 {
                     continue;
                 }
-                else {
+                else
+                {
                     item = _item;
                     break;
                 }
             }
 
-            switch (itemType) {
+            switch (itemType)
+            {
                 case 0:
                     modifier = item.healthMod;
                     game.character.health = game.character.health + modifier;
@@ -343,11 +375,38 @@ namespace Capstone_Xavier.Controllers
 
             increment = (bar + modifier) - bar;
 
-            var _return = new {bar = barID, value =  increment};
+            var _return = new { bar = barID, value = increment };
             data.RemoveItemFromInventory(inventoryID);
             data.UpdateUserCharacter(map.CharacterModel_To_BO(game.character));
 
             return Json(_return, JsonRequestBehavior.AllowGet);
+        }
+
+        public string SellInventory()
+        {
+            GameModel game = (GameModel)Session["Game"];
+            Mapper map = new Mapper();
+            DBUse data = new DBUse();
+            List<ItemModel> inven = map.ItemBO_To_List(data.GetCharacterInventory(game.character.id));
+            string _returnString = "";
+
+            foreach (ItemModel item in inven)
+            {
+
+                if (item.isEquipted == 1)
+                {
+                    continue;
+                }
+                else
+                {
+                    _returnString = _returnString + "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() +
+                    "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='SellItem(" + item.inventoryID + ","
+                   + item.goldPrice + ")'>Sell</button></div><br>";
+                }
+
+            }
+
+            return _returnString;
         }
     }
 }
