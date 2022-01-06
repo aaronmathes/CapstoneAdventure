@@ -5,92 +5,128 @@
 @{
     ViewBag.Title = "CreateCharacter";
 }
-@*<div class="nav-side">
-    <div class="dropdown">
-        <button onclick="dropDown()" class="dropBtn">More</button>
-        <div id="myDropdown" class="dropdown-item">
-            <a onclick="location.href='@Url.Action("Users", "Home")'">Home</a>
-            @{
-                string role = Session["Role"].ToString();
-
-                if (role == "1" || role == "2")
-                {
-                    <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
-                }
-            }
-            <a href="#">@Html.ActionLink("FAQS", "FAQS", "Home")</a>
-            <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a>
-        </div>
+<div class="row">
+    <div class="col-md-4 ml-md-auto d-flex justify-content-center">
+        <h3>CreateCharacter</h3>
     </div>
-</div>*@
+    <div class="col-md-4 d-flex justify-content-center" id="menu-button-style">
+        <div class="nav-side">
+            <div class="dropdown">
+                <button onclick="dropDown()" class="dropBtn">More</button>
+                <div id="myDropdown" class="dropdown-item">
+                    <a onclick="location.href='@Url.Action("Users", "Home")'">User Home</a>
+                    <a onclick="location.href='@Url.Action("UserInfo", "User")'">Profile</a>
+                    @{
+                        string role = Session["Role"].ToString();
 
-<h3>CreateCharacter</h3>
-<div class="nav-side">
-    <div class="dropdown">
-        <button onclick="dropDown()" class="dropBtn">More</button>
-        <div id="myDropdown" class="dropdown-item">
-            <a onclick="location.href='@Url.Action("Users", "Home")'">User Home</a>
-            <a onclick="location.href='@Url.Action("UserInfo", "User")'">Profile</a>
-            @{
-                string role = Session["Role"].ToString();
-
-                if (role == "1")
-                {
-                    <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
-                }
-                else if (role == "3")
-                {
-                    <a onclick="location.href='@Url.Action("Gamemaster", "Admin")'">GameMaster</a>
-                }
-            }
-            @*<a>@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
-            <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a> @*this makes no extra spaces while @Html.ActionLink creates spaces*@
-        </div>
-    </div>
-</div>
-@*<div>*@
-    @*@using (Ajax.BeginForm("GetClasses", "User", null,*@
-    @*new AjaxOptions { UpdateTargetId = "Classes", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
-    {*@
-        @*<div style="height: 100px; width: 250px; position: absolute; top: 15vw;">
-            <button type="submit" class="btn-user" style="top: -15px; position: relative">Get Class Info</button>
-            <label style="display: inline-block;position: absolute; right: -5vw; top: -3vw">Choose a class and click the button to see their stats.</label>*@
-            @*@Html.DropDownListFor(Ajax => Ajax.classID, new SelectList(Model.classes, "classID", "className") ,htmlAttributes: new { @id = "classID_old", @class = "form-control", @type = "submit", @role = "button", @onclick= "displayClassInfo()"}*@)
-        @*</div>
-
-        <div id="Classes" class="info-box-alt">
-
-        </div>
-    }
-</div>*@
-<div id="Classes" class="info-box-alt" style="height:400px"></div>
-<div>
-    @using (Html.BeginForm("CreateNewCharacter", "User"))
-    {
-        <div class="nav-side2">
-            <div class="input-list">
-                <div class="input">
-                    <label>Character Name</label>
-                    <span class="icon-input"></span>
-                    @Html.EditorFor(CharacterModel => CharacterModel.name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
-
-                </div>
-
-                <br>
-                <div class="input">
-                    <label>Class</label>
-                    <span class="icon-input"></span>
-
-                    @Html.DropDownListFor(Model => Model.classID, new SelectList(Model.classes, "classID", "className"), htmlAttributes: new { @id = "classID", @class = "form-control", @onchange = "displayClassInfo()", @onclick="displayClassInfo()"})
-
+                        if (role == "1")
+                        {
+                            <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
+                        }
+                        else if (role == "3")
+                        {
+                            <a onclick="location.href='@Url.Action("Gamemaster", "Admin")'">GameMaster</a>
+                        }
+                    }
+                    @*<a>@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
+                    <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a> @*this makes no extra spaces while @Html.ActionLink creates spaces*@
                 </div>
             </div>
-
-            <button class="btn-user" type="submit">Submit</button>
         </div>
-
-    }
+    </div>
 </div>
+<div class="row justify-content-center" id="content">
+    <div class="col-md-3">
+        <div class="row justify-content-center" style="margin-left: -20px;">
+            <label style="height: fit-content;"> Class Info </label>
+        </div>
+        <div class="row">
+            <div id="Classes" class="info-box-alt" style="height:400px; width: 100%;" @*onload="displayHunterClassInfo()*@>
+                <h6>Hunter</h6>
+                <div class='seperator'>
+                    <label> Health </label>
+                    <p> 100</p>
+                </div>
+                <div class='seperator'>
+                    <label> Magica </label>
+                    <p>0 </p>
+                </div>
+                <div class='seperator'>
+                    <label> Stamina </label>
+                    <p>125 </p>
+                </div>
+                <hr>
+                <div class='class'>
+                    <label style='display: block'>Weapons</label>
+                    <p> Weapons available to this class are: Daggers, Short Swords and Bows/Thrown</p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="col-md-5" style=" margin-top: 36px;">
+        @using (Html.BeginForm("CreateNewCharacter", "User"))
+        {
+            <div class="nav-side2">
+                <div class="input-list">
+                    <div class="input" style="margin-bottom: 1em;">
+                        <label>Character Name</label>
+                        @Html.EditorFor(CharacterModel => CharacterModel.name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
+                    </div>
+                    <br>
+                    <div class="input">
+                        <label>Class</label>
+                        @Html.DropDownListFor(Model => Model.classID, new SelectList(Model.classes, "classID", "className"), htmlAttributes: new { @id = "classID", @class = "form-control", @onchange = "displayClassInfo()", @onclick = "displayClassInfo()" })
+                    </div>
+                </div>
+                <button class="btn-user" type="submit">Submit</button>
+            </div>
+
+        }
+    </div>
+
+</div>
+
+
+    @*<div class="nav-side">
+            <div class="dropdown">
+                <button onclick="dropDown()" class="dropBtn">More</button>
+                <div id="myDropdown" class="dropdown-item">
+                    <a onclick="location.href='@Url.Action("Users", "Home")'">Home</a>
+                    @{
+                        string role = Session["Role"].ToString();
+
+                        if (role == "1" || role == "2")
+                        {
+                            <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
+                        }
+                    }
+                    <a href="#">@Html.ActionLink("FAQS", "FAQS", "Home")</a>
+                    <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a>
+                </div>
+            </div>
+        </div>*@
+
+
+
+    @*<div>*@
+    @*@using (Ajax.BeginForm("GetClasses", "User", null,*@
+    @*new AjaxOptions { UpdateTargetId = "Classes", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
+        {*@
+    @*<div style="height: 100px; width: 250px; position: absolute; top: 15vw;">
+        <button type="submit" class="btn-user" style="top: -15px; position: relative">Get Class Info</button>
+        <label style="display: inline-block;position: absolute; right: -5vw; top: -3vw">Choose a class and click the button to see their stats.</label>*@
+    @*@Html.DropDownListFor(Ajax => Ajax.classID, new SelectList(Model.classes, "classID", "className") ,htmlAttributes: new { @id = "classID_old", @class = "form-control", @type = "submit", @role = "button", @onclick= "displayClassInfo()"}*@)
+    @*</div>
+
+                <div id="Classes" class="info-box-alt">
+
+                </div>
+            }
+        </div>*@
+
+   
+
 
 <script type="text/javascript">
     function displayClassInfo() {
@@ -102,7 +138,7 @@
             async: true,
             success: function (data) {
                 var textout = document.getElementById("Classes");
-                @*console.log(data);*@
+                console.log(data);
                 textout.innerHTML = data;
             }
         })
