@@ -3,52 +3,65 @@
 @{
     ViewData["Title"] = "Register";
 }
-<h2>@ViewData["Title"]</h2>
-<br>
-<div class="nav-side2">
-    <div class="dropdown">
-        <button onclick="dropDown()" class="dropBtn">More</button>
-        <div id="myDropdown" class="dropdown-item">
-            <a onclick="location.href='@Url.Action("Index", "Home")'"> Home</a>
-            <a onclick="location.href='@Url.Action("Login", "Home")'"> Login</a>
-            <a onclick="location.href='@Url.Action("FAQS", "Home")'"> FAQS</a>
-            @*<a>@Html.ActionLink("Home", "Index", "Home")</a>
-                <a>@Html.ActionLink("Login", "Login", "Home")</a>
-                <a>@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
+<div class="row" style="margin-top: 2%;">
+    <div class="col-md-4 ml-md-auto d-flex justify-content-center">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+    <div class="col-md-4" id="menu-button-style">
+        <div class="row">
+            <div class="row">
+                <div class="nav-side2" id="user-menu-button">
+                    <div class="dropdown">
+                        <button onclick="dropDown()" class="dropBtn">More</button>
+                        <div id="myDropdown" class="dropdown-item">
+                            <a onclick="location.href='@Url.Action("Index", "Home")'"> Home</a>
+                            <a onclick="location.href='@Url.Action("Login", "Home")'"> Login</a>
+                            <a onclick="location.href='@Url.Action("FAQS", "Home")'"> FAQS</a>
+                            @*<a>@Html.ActionLink("Home", "Index", "Home")</a>
+                    <a>@Html.ActionLink("Login", "Login", "Home")</a>
+                    <a>@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<div class="row justify-content-center" id="content">
+    @using (Html.BeginForm("Register", "Home"))
+    {
 
-@using (Html.BeginForm("Register", "Home"))
-{
 
-
-    <div class="input-list">
-        <div class="input">
-            <label>Username</label>
-            <span class="icon-input"></span>
-            @Html.EditorFor(RegisterModel => RegisterModel.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
-            @Html.ValidationMessageFor(RegisterModel => RegisterModel.username, null, new { @class = "validation" })
+        <div class="input-list">
+            <div class="input">
+                <label>Username</label>
+                <span class="icon-input"></span>
+                @Html.EditorFor(RegisterModel => RegisterModel.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
+                @Html.ValidationMessageFor(RegisterModel => RegisterModel.username, null, new { @class = "validation" })
+            </div>
+            <br>
+            <div class="input">
+                <label>Password</label>
+                <span class="icon-input"></span>
+                @Html.EditorFor(RegisterModel => RegisterModel.password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Enter Password." } })
+                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.password, "", new { @class = "validation" }).ToHtmlString()))
+            </div>
+            <br>
+            <div class="input">
+                <label>Email</label>
+                <span class="icon-input"></span>
+                @Html.EditorFor(RegisterModel => RegisterModel.email, new { htmlAttributes = new { @type = "text", @class = "form-control", @placeholder = "Enter Email" } })
+                <br />
+                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @class = "validation" }).ToHtmlString()))
+            </div>
         </div>
-        <br>
-        <div class="input">
-            <label>Password</label>
-            <span class="icon-input"></span>
-            @Html.EditorFor(RegisterModel => RegisterModel.password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Enter Password." } })
-            @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.password, "", new { @class = "validation" }).ToHtmlString()))
-        </div>
-        <br>
-        <div class="input">
-            <label>Email</label>
-            <span class="icon-input"></span>
-            @Html.EditorFor(RegisterModel => RegisterModel.email, new { htmlAttributes = new { @type = "text", @class = "form-control", @placeholder = "Enter Email" } })
-            <br />
-            @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @class = "validation" }).ToHtmlString()))
-        </div>
-    </div>
 
-    <button class="btn-user" type="submit">Submit</button>
-    <button class="btn-user" type="reset">Clear</button>
+        <button class="btn-user" type="submit">Submit</button>
+        <button class="btn-user" type="reset">Clear</button>
 
 
-}
+    }
+</div>
+
+
+
