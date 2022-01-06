@@ -38,34 +38,43 @@
     </div>
 
     <div class="row justify-content-center" id="content">
+        <div class="row justify-content-center*">
+            @*justify-content-center*@
+            <div class="col-sm-4 ml-sm-auto d-flex justify-content-center">
+                <label style="height: fit-content;">Click a character's' name to play or click the "Create Character" button to create a new character!</label>
+            </div>
+            <div class="col-sm-3 ml-sm-auto d-flex justify-content-center">
+                <button class="btn-user" id="User" onclick="location.href='@Url.Action("createCharacter", "User", null)'">Create Character</button>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="list">
 
-        <div class="list">
-
-            @foreach (CharacterModel ch in Model)
-            {
-                <div class="row align-items-center" style="margin-right: 0px; margin-left: 0px;">
-                    @*<div class="col-sm-12 ">*@
+                @foreach (CharacterModel ch in Model)
+                {
+                    <div class="row align-items-center" style="margin-right: 0px; margin-left: 0px;">
+                        @*<div class="col-sm-12 ">*@
                         @*<div class="list-item-character">*@
-                    <div class="col-sm-9">
-                        <div class="row align-items-center">
-                            <div class="col-sm-4">
-                                <div class="list-item-character">
-                                    <p onclick="location.href='@Url.Action("Game", "Game", ch)'" style="cursor: pointer">@ch.name</p>
-                                    <h6 class="sub-num">@ch.level</h6>
+                        <div class="col-sm-9">
+                            <div class="row align-items-center">
+                                <div class="col-sm-4">
+                                    <div class="list-item-character">
+                                        <p onclick="location.href='@Url.Action("Game", "Game", ch)'" style="cursor: pointer">@ch.name</p>
+                                        <h6 class="sub-num">@ch.level</h6>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button class="btn-change" id="@ch.id" onclick="location.href='@Url.Action("UpdateCharacter", "User", ch)'"></button>
+                                    <button class="btn-remove" onclick="location.href='@Url.Action("RemoveCharacter", "User", ch)'"></button>
+
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="info" id="class-info" @*style="margin-left: 2%;"*@>Class: @ch.className</div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                <button class="btn-change" id="@ch.id" onclick="location.href='@Url.Action("UpdateCharacter", "User", ch)'"></button>
-                                <button class="btn-remove" onclick="location.href='@Url.Action("RemoveCharacter", "User", ch)'"></button>
-                               
-                            </div>
-                            <div class="col-sm-5">
-                                <div class="info" id="class-info" @*style="margin-left: 2%;"*@>Class: @ch.className</div>
-                            </div>
+
                         </div>
-                        
-                    </div>
-                    @*</div>*@
+                        @*</div>*@
                         <div class="col-sm-3">
                             <div class="info">
                                 Health: @ch.health / @ch.maxHP
@@ -75,20 +84,21 @@
                                 Gold: @ch.gold
                             </div>
                         </div>
-                    @*</div>*@
-                            @*<div class="row" style="margin-right: 0px; margin-left: 0px;">*@
+                        @*</div>*@
+                        @*<div class="row" style="margin-right: 0px; margin-left: 0px;">*@
 
-                            @*</div>*@
+                        @*</div>*@
                         @*</div>*@
 
                     </div>
-                <hr>
-            }
+                    <hr>
+                }
+            </div>
+
         </div>
-        <div>
-            <button class="btn-user" id="User" onclick="location.href='@Url.Action("createCharacter", "User", null)'">Create Character</button>
-            <label style="position: absolute; top:20vw; right:25vw;">Click the character name to play!</label>
-        </div>
+        @*<div class="row justify-content-center">
+            
+        </div>*@
     </div>
 </div>
 
