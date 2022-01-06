@@ -403,8 +403,8 @@ button {
     width: 350px;
     background-color: saddlebrown;
     display: block;
-    position: absolute;
-    bottom: 1vw;
+    /*position: absolute;*/
+    /*bottom: 1vw;*/
     overflow-y: scroll;
     overflow-x: visible;
 }
@@ -414,7 +414,9 @@ button {
         border: 1px solid white;
         font-size: x-large;
         text-align: center;
-        height: 50px;
+        /* height: 50px; */
+        padding-top: 1%;
+        padding-bottom: 1%;
         color: black;
         background-color: green;
     }
