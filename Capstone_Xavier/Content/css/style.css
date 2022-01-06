@@ -53,11 +53,11 @@
 
 .dropdown-item {
     display: none;
-   /* position: absolute;*/
+   position: absolute;
     background-color: darkolivegreen;
     /*left: 100%;
-    min-width: 160px;
-    width: 400%;*/
+    min-width: 160px;*/
+    width: 100%;
     text-align: center;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
