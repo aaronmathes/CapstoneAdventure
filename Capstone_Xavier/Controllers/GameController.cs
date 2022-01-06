@@ -247,9 +247,9 @@ namespace Capstone_Xavier.Controllers
         {
             GameModel game = (GameModel)Session["Game"];
             CharacterModel character = game.character;
-            var _character = new { gold = character.gold.ToString() };
+            var _purse = new { gold = character.gold.ToString() };
 
-            return Json(_character, JsonRequestBehavior.AllowGet);
+            return Json(_purse, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

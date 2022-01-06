@@ -620,19 +620,20 @@
     function OpenBag() {
         var elem = document.getElementById("Bag-List");
         var merchant = document.getElementById("merchant");
-        var sellBtnOpen = document.getElementById("SellOpen");
+        var sellBtnOpen = document.getElementById("SellOpen");        
         console.log("first sell open: " + sellBtnOpen.style.display);
         var sellBtnClose = document.getElementById("SellClose");
         console.log("first sell close: " + sellBtnClose.style.display);
+        var gold = GetPurse();
         $.ajax({
             url: "../../Game/GetCharacterInventory",
             type: "Post",
             data: {},
             cache: false,
             async: true,
-            success: function (data) {
-                elem.innerHTML = data;
-                if (elem.style.display === "none") { //if the bag is closed
+            success: function (data) {                
+                elem.innerHTML = "<div style=\"color: #ffbf00; padding-left: 10px; position: absolute;\">Gold: "+ gold +"</div>" + data;
+                                if (elem.style.display === "none") { //if the bag is closed
                     elem.style.display = "inline-block"; //display bag
                 } else { //if the bag is open
                     if (sellBtnClose.style.display != "none") { //if the sell close bag button is displayed
@@ -647,6 +648,21 @@
                 }
             }
         });
+    }
+
+    function GetPurse() {
+        var gold;
+        $.ajax({
+            url: "../../Game/GetPurse",
+            type: "Get",
+            data: {},
+            cache: false,
+            async: false,
+            success: function (data) {
+                gold = data.gold;                
+            }
+        });
+        return gold;
     }
 
     function LeaveMerchant() {
