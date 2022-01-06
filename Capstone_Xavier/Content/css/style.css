@@ -245,7 +245,8 @@ h2 {
     float: left;
     padding: 1.5em;
     padding-top: 1em;
-    font-size: 3vw;
+    font-size: 2vw;
+    height: fit-content;
     text-align: center;
     background-image: url("css/lib/Images/Capstone_Title.png");
     background-size: 100% 100%;
