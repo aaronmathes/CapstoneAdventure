@@ -37,15 +37,15 @@
         </div>
     </div>
 
-    <div class="row justify-content-center" id="content">
-        <div class="row justify-content-center">
-            <div class="col-sm-4 ml-sm-auto d-flex justify-content-center">
+    <div class="row justify-content-center" id="content" >
+        <div class="row justify-content-center" style="margin-bottom: 1%;">
+            <div class="col-sm-2 d-flex justify-content-center" style="margin-right: 1%; margin-left: 0;">
                 <label style="height: fit-content;">Click a character's' name to play or click the "Create Character" button to create a new character!</label>
             </div>
-            <div class="col-sm-3 ml-sm-auto d-flex justify-content-center">
-                <button class="btn-user" id="User" onclick="location.href='@Url.Action("createCharacter", "User", null)'">Create Character</button>
+            <div class="col-sm-2 d-flex justify-content-center" style="margin-left: 5%; padding-left: 3%;">
+                <button class="btn-user" id="User" style="margin-left: 2%;"onclick="location.href='@Url.Action("createCharacter", "User", null)'">Create Character</button>
             </div>
-        </div>
+        </div> 
     
         <div class="row justify-content-center">
              <div id="deleteAlert" style="display: none; font-size: 1.5rem; width: fit-content; height: fit-content; padding: 2%; background-color: palegoldenrod; background-image: linear-gradient(#ee3f3f, #961111); border-radius: 12px; ">
