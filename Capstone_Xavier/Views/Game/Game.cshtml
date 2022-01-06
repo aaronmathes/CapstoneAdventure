@@ -6,29 +6,95 @@
 
 </div>
 
-@using (Ajax.BeginForm("GetCharacterInventory", "User", Model.character,
-    new AjaxOptions { UpdateTargetId = "Bag-List", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
-{
+
     <!--The character UI and stats-->
     <div class="info-UI" style=" height: fit-content; padding-bottom: 1%;">
-        <div style="width: 38%; height: 100%;  display:inline-block">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-12">
+                        <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Name: @Model.character.name</h6>
+                    </div>
+                    <div class="col=12">
+                        <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Class: @Model.character.className</h6>
+                    </div>
+                    <div class="col-7">
+                        <button class="btn-user" style="width: 50%; margin-left: 1vw;" type="submit" onclick="OpenBag()">Bag</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="progress" style="height: 2rem;border:2px solid black;">
+                            <div class="progress-bar bg-danger" id="Health" role="progressbar" aria-valuenow="70"
+                                 aria-valuemin="0" aria-valuemax="200" style="width:70%;">
+                                <div id="HealthDisplay" style="color:black;">
+                                    HP
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="progress" style="height: 2rem;border:2px solid black;">
+                            <div class="progress-bar bg-success" id="Stamina" role="progressbar" aria-valuenow="20"
+                                 aria-valuemin="0" aria-valuemax="60" style="width:33%;">
+                                <div id="StaminaDisplay" style="color:black;">
+                                    STAMINA
+                                </div>
+                            </div>
+                        </div>
+                        @*<progress id="Stamina" value="20" max="60"></progress>*@
+                    </div>
+                    <div class="col-6">
+                        <div class="progress" style="height: 2rem;border:2px solid black;">
+                            <div class="progress-bar progress-bar-info" id="Magica" role="progressbar" aria-valuenow="10"
+                                 aria-valuemin="0" aria-valuemax="60" style="width:15%;">
+                                <div id="MagicaDisplay" style="color:black;">
+                                    MAGICA
+                                </div>
+                            </div>
+                        </div>
+                        @*<progress id="Magica" value="10" max="60"></progress>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div style="width: 38%; height: 100%;  display:inline-block">
             <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Name: @Model.character.name</h6>
             <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Class: @Model.character.className</h6>
             <button class="btn-user" style="width: 50%; margin-left: 1vw;" type="submit" onclick="OpenBag()">Bag</button>
-        </div>
-        <div class="container-bar" style="width: 60%;  float: right; vertical-align: middle;">
-
-            <progress id="Health" class="Health" value="0" max="200"></progress>
+        </div>*@
+        @*<div class="container-bar" style="width: 60%;  float: right; vertical-align: middle;">
+            <div class="progress" style="height: 2rem;border:1px solid black;">
+                <div class="progress-bar bg-success" id="Health" role="progressbar" aria-valuenow="70"
+                     aria-valuemin="0" aria-valuemax="200" style="width:70%;">
+                    <div id="HealthDisplay" style="color:black;">
+                        HP
+                    </div>
+                </div>
+            </div>
+            <div class="progress Health" id="Health" value="0" max="200">
+                <div class="content" style="position:relative;">
+                    <p>Health</p>
+                </div>
+            </div>
             <progress id="Stamina" value="20" max="60"></progress>
-            <progress id="Magica" value="10" max="60"><text>Magica</text></progress>
-        </div>
+
+            <progress id="Magica" value="10" max="60"></progress>
+        </div>*@
     </div>
     <!--The character bag items. Refreshed every time the bag button is clicked.-->
 
-    <div id="Bag-List" class="list-bag" style="bottom: 0;height: 20vw; position: absolute; top:28vw; display: none;">
+<div id="Bag-List" class="list-bag" style="bottom: 0;height: 20vw; position: absolute; top:28vw; display: none;">
 
-    </div>
-}
+</div>
+
+
+
+
 
 @*--------Monster UI------------------*@
 <div id="MonsterUI" class="info-UI" style="top: 7vw; display: none;">
@@ -36,7 +102,14 @@
         <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center" id="monsterName">Monster name</h6>
     </div>
     <div class="container-bar" style="width: 60%;  float: right; vertical-align: middle;">
-        <progress id="MHealth" class="Health" value="0" max="200"></progress>
+        <div class="progress" style="height: 2rem;border:2px solid black;">
+            <div class="progress-bar bg-danger" id="MHealth" role="progressbar" aria-valuenow="200"
+                 aria-valuemin="0" aria-valuemax="200" style="width:100%;">
+                <div id="MHealthDisplay" style="color:black;">
+                    HP
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -63,15 +136,15 @@
 
 <!--Merchant Buttons. Called on merchant events-->
 <div id="MerchantBtns" class="btn-block" style="display: none;">
-    <button class="btn-user" id="Buy" style="display: none;" onclick="closeSellBag()">Buy</button>
-    <button class="btn-user" id="Sell" onclick="openSellBag()">Sell</button>
+    <button class="btn-user" id="SellClose" style="display: none;" onclick="closeSellBag()">Sell (Close Bag)</button>
+    <button class="btn-user" id="SellOpen" onclick="openSellBag()">Sell (Open Bag)</button>
     <button class="btn-user" id="btn-merchant" onclick="LeaveMerchant()">Leave Merchant</button>
 </div>
 
 
 <!--For combat events only. Shows during monster events-->
 <div id="ComabatBtn" class="btn-block" style="display: none;">
-    <button class="btn-user" id="Travel" onclick="combatAction(0)">Attack</button>
+    <button class="btn-user" onclick="combatAction(0)">Attack</button>
     <button class="btn-user" onclick="combatAction(1)">Defend</button>
     <button class="btn-user" onclick="combatAction(2)">Flee</button>
     <button class="btn-user" onclick="location.href='@Url.Action("Users", "Home")'">Exit</button>
@@ -119,34 +192,95 @@
             Stamina: stamina,
             Magica: magica
         }
-        //used for setting the health bar
+        //Set Health progress-bar Health
         var h = document.getElementById("Health");
-        h.max = ob.maxhp;
-        h.value = ob.hp;
-
+        h.setAttribute('aria-valuemax', maxHP);
+        h.setAttribute('aria-valuenow', health);
+        //calculate the health percentage
+        let health_percent= (ob.hp / ob.maxhp)*100;
+        let health_rounded = Math.round(health_percent);
+        let width_string = health_rounded.toString() + "%";
+        //set calculated value to progress-bar
+        h.style.width = width_string;
+        //h = ob.maxhp;
+        var display = document.getElementById("HealthDisplay");
+        let health_display = health + "/" + maxHP;
+        display.innerHTML = health_display;
+        //aria-valuenow will be used to know the HP number, not percentage
+        //let health_value = document.getElementById("Health").getAttribute('aria-valuenow');
+        //health_value = ob.hp;
         //used for setting the stamina bar
         var s = document.getElementById("Stamina");
-        s.value = ob.Stamina;
-        s.max = ob.Stamina;
+        s.setAttribute('aria-valuemax', stamina);
+        s.setAttribute('aria-valuenow', stamina);
+        s.style.width = "100%";
+        var sdisplay = document.getElementById("StaminaDisplay");
+        let stamina_display = stamina + "/" + stamina;
+        sdisplay.innerHTML = stamina_display;
 
         //used for setting the magica bar
         var m = document.getElementById("Magica");
-        m.max = ob.Magica;
-        m.value = ob.Magica;
+        m.setAttribute('aria-valuemax', magica);
+        m.setAttribute('aria-valuenow', magica);
+        m.style.width = "100%";
+        var mdisplay = document.getElementById("MagicaDisplay");
+        let magica_display = magica + "/" + magica;
+        mdisplay.innerHTML = magica_display;
+        //m.max = ob.Magica;
+        //m.value = ob.Magica;
     });
     //########################/*Misc and UI*/#######################################
 
     //For decreasing specific bar values based on amount and bar
     function alterBar(increment, element) {
-        var h = document.getElementById(element);
-        var min = h.value - increment;
-        var i;
-        var id = setInterval(animateBar, 80);
+        var pb = document.getElementById(element);
+        //used for calculating percentages
+        var max_health = parseInt(pb.getAttribute('aria-valuemax'));
+        console.log("max health: " + pb.getAttribute('aria-valuemax'));
+        var current_val = parseInt(pb.getAttribute('aria-valuenow'));
+        var new_val = parseInt(pb.getAttribute('aria-valuenow')) - parseInt(increment);
+        //var i;
+        var id = setInterval(animateBar, 20);
         function animateBar() {
-            if (h.value === min || h.value === 0) {
+            //console.log(current_val + ">" + new_val);
+            var current_val = parseInt(pb.getAttribute('aria-valuenow'));
+
+            if (current_val > new_val) {
+                //increment down one
+                current_val = current_val - 1;
+                //attributes need to be set
+                pb.setAttribute('aria-valuenow', current_val);
+                //calculate percent to view
+                let health_percent = (current_val / max_health) * 100;
+                let health_rounded = Math.round(health_percent);
+                var width_string = health_rounded.toString() + "%";
+                //set calculated value to progress-bar
+                pb.style.width = width_string;
+                if (element == "Health") { //we will update the character's health
+                    let display = document.getElementById("HealthDisplay");
+                    let health_display = current_val + "/" + max_health;
+                    display.innerHTML = health_display;
+                }
+                if (element == "MHealth") { //we will update the monster's health
+                    let display = document.getElementById("MHealthDisplay");
+                    let health_display = current_val + "/" + max_health;
+                    display.innerHTML = health_display;
+                }
+                //console.log("percentage decreasing: " +width_string);
+                
+            }
+            else if (current_val == new_val) {
+                console.log("ClearInterval() called");
+                //if (element == "Health") { //we will update the character's health, throws undefined here
+                //    let display = document.getElementById("HealthDisplay");
+                //    display.innerHTML = width_string;
+                //}
                 clearInterval(id);
-            } else {
-                h.value--;
+            }
+            else {
+                console.log("Incrementation did not stop");
+                console.log("Current_val:" + current_val + ".New_val:" + new_val);//current_val < new_val
+                clearInterval(id);
             }
         };
     };
@@ -154,14 +288,21 @@
     //For increasing specific bar values based on amount and bar
     function increaseAlterBar(increment, element) {
         var h = document.getElementById(element);
-        var min = h.value + increment;
-        var i;
+        var min = h.getAttribute('aria-valuenow') + increment;
+        //var i;
         var id = setInterval(animateBar, 90);
         function animateBar() {
-            if (h.value === min || h.value === h.max) {
+            if (h.getAttribute('aria-valuenow') === min || h.getAttribute('aria-valuenow') === h.getAttribute('aria-valuemax')) {
                 clearInterval(id);
             } else {
-                h.value++;
+                let health_value = h.getAttribute('aria-valuenow');
+                health_value = health_value + 1;
+                //calculate percentage to display value with bootstrap
+                let health_percent = (h.getAttribute('aria-valuenow') / h.getAttribute('aria-valuemax')) * 100;
+                let health_rounded = Math.round(health_percent);
+                let width_string = health_rounded.toString() + "%";
+                //set calculated value to progress-bar
+                h.style.width = width_string;
             }
         };
     };
@@ -203,43 +344,72 @@
             mName.innerHTML = response.monstername;
 
             var mHealth = document.getElementById("MHealth");
-            mHealth.max = response.monsterHealth;
-            mHealth.value = response.monsterHealth;
+            mHealth.setAttribute("aria-valuenow",response.monsterHealth);
+            mHealth.setAttribute("aria-valuemax", response.monsterHealth);
+            //calculate the health percentage
+            let health_percent = (response.monsterHealth / response.monsterHealth) * 100;
+            let health_rounded = Math.round(health_percent);
+            let width_string = health_rounded.toString() + "%";
+            //set calculated value to progress-bar
+            mHealth.style.width = width_string;
+            //h = ob.maxhp;
+            var display = document.getElementById("MHealthDisplay");
+            let health_display = response.monsterHealth + "/" + response.monsterHealth;
+            display.innerHTML = health_display;
 
             
         })
     };
 
     function MerchantEvent() {
-        var gold;
+        //var gold;
 
-        $.getJSON("../../Game/GetPurse", function (response) {
-            gold = response.gold;
+        $.getJSON("../../Game/GetMerchantInfo", function (response) {
+            //gold = response.gold;
+            //console.log("getJSON response.gold: " + response.gold);
+            //console.log("getJSON gold: " + gold);
+            var merchantBox = document.getElementById("merchant");
+            merchantBox.style.display = "inline-block";
+            merchantBox.innerHTML = response.itemtext;
+
+            var merchant = document.getElementById("MerchantBtns");
+            merchant.style.display = "inline-block";
+
+            var defaultBtn = document.getElementById("defaultBtn");
+            defaultBtn.style.display = "none";
+
+            var merchantText = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>After searching the area for a while you come across an old man carrying a large sack on his back. He looks to you with a crookedd smile." +
+                "Care to browse my wares? Opening the sack you see a few items. Will you buy? Your purse: <strong>" + response.gold + " gold</strong></div><br>";
+            addHTMLToTextUI(merchantText)
 
         })
-         $.ajax({
-            url: "../../Game/MerchantEvent",
-            type: "POST",
-            data: {  },
-            cache: false,
-            async: true,
-            success: function (data) {
-                var merchantBox = document.getElementById("merchant");
-                merchantBox.style.display = "inline-block";
-                merchantBox.innerHTML = data;
+        // $.ajax({
+        //    url: "../../Game/MerchantEvent",
+        //    type: "POST",
+        //    data: {  },
+        //    cache: false,
+        //    async: true,
+        //     success: function (data) {
+        //         var itemtext = data["_returnString"];
+        //         var gold = data["gold"];
+        //         console.log(data);
+        //         console.log(data["gold"]);
+        //        var merchantBox = document.getElementById("merchant");
+        //        merchantBox.style.display = "inline-block";
+        //        merchantBox.innerHTML = itemtext;
 
-                var merchant = document.getElementById("MerchantBtns");
-                merchant.style.display = "inline-block";
+        //        var merchant = document.getElementById("MerchantBtns");
+        //        merchant.style.display = "inline-block";
 
-                var defaultBtn = document.getElementById("defaultBtn");
-                defaultBtn.style.display = "none";
+        //        var defaultBtn = document.getElementById("defaultBtn");
+        //        defaultBtn.style.display = "none";
+                
+        //        var merchantText = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>After searching the area for a while you come across an old man carrying a large sack on his back. He looks to you with a crookedd smile." +
+        //            "Care to browse my wares? Opening the sack you see a few items. Will you buy? Your purse: <strong>" + gold + " gold</strong></div><br>";
+        //        addHTMLToTextUI(merchantText)
 
-                var merchantText = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>After searching the area for a while you come across an old man carrying a large sack on his back. He looks to you with a crookedd smile." +
-                    "Care to browse my wares? Opening the sack you see a few items. Will you buy? Your purse: <strong>" + gold + " gold</strong></div><br>";
-                addHTMLToTextUI(merchantText)
-
-            }
-        });
+        //    }
+        //});
     }
 
     function addHTMLToTextUI(html) {
@@ -250,10 +420,10 @@
 
     //###############################/*Combat Actions*/########################
     function combatAction(actionID) {
-        var mHealth = document.getElementById("MHealth").value;
-        var health = document.getElementById("Health").value;
-        var magica = document.getElementById("Magica").value;
-        var stamina = document.getElementById("Stamina").value;
+        var mHealth = document.getElementById("MHealth").getAttribute('aria-valuenow');
+        var health = document.getElementById("Health").getAttribute('aria-valuenow');
+        var magica = document.getElementById("Magica").getAttribute('aria-valuenow');
+        var stamina = document.getElementById("Stamina").getAttribute('aria-valuenow');
 
         //For altering the bars and calling possible death events
         $.getJSON("../../Combat/CombatAction", { monsterHealth: mHealth, playerHealth: health, magica: magica, stamina: stamina, actionID: actionID }, function (response) {
@@ -278,11 +448,14 @@
 
                 //used for altering the player bar
                 var playerHBar = document.getElementById("Health");
+                console.log("playerHBar:"+playerHBar);
+                //var health = document.getElementById("Health").getAttribute('aria-valuenow');
                 var playerStamina = document.getElementById("Stamina");
                 var playerMagica = document.getElementById("Magica");
 
 
-                var playerHealth = playerHBar.value;
+                var playerHealth = playerHBar.getAttribute('aria-valuenow');
+                //console.log("playerHealth:" + playerHealth);
                 var increment = playerHealth - response.playerH;
                 if (response.Stamina != null) {
                     var staminaIncrement = stamina - response.Stamina;
@@ -293,11 +466,12 @@
                     alterBar(magicaIncrememnt, playerMagica.id);
 
                 }
+                console.log("alterBar(" + increment + "," + playerHBar.id + ")");
                 alterBar(increment, playerHBar.id);
 
                 //used for altering the mosnterbar
                 var monsterHBar = document.getElementById("MHealth");
-                var monsterIncrement = monsterHBar.value - response.monsterH;
+                var monsterIncrement = monsterHBar.getAttribute("aria-valuenow") - response.monsterH;
 
                 if (increment < 0) {
                     increment = (increment - increment) - increment;
@@ -306,14 +480,15 @@
                 if (monsterIncrement < 0) {
                     monsterIncrement = (monsterIncrement - monsterIncrement) - monsterIncrement;
                 }
-
+                console.log("monsterIncrement:" + monsterIncrement);
+                console.log("monsterhealth: " + monsterHBar);
                 alterBar(monsterIncrement, monsterHBar.id);
 
-                if (monsterIncrement > monsterHBar.value) {
+                if (monsterIncrement >= monsterHBar.getAttribute("aria-valuenow")) {
 
                     monsterDeathEvent(playerHealth - increment);
                 }
-                if (increment > playerHBar.value) {
+                if (increment >= playerHBar.getAttribute('aria-valuenow')) {
                     playerDeathEvent();
 
                 }
@@ -380,13 +555,20 @@
             cache: false,
             async: true,
             success: function (data) {
-            
-                addHTMLToTextUI(data)
+                addHTMLToTextUI(data);
+                var bag = document.getElementById("Bag-List");
+                if (bag.style.display != "none") {
+                    openSellBagScroll();
+                }
+
             }
-        });
+         });
     }
 
     function SellItem(item, price) {
+        var bag = document.getElementById("Bag-List");
+        var sellBtnOpen = document.getElementById("SellOpen");
+        var sellBtnClose = document.getElementById("SellClose");
         $.ajax({
             url: "../../Game/SellEvent",
             type: "POST",
@@ -394,18 +576,21 @@
             cache: false,
             async: true,
             success: function (data) {
-            
                 addHTMLToTextUI(data);
-
-                closeSellBag();
+                console.log(data);
+                var bag = document.getElementById("Bag-List");
+                if (bag.style.display != "none") {
+                    openSellBagScroll();
+                    console.log(bag.innerHTML);
+                }
             }
         });
     }
 
     function openSellBag() {
         var bag = document.getElementById("Bag-List");
-        var sellBtn = document.getElementById("Sell");
-        var buyBtn = document.getElementById("Buy");
+        var sellBtnOpen = document.getElementById("SellOpen");
+        var sellBtnClose = document.getElementById("SellClose");
         $.ajax({
             url: "../../Game/SellInventory",
             type: "Post",
@@ -415,30 +600,72 @@
             success: function (data) {
                 bag.innerHTML = data;
                 bag.style.display = "inline-block";
-                sellBtn.style.display = "none";
-                buyBtn.style.display = "inline-block";
+                sellBtnOpen.style.display = "none";
+                sellBtnClose.style.display = "inline-block";
             }
         });
 
     }
+    function openSellBagScroll() {
+        var bag = document.getElementById("Bag-List");
+        var sellBtnOpen = document.getElementById("SellOpen");
+        var sellBtnClose = document.getElementById("SellClose");
+        $.ajax({
+            url: "../../Game/SellInventory",
+            type: "Post",
+            data: {},
+            cache: false,
+            async: true,
+            success: function (data) {
+                bag.innerHTML = data;
+                bag.style.display = "inline-block";
+                sellBtnOpen.style.display = "none";
+                sellBtnClose.style.display = "inline-block";
+                bag.scrollTop = bag.scrollHeight;
+            }
+        });
+    }
 
     function closeSellBag() {
         var bag = document.getElementById("Bag-List");
-        var sellBtn = document.getElementById("Sell");
-        var buyBtn = document.getElementById("Buy");
+        var sellBtnOpen = document.getElementById("SellOpen");
+        var sellBtnClose = document.getElementById("SellClose");
 
         bag.style.display = "none";
-        sellBtn.style.display = "inline-block";
-        buyBtn.style.display = "none";
+        sellBtnOpen.style.display = "inline-block";
+        sellBtnClose.style.display = "none";
     }
 
     function OpenBag() {
         var elem = document.getElementById("Bag-List");
-        if (elem.style.display === "none") {
-            elem.style.display = "inline-block";
-        } else {
-            elem.style.display = "none";
-        }
+        var merchant = document.getElementById("merchant");
+        var sellBtnOpen = document.getElementById("SellOpen");
+        console.log("first sell open: " + sellBtnOpen.style.display);
+        var sellBtnClose = document.getElementById("SellClose");
+        console.log("first sell close: " + sellBtnClose.style.display);
+        $.ajax({
+            url: "../../Game/GetCharacterInventory",
+            type: "Post",
+            data: {},
+            cache: false,
+            async: true,
+            success: function (data) {
+                elem.innerHTML = data;
+                if (elem.style.display === "none") { //if the bag is closed
+                    elem.style.display = "inline-block"; //display bag
+                } else { //if the bag is open
+                    if (sellBtnClose.style.display != "none") { //if the sell close bag button is displayed
+                        sellBtnClose.style.display = "none"; //hide that button
+                        console.log("Sell close: " + sellBtnClose.style.display);
+                        if (merchant.style.display != "none") { //if we are at a mercahnt
+                            sellBtnOpen.style.display = "inline-block"; //display the sell open bag button
+                            console.log("Sell open: " + sellBtnOpen.style.display);
+                        }
+                    }
+                    elem.style.display = "none";
+                }
+            }
+        });
     }
 
     function LeaveMerchant() {
@@ -450,6 +677,7 @@
         defautlBtn.style.display = "inline-block";
         merchantBtn.style.display = "none";
         merchant.style.display = "none";
+        closeSellBag();
         bag.style.display = "none";
     }
 
@@ -459,8 +687,8 @@
         var value;
         var bag = document.getElementById("Bag-List");
         if (itemType === 0) {
-            bar = document.getElementById("Health");
-            value = bar.value;
+            bar = document.getElementById("Health").getAttribute('aria-valuenow');;
+            value = bar;
         } else if (itemType === 1) {
             bar = document.getElementById("Stamina");
             value = bar.value;
@@ -496,7 +724,7 @@
                 var bag = document.getElementById("Bag-List");
                 bag.style.display = "none";
 
-                addHTMLToTextUI(data)
+                addHTMLToTextUI(data);
             }
         });
     }
@@ -520,7 +748,7 @@
                         MerchantEvent();
                     }
                     else {
-                        addHTMLToTextUI(data)
+                        addHTMLToTextUI(data);
                     }
                 }
             })

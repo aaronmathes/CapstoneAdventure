@@ -205,7 +205,7 @@ namespace Capstone_Xavier.Controllers
             GameModel game = (GameModel)Session["Game"];
             int userID = int.Parse(Session["UserID"].ToString());
 
-            _returnString = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> Althought you fought with all your strenght the monster gained the uppder hand. " +
+            _returnString = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> Although you fought with all your strength the monster gained the upper hand. " +
                             "without mercy or pity the beast strikes you down. As you turn to dust with your final breath your save data is deleted forever and your story is forgotten.</div><br>";
 
             data.RemoveCharacter(game.character.id, userID);
@@ -214,16 +214,52 @@ namespace Capstone_Xavier.Controllers
         }
 
         //Used for the merchant event. Allows the user to purchase goods
-        [HttpPost]
-        public string MerchantEvent()
+        //[HttpPost]
+        //public Dictionary<string,string> MerchantEvent()
+        //{
+        //    //I want the merchant items and the player's available gold
+        //    Dictionary<string, string> returnvalues = new Dictionary<string, string>();
+        //    DBUse data = new DBUse();
+        //    Mapper map = new Mapper();
+        //    //string _returnString = "";
+        //    returnvalues.Add("_returnString","");
+        //    List<ItemModel> list = new List<ItemModel>();
+        //    Random rand = new Random();
+        //    int inven = rand.Next(6);
+        //    if (inven <= 0) {
+        //        inven = 3;
+        //    }
+
+        //    list = map.ItemBO_To_List(data.GetItemList());
+
+        //    for (int i = 0; i < inven; i++)
+        //    {
+        //        int itemNum = rand.Next(list.Count);
+        //        ItemModel item = list[itemNum];
+        //        string stats = GetStatsString(item);
+
+        //        //return string HTML. Used for list of items
+        //        string temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats + "</div><button class='btn-user'style='display: inline-block; float: right;' onclick='buy(" + item.itemID.ToString() + "," + item.goldPrice.ToString() + ")'>Buy</button></div><br>";
+        //        returnvalues["_returnString"] = returnvalues["_returnString"] + temp;
+        //    }
+        //    GameModel game = (GameModel)Session["Game"];
+        //    returnvalues.Add("gold", game.character.gold.ToString());
+        //    return returnvalues;
+        //}
+        [HttpGet]
+        public ActionResult GetMerchantInfo()
         {
+            GameModel game = (GameModel)Session["Game"];
+            CharacterModel character = game.character;
+            //
             DBUse data = new DBUse();
             Mapper map = new Mapper();
             string _returnString = "";
             List<ItemModel> list = new List<ItemModel>();
             Random rand = new Random();
             int inven = rand.Next(6);
-            if (inven <= 0) {
+            if (inven <= 0)
+            {
                 inven = 3;
             }
 
@@ -239,17 +275,10 @@ namespace Capstone_Xavier.Controllers
                 string temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats + "</div><button class='btn-user'style='display: inline-block; float: right;' onclick='buy(" + item.itemID.ToString() + "," + item.goldPrice.ToString() + ")'>Buy</button></div><br>";
                 _returnString = _returnString + temp;
             }
+            //
+            var _merchantvalues = new { gold = character.gold.ToString(), itemtext = _returnString };
 
-            return _returnString;
-        }
-        [HttpGet]
-        public ActionResult GetPurse()
-        {
-            GameModel game = (GameModel)Session["Game"];
-            CharacterModel character = game.character;
-            var _character = new { gold = character.gold.ToString() };
-
-            return Json(_character, JsonRequestBehavior.AllowGet);
+            return Json(_merchantvalues, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -282,6 +311,7 @@ namespace Capstone_Xavier.Controllers
         public string BuyEvent(int itemID, int itemPrice)
         {
             string _returnstring = "";
+            
             Mapper map = new Mapper();
             DBUse data = new DBUse();
             GameModel game = (GameModel)Session["Game"];
@@ -299,31 +329,83 @@ namespace Capstone_Xavier.Controllers
                 _returnstring = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>Holding the " + itemPrice.ToString() + "gold coins out you see the old man greedily grab the shiny coins cackling soflty. He allows you to grab the item and looks at you once again. Will that be all? Your purse: <strong>" + game.character.gold.ToString() + "gold</strong></div><br>";
 
             }
+            
             return _returnstring;
         }
 
         [HttpPost]
-        public string SellEvent(int itemID, int itemPrice) {
+        public string SellEvent(int itemID, int itemPrice)
+        {
             string _returnstring = "";
             Mapper map = new Mapper();
             DBUse data = new DBUse();
             GameModel game = (GameModel)Session["Game"];
 
+            //here is where text about not having any sellable items would go 
+
             data.RemoveItemFromInventory(itemID);
             game.character.gold  += itemPrice;
             data.UpdateUserCharacter(map.CharacterModel_To_BO(game.character));
             game.inventory = map.ItemBO_To_List(data.GetCharacterInventory(game.character.id));
-            _returnstring = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>The greedy man holds out the gold grudginly quickly swiping the item from you. Your purse <strong>"+game.character.gold+"gold</strong></div><br>";
+            _returnstring = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>The greedy man holds out the gold grudgingly quickly swiping the item from you. Your purse <strong>"+game.character.gold+"gold</strong></div><br>";
 
             return _returnstring;
         }
+        public string GetCharacterInventory()
+        {
+            //return "Test string" + character.name;
+            string _returnString = "";
+            Mapper map = new Mapper();
+            DBUse data = new DBUse();
+            GameModel game = (GameModel)Session["Game"];
 
+                List<ItemModel> list = map.ItemBO_To_List(data.GetCharacterInventory(game.character.id));
+                for (int i = 0; i < list.Count; i++)
+                {
+                    ItemModel item = list[i];
+                    string stats = GetStatsString(item);
+                    string temp = "";
+                    if (item.itemType == (int)ItemTypes.Armor || item.itemType == (int)ItemTypes.Weapons)//If the item is armor or a weapon
+                    {
+                        if (item.isEquipted == 1)//If the item is equipted. 0: Not , 1: Equipted
+                        {
+                            temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats
+                       + "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='UseNonCosumable(" + item.inventoryID + ","
+                       + item.itemType.ToString() + ")'>Unequip</button></div><br>";
+                        }
+                        else
+                        {
+                            temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats
+                       + "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='UseNonCosumable(" + item.inventoryID + ","
+                       + item.itemType.ToString() + ")'>Equip</button></div><br>";
+                        }
+                    }
+                    else
+                    {
+                        temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats
+                        + "</div><button class='btn-user'style='display: inline-block; float: left;' onclick='UseItem(" + item.inventoryID + ","
+                        + item.itemType.ToString() + ")'>Use</button></div><br>";
+                    }
+
+                    //return string HTML. Used for list of items
+
+                    _returnString = _returnString + temp;
+                }
+
+                return _returnString;
+            
+
+        }
         //----------------Misc---------------------
 
         //Used to get the current monster values for use.
         [HttpGet]
         public ActionResult GetMonsterValues() {
             GameModel game = (GameModel)Session["Game"];
+            if(game.monster == null)
+            {
+                return Json(game); //unsure why it is null, but does not break game
+            }
             MonsterModel monster = game.monster;
             var _monster = new {monstername = monster.monsterName, monsterHealth = monster.health.ToString() };
 

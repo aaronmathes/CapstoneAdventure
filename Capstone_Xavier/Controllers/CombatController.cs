@@ -82,7 +82,7 @@ namespace Capstone_Xavier.Controllers
             if (magica == 0 && weapon != null)
             {
                 health = health + magicaMod;
-                story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> Due to your lack of magical experience you to use your own life energy to cast the spell costing you, " + magicaMod.ToString() + " Damge</div><br>";
+                story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> Due to your lack of magical experience, you to use your own life energy to cast the spell costing you, " + magicaMod.ToString() + " Damge</div><br>";
             }
             else {
                  _magica = magica + magicaMod;
@@ -90,7 +90,7 @@ namespace Capstone_Xavier.Controllers
                 {
                     //For if the caster runs out of magica.
                     health = health + _magica;
-                    story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> You run out of magica causing you to use your own life energy to cast the spell costing you, " + _magica.ToString() + " Damge</div><br>";
+                    story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> You run out of magica causing you to use your own life energy to cast the spell. It causes you " + _magica.ToString() + " Damage</div><br>";
                     _magica = 0;
                 }
             }
@@ -158,7 +158,7 @@ namespace Capstone_Xavier.Controllers
                 if (chance > 15)
                 {
                     endID = 1;
-                    story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> You scared the monster into quick submisstion. Scared or not interesting in fighting the mosnter flees from you.</div><br>";
+                    story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> You scared the monster into quick submission. Scared or not interested in fighting, the monster flees from you.</div><br>";
                     
                 }
                 else {//flee unsucessful
@@ -175,10 +175,10 @@ namespace Capstone_Xavier.Controllers
                 
                 mHealth = mHealth - damage;
                 if (actionID == 1) {
-                    story = story + "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'>You manage to strike the mosnter doing " + damage.ToString() + " damage." +
+                    story = story + "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'>You manage to strike the monster doing " + damage.ToString() + " damage." +
                               "but the " + monster.monsterName + "was ready and attacks you doing " + monsterDamage.ToString() + "damage.</div><br>";
                 } else if (actionID == -1) {
-                    story = story + "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The mosnter attempted to flee but you easily keep up. With this advantage you strike for " + damage.ToString() + "damage."+
+                    story = story + "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The monster attempted to flee, but you easily keep up. With this advantage you strike for " + damage.ToString() + "damage."+
                             "The monster wasnt ready and weakly attempt to strike only doing " + monsterDamage.ToString() + "damage. </div><br>";
                 }
                 
@@ -189,8 +189,8 @@ namespace Capstone_Xavier.Controllers
             if (actionID == 2) {
                 mHealth = (int)(mHealth - (damage - (monster.armor * 1.5)));
                 mHealth += 10;
-                story = story + "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The beast tries to get defensive protecting its vital spots. Not attacking it takes " + 
-                        damage.ToString() + " damage but manages to take this time to heal a small amount of health.</div><br>";
+                story = story + "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The beast gets defensive protecting itself. It takes " + 
+                        damage.ToString() + " damage and manages to heal a small amount of health (+10).</div><br>";
             }
 
             var _return = new { action = endID, print = story, monsterH = mHealth, playerH = health, Magica = _magica, Stamina = _stamina };
@@ -247,7 +247,7 @@ namespace Capstone_Xavier.Controllers
                 if (chance > 15)
                 {
                     endID = 1;
-                    story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> You scared the monster into quick submisstion. Scared or not interesting in fighting the mosnter flees from you.</div><br>";
+                    story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> You scared the monster into quick submission. Not interested in fighting the monster flees from you.</div><br>";
 
                 }
                 else
@@ -263,12 +263,12 @@ namespace Capstone_Xavier.Controllers
                 health = (int)(health - (monsterDamage - (player.armor/100)));
                 if (actionID == 1)
                 {
-                    story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'>You Raise your defenses in hopes to defelect damage." +
-                              " but the " + monster.monsterName + " in unrelenting and attacks you for " + monsterDamage.ToString() + "damage.</div><br>";
+                    story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'>You raise your defense in hopes to deflect damage," +
+                              " but the " + monster.monsterName + " is unrelenting and attacks you for " + monsterDamage.ToString() + " damage.</div><br>";
                 }
                 else if (actionID == -1)
                 {
-                    story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The mosnter attempted to flee but you easily keep up. Not willing to lower your guard you pursue." +
+                    story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The monster attempted to flee, but you easily keep up. Not willing to lower your guard, you pursue." +
                             " </div><br>";
                 }
             }
@@ -277,8 +277,7 @@ namespace Capstone_Xavier.Controllers
             if (actionID == 2)
             {
                 mHealth += 10;
-                story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The beast tries to get defensive protecting its vital spots. Not attacking it takes "+
-                        "damage but manages to take this time to heal a small amount of health.</div><br>";
+                story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The beast gets defensive protecting itself and manages to heal a small amount of health,too. (+10)</div><br>";
             }
 
             var _return = new { action = endID, print = story, monsterH = mHealth, playerH = health };
@@ -290,7 +289,7 @@ namespace Capstone_Xavier.Controllers
         private ActionResult FleeAction() {
             GameModel game = (GameModel)Session["Game"];
             game.monster = null;
-            string story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> You turn around and run from the beast as fast as you can. Not wanting a fight you flee. " +
+            string story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> You turn and run from the beast as fast as you can. Not wanting to fight you flee. " +
                         "</div><br>";
 
 

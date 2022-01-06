@@ -12,6 +12,7 @@ namespace Capstone_Xavier.Models
     {
         public int userID { get; set; }
         public int roleID { get; set; }
+
         public bool changeRole { get; set; }
 
         [Required(ErrorMessage = "Username is required")]
