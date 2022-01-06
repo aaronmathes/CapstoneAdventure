@@ -37,6 +37,7 @@ namespace Capstone_BLL
             _returnUser.Username = user.Username;
             _returnUser.UserRole = user.UserRole;
             _returnUser.Email = user.Email;
+            _returnUser.Password = user.Password;
 
             return _returnUser;
         }

@@ -142,6 +142,7 @@ namespace Capstone_DAL
                                 user.UserRole = (int)reader["role_FK"];
                                 user.Username = reader["userName"].ToString();
                                 user.Email = reader["Email"].ToString();
+                                user.Password = reader["userPassword"].ToString();
                                 _returnList.Add(user);
 
                             }
@@ -160,23 +161,64 @@ namespace Capstone_DAL
         }
 
         //Update: Updates data of a existing user. Takes both values.
-        public bool UpdateUser(int userID, UsersDO user) {
+        public bool UpdateUser(UsersDO user) {
             try {
                 using (SqlConnection connection = new SqlConnection(_connection)) {
-                    connection.Open();
+                 
 
-                    using (SqlCommand command = new SqlCommand("SP_UpdateUser", connection)) {
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.CommandTimeout = 10;
+                    using (SqlCommand _command = new SqlCommand("SP_UpdateUser", connection)) {
+                        _command.CommandType = CommandType.StoredProcedure;
+                        _command.CommandTimeout = 30;
 
-                        //Parameters: _userID(INT), _newUsername(NVARCHAR(200)), _newPassword(NVARCHAR(200)
-                        command.Parameters.AddWithValue("@parm_userID", SqlDbType.Int).Value = userID;
-                        command.Parameters.AddWithValue("@parm_newUsername", SqlDbType.NVarChar).Value = user.Username;
-                        command.Parameters.AddWithValue("@parm_newPassword", SqlDbType.NVarChar).Value = user.Password;
-                        command.Parameters.AddWithValue("@parm_newEmail", SqlDbType.NVarChar).Value = user.Email;
-                        command.ExecuteNonQuery(); 
+                        ////Parameters: _userID(INT), _newUsername(NVARCHAR(200)), _newPassword(NVARCHAR(200)
+                        //command.Parameters.AddWithValue("@parm_userID", SqlDbType.Int).Value = userID;
+                        //command.Parameters.AddWithValue("@parm_newUsername", SqlDbType.NVarChar).Value = user.Username;
+                        //command.Parameters.AddWithValue("@parm_newPassword", SqlDbType.NVarChar).Value = user.Password;
+                        //command.Parameters.AddWithValue("@parm_newEmail", SqlDbType.NVarChar).Value = user.Email;
+
+                        SqlParameter _parmUserID = _command.CreateParameter();
+                        _parmUserID.DbType = DbType.Int32;
+                        _parmUserID.ParameterName = "@parm_userID";
+                        _parmUserID.Value = user.UserID;
+                        _command.Parameters.Add(_parmUserID);
+
+
+                        SqlParameter _parmRoleID = _command.CreateParameter();
+                        _parmRoleID.DbType = DbType.Int32;
+                        _parmRoleID.ParameterName = "@parm_newRoleID";
+                        _parmRoleID.Value = user.UserRole;
+                        _command.Parameters.Add(_parmRoleID);
+                        
+                        SqlParameter _parmUserName = _command.CreateParameter();
+                        _parmUserName.DbType = DbType.String;
+                        _parmUserName.ParameterName = "@parm_newUsername";
+                        _parmUserName.Value = user.Username;
+                        _command.Parameters.Add(_parmUserName);
+
+                        SqlParameter _parmPassword = _command.CreateParameter();
+                        _parmPassword.DbType = DbType.String;
+                        _parmPassword.ParameterName = "@parm_newPassword";
+                        _parmPassword.Value = user.Password;
+                        _command.Parameters.Add(_parmPassword);
+
+                        SqlParameter _parmEmail = _command.CreateParameter();
+                        _parmEmail.DbType = DbType.String;
+                        _parmEmail.ParameterName = "@parm_newEmail";
+                        _parmEmail.Value = user.Email;
+                        _command.Parameters.Add(_parmEmail);
+
+                        SqlParameter _parmDateModified = _command.CreateParameter();
+                        _parmDateModified.DbType = DbType.DateTime;
+                        _parmDateModified.ParameterName = "@parm_dateModified";
+                        _parmDateModified.Value = DateTime.Now;
+                        _command.Parameters.Add(_parmDateModified);
+
+                      
+                        connection.Open();
+                        _command.ExecuteNonQuery();
+                        connection.Close();
                     }
-                    connection.Close();
+                   
                     connection.Dispose();
                     return true;
                 }

@@ -4,6 +4,7 @@ namespace Capstone_Xavier
 {
     using Capstone_BLL.BusinessObjects;
     using Capstone_Xavier.Models;
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -72,6 +73,20 @@ namespace Capstone_Xavier
             }
 
             return _returnList;
+        }
+
+        internal UserModel UserBOToUserModel(UsersBO u)
+        {
+            UserModel _um = new UserModel();
+
+            _um.roleID = u.UserRole;
+            _um.password = u.Password;
+            _um.confirmPassword = u.Password;
+            _um.email = u.Email;
+            _um.userID = u.UserID;
+            _um.username = u.Username;
+
+            return _um;
         }
 
         //---------------------------Character Mapping------------------------------
