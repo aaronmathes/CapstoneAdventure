@@ -63,35 +63,30 @@
             <div class="input-list">
 
                 <div class="input">
-                    <span class="icon-input"></span>
                     <label>Monster Name</label>
                     @Html.EditorFor(MonsterModel => Model.monsterName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Monster Name" } })
 
                 </div>
                 <br>
                 <div class="input">
-                    <span class="icon-input"></span>
                     <label>Monster Health(Max 300)</label>
                     @Html.EditorFor(MonsterModel => Model.health, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
 
                 </div>
                 <br>
                 <div class="input">
-                    <span class="icon-input"></span>
                     <label>Monster Armor(Max 40)</label>
                     @Html.EditorFor(MonsterModel => Model.armor, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
 
                 </div>
                 <br>
                 <div class="input">
-                    <span class="icon-input"></span>
                     <label>Monster Damage(Max 100)</label>
                     @Html.EditorFor(MonsterModel => Model.damage, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
 
                 </div>
                 <br>
                 <div class="input">
-                    <span class="icon-input"></span>
                     <label>Monster Danger(Max 10)</label>
                     @Html.EditorFor(MonsterModel => Model.danger, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
 
@@ -99,7 +94,6 @@
                 <br>
 
                 <div class="input">
-                    <span class="icon-input"></span>
                     <label style="width: 15vw">Monster Behaviour(Higher Num = More Agressive)</label>
                     @Html.DropDownListFor(MonsterModel => Model.behaviour, new SelectList(Model.monsterBehaviours), new { @id = "classID", @class = "form-control" })
 
