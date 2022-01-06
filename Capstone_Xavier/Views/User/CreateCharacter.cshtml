@@ -81,7 +81,7 @@
                     <br>
                     <div class="input">
                         <label>Class</label>
-                        @Html.DropDownListFor(Model => Model.classID, new SelectList(Model.classes, "classID", "className"), htmlAttributes: new { @id = "classID", @class = "form-control", @onchange = "displayClassInfo()", @onclick = "displayClassInfo()" })
+                        @Html.DropDownListFor(Model => Model.classID, new SelectList(Model.classes, "classID", "className"), htmlAttributes: new { @id = "classID", @class = "form-control", @onchange = "displayClassInfo()" })
                     </div>
                 </div>
                 <button class="btn-user" type="submit">Submit</button>
