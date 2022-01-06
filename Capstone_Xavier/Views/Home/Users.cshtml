@@ -6,67 +6,97 @@
     ViewBag.Title = "User";
 }
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 ml-md-auto d-flex justify-content-center">
+            <h2>@ViewData["Title"]</h2>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center" id="menu-button-style">
+            <div class="nav-side">
+                <div class="dropdown">
+                    <button onclick="dropDown()" class="dropBtn">More</button>
+                    <div id="myDropdown" class="dropdown-item">
+                        <a onclick="location.href='@Url.Action("UserInfo", "User")'">Profile</a>
+                        @{
+                            string role = Session["Role"].ToString();
 
-<h2>@ViewData["Title"]</h2>
+                            if (role == "1")
+                            {
+                                <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
+                            }
+                            else if (role == "3")
+                            {
+                                <a onclick="location.href='@Url.Action("Gamemaster", "Admin")'">GameMaster</a>
+                            }
+                        }
+                        @*<a>@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
+                        <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a> @*this makes no extra spaces while @Html.ActionLink creates spaces*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="nav-side">
-    <div class="dropdown">
-        <button onclick="dropDown()" class="dropBtn">More</button>
-        <div id="myDropdown" class="dropdown-item">
-            <a onclick="location.href='@Url.Action("UserInfo", "User")'">Profile</a>
-            @{
-                string role = Session["Role"].ToString();
+    <div class="row justify-content-center" id="content">
 
-                if (role == "1")
-                {
-                    <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
-                }
-                else if (role == "3")
-                {
-                    <a onclick="location.href='@Url.Action("Gamemaster", "Admin")'">GameMaster</a>
-                }
+        <div class="list">
+
+            @foreach (CharacterModel ch in Model)
+            {
+                <div class="row align-items-center" style="margin-right: 0px; margin-left: 0px;">
+                    @*<div class="col-sm-12 ">*@
+                        @*<div class="list-item-character">*@
+                    <div class="col-sm-9">
+                        <div class="row align-items-center">
+                            <div class="col-sm-4">
+                                <div class="list-item-character">
+                                    <p onclick="location.href='@Url.Action("Game", "Game", ch)'" style="cursor: pointer">@ch.name</p>
+                                    <h6 class="sub-num">@ch.level</h6>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <button class="btn-change" id="@ch.id" onclick="location.href='@Url.Action("UpdateCharacter", "User", ch)'"></button>
+                                <button class="btn-remove" onclick="location.href='@Url.Action("RemoveCharacter", "User", ch)'"></button>
+                               
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="info" id="class-info" @*style="margin-left: 2%;"*@>Class: @ch.className</div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    @*</div>*@
+                        <div class="col-sm-3">
+                            <div class="info">
+                                Health: @ch.health / @ch.maxHP
+                                <br>
+                                Xp: @ch.xp / @ch.maxXp
+                                <br>
+                                Gold: @ch.gold
+                            </div>
+                        </div>
+                    @*</div>*@
+                            @*<div class="row" style="margin-right: 0px; margin-left: 0px;">*@
+
+                            @*</div>*@
+                        @*</div>*@
+
+                    </div>
+                <hr>
             }
-            @*<a>@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
-            <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a> @*this makes no extra spaces while @Html.ActionLink creates spaces*@ 
+        </div>
+        <div>
+            <button class="btn-user" id="User" onclick="location.href='@Url.Action("createCharacter", "User", null)'">Create Character</button>
+            <label style="position: absolute; top:20vw; right:25vw;">Click the character name to play!</label>
         </div>
     </div>
 </div>
-<br>
 
 
-<div class="list">
 
-    @foreach (CharacterModel ch in Model)
-    {
-        <div class="row" style="margin-right: 0px; margin-left: 0px;" >
-            <div class="col-sm-6">
-                <div class="list-item-character">
-                    <p onclick="location.href='@Url.Action("Game", "Game", ch)'" style="cursor: pointer">@ch.name</p>
-                    <h6 class="sub-num">@ch.level</h6>
-                    <button class="btn-change" id="@ch.id" onclick="location.href='@Url.Action("UpdateCharacter", "User", ch)'"></button>
-                    <button class="btn-remove" onclick="location.href='@Url.Action("RemoveCharacter", "User", ch)'"></button>
-                </div>
-                <div class="row" style="margin-right: 0px; margin-left: 0px;">
-                    <div class="info" style="margin-left: 2%;">@ch.className</div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="info">
-                    Health: @ch.health / @ch.maxHP
-                    <br>
-                    Xp: @ch.xp / @ch.maxXp
-                    <br>
-                    Gold: @ch.gold
-                </div>
-            </div>
-        </div>
-        <hr>
-    }
-</div>
-    <div>
-        <button class="btn-user" id="User" onclick="location.href='@Url.Action("createCharacter", "User", null)'">Create Character</button>
-        <label style="position: absolute; top:20vw; right:25vw;">Click the character name to play!</label>
-    </div>
+
+
+
 
 <script type="text/javascript">
 

@@ -6,11 +6,17 @@
     margin-right: 0;
     margin-left: 10%;
 }
+#content {
+    margin-top: 2%;
+}
 .row{
     width: 100%;
 }
 /*Dropdown*/
-
+#menu-button-style {
+    margin-left: 10%;
+    margin-right: -10%;
+}
 .dropBtn {
     color: black;
     padding: 16px;
@@ -465,11 +471,11 @@ button {
 
 .list {
     border: 2px solid black;
-    height: 300px;
-    width: 410px;
+    height: 445px;
+    width: 35%;
     background-color: saddlebrown;
     margin-bottom: 0px;
-    position: absolute;
+    position: unset;
     bottom: 10px;
     right: 10%;
     overflow-y: scroll;
@@ -526,7 +532,11 @@ button {
     padding-right: 2%;
     margin-top: 3%;
 }
-
+#class-info {
+    margin-left: 6%;
+   /* float: none;*/
+    width: 100%;
+}
 
 
 #User {
