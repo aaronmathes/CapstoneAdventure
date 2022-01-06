@@ -3,63 +3,105 @@
 @{
     ViewBag.Title = "UpdateCharacter";
 }
-<div class="nav-side">
-    <div class="dropdown">
-        <button onclick="dropDown()" class="dropBtn">More</button>
-        <div id="myDropdown" class="dropdown-item">
-            <a onclick="location.href='@Url.Action("Users", "Home")'">User Home</a>
-            <a onclick="location.href='@Url.Action("UserInfo", "User")'">Profile</a>
-            @{
-                string role = Session["Role"].ToString();
+<div class="row">
+    <div class="col-12">
+        @*<div class="nav-side">*@
+            <div class="dropdown" style="margin-left: 70%; margin-top: 2vw;">
+                <button onclick="dropDown()" class="dropBtn">More</button>
+                <div id="myDropdown" class="dropdown-item">
+                    <a onclick="location.href='@Url.Action("Users", "Home")'">User Home</a>
+                    <a onclick="location.href='@Url.Action("UserInfo", "User")'">Profile</a>
+                    @{
+                        string role = Session["Role"].ToString();
 
-                if (role == "1" || role == "2")
-                {
-                    <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
-                }
-            }
-            @*<a href="#">@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
-            <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a>
-        </div>
+                        if (role == "1" || role == "2")
+                        {
+                            <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
+                        }
+                    }
+                    @*<a href="#">@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
+                    <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a>
+                </div>
+            </div>
+        @*</div>*@
     </div>
 </div>
-<h3>@ViewData["Title"]</h3>
+<div class="row">
+    <div class="col-12">
+        <h3 style="margin-top:0;margin-left:2%;">@ViewData["Title"]</h3>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-12">
-        <div class="info-box">
-            <label>Name</label>
-            <p class="c-info">@Model.name</p>
-            <label>Class</label>
-            <p class="c-info">@Model.className</p>
-            <label>Level</label>
-            <p class="c-info">@Model.level</p>
-            <label>Experience</label>
-            <p class="c-info"> @Model.xp / @Model.maxXp</p>
-        </div>
-    </div>
-    @using (Html.BeginForm("UpdateCharacterInfo", "User", Model))
-    {
-        <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="nav-side2">
-                <div class="input-list">
-                    <div class="input">
-                        <label>Character Name</label>
-                        <span class="icon-input"></span>
-                        @Html.EditorFor(CharacterModel => CharacterModel.name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
-
-                    </div>
-                    <br>
-                    <div class="input">
-                        <label>Class</label>
-                        <span class="icon-input"></span>
-
-                        @Html.DropDownListFor(Model => Model.classID, new SelectList(Model.classes, "classID", "className"), new { @id = "classID", @class = "form-control" })
-
-                    </div>
+        <div class="info-box" style="position:static;margin-bottom:2%;">
+            <div class="row">
+                <div class="col-12">
+                    <label>Name</label>
                 </div>
-
-                <button type="submit" class="btn-user" onclick="">Submit</button>
+                <div class="col-12">
+                    <p class="c-info">@Model.name</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Class</label>
+                </div>
+                <div class="col-12">
+                    <p class="c-info">@Model.className</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Level</label>
+                    <p class="c-info">@Model.level</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Experience</label>
+                    <p class="c-info"> @Model.xp / @Model.maxXp</p>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
 
-    }
-</div>
+        @using (Html.BeginForm("UpdateCharacterInfo", "User", Model))
+        {
+        <div class="row">
+
+            @*<div class="nav-side2">*@
+            @*<div class="input-list">*@
+            @*<div class="input">*@
+            <div class="col-12">
+                <label>Character Name</label>
+            </div>
+            <div class="col-12">
+                @*<span class="icon-input"></span>*@
+                @Html.EditorFor(CharacterModel => CharacterModel.name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
+            </div>
+
+            @*<br>*@
+            @*<div class="input">*@
+
+            <div class="col-12">
+                <label>Class</label>
+            </div>
+
+            <div class="col-12">
+                @*<span class="icon-input"></span>*@
+                @Html.DropDownListFor(Model => Model.classID, new SelectList(Model.classes, "classID", "className"), new { @id = "classID", @class = "form-control" })
+            </div>
+            @*</div>*@
+            @*</div>*@
+            <div class="col-12" style="margin-top:2%;">
+                <button type="submit" class="btn-user" onclick="">Submit</button>
+            </div>
+            @*</div>*@
+            @*</div>*@
+        </div>
+
+                }
+            
+        </div>
