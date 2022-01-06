@@ -214,16 +214,52 @@ namespace Capstone_Xavier.Controllers
         }
 
         //Used for the merchant event. Allows the user to purchase goods
-        [HttpPost]
-        public string MerchantEvent()
+        //[HttpPost]
+        //public Dictionary<string,string> MerchantEvent()
+        //{
+        //    //I want the merchant items and the player's available gold
+        //    Dictionary<string, string> returnvalues = new Dictionary<string, string>();
+        //    DBUse data = new DBUse();
+        //    Mapper map = new Mapper();
+        //    //string _returnString = "";
+        //    returnvalues.Add("_returnString","");
+        //    List<ItemModel> list = new List<ItemModel>();
+        //    Random rand = new Random();
+        //    int inven = rand.Next(6);
+        //    if (inven <= 0) {
+        //        inven = 3;
+        //    }
+
+        //    list = map.ItemBO_To_List(data.GetItemList());
+
+        //    for (int i = 0; i < inven; i++)
+        //    {
+        //        int itemNum = rand.Next(list.Count);
+        //        ItemModel item = list[itemNum];
+        //        string stats = GetStatsString(item);
+
+        //        //return string HTML. Used for list of items
+        //        string temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats + "</div><button class='btn-user'style='display: inline-block; float: right;' onclick='buy(" + item.itemID.ToString() + "," + item.goldPrice.ToString() + ")'>Buy</button></div><br>";
+        //        returnvalues["_returnString"] = returnvalues["_returnString"] + temp;
+        //    }
+        //    GameModel game = (GameModel)Session["Game"];
+        //    returnvalues.Add("gold", game.character.gold.ToString());
+        //    return returnvalues;
+        //}
+        [HttpGet]
+        public ActionResult GetMerchantInfo()
         {
+            GameModel game = (GameModel)Session["Game"];
+            CharacterModel character = game.character;
+            //
             DBUse data = new DBUse();
             Mapper map = new Mapper();
             string _returnString = "";
             List<ItemModel> list = new List<ItemModel>();
             Random rand = new Random();
             int inven = rand.Next(6);
-            if (inven <= 0) {
+            if (inven <= 0)
+            {
                 inven = 3;
             }
 
@@ -239,17 +275,10 @@ namespace Capstone_Xavier.Controllers
                 string temp = "<br><div class='shop-item' style='height: 5vw'> <h6>" + item.itemName + "</h6> <div class='item-stats'> Gold: " + item.goldPrice.ToString() + stats + "</div><button class='btn-user'style='display: inline-block; float: right;' onclick='buy(" + item.itemID.ToString() + "," + item.goldPrice.ToString() + ")'>Buy</button></div><br>";
                 _returnString = _returnString + temp;
             }
+            //
+            var _merchantvalues = new { gold = character.gold.ToString(), itemtext = _returnString };
 
-            return _returnString;
-        }
-        [HttpGet]
-        public ActionResult GetPurse()
-        {
-            GameModel game = (GameModel)Session["Game"];
-            CharacterModel character = game.character;
-            var _character = new { gold = character.gold.ToString() };
-
-            return Json(_character, JsonRequestBehavior.AllowGet);
+            return Json(_merchantvalues, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -373,6 +402,10 @@ namespace Capstone_Xavier.Controllers
         [HttpGet]
         public ActionResult GetMonsterValues() {
             GameModel game = (GameModel)Session["Game"];
+            if(game.monster == null)
+            {
+                return Json(game); //unsure why it is null, but does not break game
+            }
             MonsterModel monster = game.monster;
             var _monster = new {monstername = monster.monsterName, monsterHealth = monster.health.ToString() };
 

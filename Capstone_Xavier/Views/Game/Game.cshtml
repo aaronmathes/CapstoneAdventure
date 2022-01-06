@@ -103,8 +103,8 @@
     </div>
     <div class="container-bar" style="width: 60%;  float: right; vertical-align: middle;">
         <div class="progress" style="height: 2rem;border:2px solid black;">
-            <div class="progress-bar bg-danger" id="MHealth" role="progressbar" aria-valuenow="70"
-                 aria-valuemin="0" aria-valuemax="200" style="width:70%;">
+            <div class="progress-bar bg-danger" id="MHealth" role="progressbar" aria-valuenow="200"
+                 aria-valuemin="0" aria-valuemax="200" style="width:100%;">
                 <div id="MHealthDisplay" style="color:black;">
                     HP
                 </div>
@@ -362,35 +362,54 @@
     };
 
     function MerchantEvent() {
-        var gold;
+        //var gold;
 
-        $.getJSON("../../Game/GetPurse", function (response) {
-            gold = response.gold;
+        $.getJSON("../../Game/GetMerchantInfo", function (response) {
+            //gold = response.gold;
+            //console.log("getJSON response.gold: " + response.gold);
+            //console.log("getJSON gold: " + gold);
+            var merchantBox = document.getElementById("merchant");
+            merchantBox.style.display = "inline-block";
+            merchantBox.innerHTML = response.itemtext;
+
+            var merchant = document.getElementById("MerchantBtns");
+            merchant.style.display = "inline-block";
+
+            var defaultBtn = document.getElementById("defaultBtn");
+            defaultBtn.style.display = "none";
+
+            var merchantText = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>After searching the area for a while you come across an old man carrying a large sack on his back. He looks to you with a crookedd smile." +
+                "Care to browse my wares? Opening the sack you see a few items. Will you buy? Your purse: <strong>" + response.gold + " gold</strong></div><br>";
+            addHTMLToTextUI(merchantText)
 
         })
-         $.ajax({
-            url: "../../Game/MerchantEvent",
-            type: "POST",
-            data: {  },
-            cache: false,
-            async: true,
-            success: function (data) {
-                var merchantBox = document.getElementById("merchant");
-                merchantBox.style.display = "inline-block";
-                merchantBox.innerHTML = data;
+        // $.ajax({
+        //    url: "../../Game/MerchantEvent",
+        //    type: "POST",
+        //    data: {  },
+        //    cache: false,
+        //    async: true,
+        //     success: function (data) {
+        //         var itemtext = data["_returnString"];
+        //         var gold = data["gold"];
+        //         console.log(data);
+        //         console.log(data["gold"]);
+        //        var merchantBox = document.getElementById("merchant");
+        //        merchantBox.style.display = "inline-block";
+        //        merchantBox.innerHTML = itemtext;
 
-                var merchant = document.getElementById("MerchantBtns");
-                merchant.style.display = "inline-block";
+        //        var merchant = document.getElementById("MerchantBtns");
+        //        merchant.style.display = "inline-block";
 
-                var defaultBtn = document.getElementById("defaultBtn");
-                defaultBtn.style.display = "none";
+        //        var defaultBtn = document.getElementById("defaultBtn");
+        //        defaultBtn.style.display = "none";
+                
+        //        var merchantText = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>After searching the area for a while you come across an old man carrying a large sack on his back. He looks to you with a crookedd smile." +
+        //            "Care to browse my wares? Opening the sack you see a few items. Will you buy? Your purse: <strong>" + gold + " gold</strong></div><br>";
+        //        addHTMLToTextUI(merchantText)
 
-                var merchantText = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>After searching the area for a while you come across an old man carrying a large sack on his back. He looks to you with a crooked smile. " +
-                    "Care to browse my wares? Opening the sack you see a few items. Will you buy? Your purse: <strong>" + gold + " gold</strong></div><br>";
-                addHTMLToTextUI(merchantText)
-
-            }
-        });
+        //    }
+        //});
     }
 
     function addHTMLToTextUI(html) {
@@ -705,7 +724,7 @@
                 var bag = document.getElementById("Bag-List");
                 bag.style.display = "none";
 
-                addHTMLToTextUI(data)
+                addHTMLToTextUI(data);
             }
         });
     }
@@ -729,7 +748,7 @@
                         MerchantEvent();
                     }
                     else {
-                        addHTMLToTextUI(data)
+                        addHTMLToTextUI(data);
                     }
                 }
             })
