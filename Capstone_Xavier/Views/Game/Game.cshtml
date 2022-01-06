@@ -10,20 +10,20 @@
     <!--The character UI and stats-->
     <div class="info-UI" style=" height: fit-content; padding-bottom: 1%;">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-12">
                 <div class="row">
                     <div class="col-12">
                         <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Name: @Model.character.name</h6>
                     </div>
-                    <div class="col=12">
+                    <div class="col-12">
                         <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Class: @Model.character.className</h6>
                     </div>
-                    <div class="col-7">
-                        <button class="btn-user" style="width: 50%; margin-left: 1vw;" type="submit" onclick="OpenBag()">Bag</button>
-                    </div>
+                    @*<div class="col-7">
+                    <button class="btn-user" style="width: 50%; margin-left: 1vw;" type="submit" onclick="OpenBag()">Bag</button>
+                </div>*@
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-12">
                 <div class="row">
                     <div class="col-12">
                         <div class="progress" style="height: 2rem;border:2px solid black;">
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top:2%">
                     <div class="col-6">
                         <div class="progress" style="height: 2rem;border:2px solid black;">
                             <div class="progress-bar bg-success" id="Stamina" role="progressbar" aria-valuenow="20"
@@ -46,7 +46,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<progress id="Stamina" value="20" max="60"></progress>*@
                     </div>
                     <div class="col-6">
                         <div class="progress" style="height: 2rem;border:2px solid black;">
@@ -57,11 +56,16 @@
                                 </div>
                             </div>
                         </div>
-                        @*<progress id="Magica" value="10" max="60"></progress>*@
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-7 col-sm-12">
+                    <button class="btn-user" style="width: 50%; margin-left: 1vw;" type="submit" onclick="OpenBag()">Bag</button>
+            </div>
+        </div>
+        
         @*<div style="width: 38%; height: 100%;  display:inline-block">
             <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Name: @Model.character.name</h6>
             <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Class: @Model.character.className</h6>
