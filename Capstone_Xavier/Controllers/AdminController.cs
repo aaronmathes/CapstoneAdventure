@@ -11,7 +11,6 @@ namespace Capstone_Xavier.Controllers
     using System.Web;
     using System.Web.Mvc;
 
-    //For admin/gamemaster funtions
     public class AdminController : Controller
     {
         // GET: Admin
@@ -45,7 +44,7 @@ namespace Capstone_Xavier.Controllers
             return View(admin);
         }
 
-        //-------------------------User Manipulation-----------------------
+        #region users
 
         [HttpPost]
         public ActionResult GetAllUsers() {
@@ -109,7 +108,11 @@ namespace Capstone_Xavier.Controllers
             return RedirectToAction("Admin", "Admin");
         }
 
-        //----------------------Monster Manipulation------------------------
+        #endregion users
+
+
+        #region monster
+
         [HttpGet]
         [MustBeInRole(Roles = "Admin,GameMaster")]
         [MustBeLoggedIn]
@@ -187,6 +190,8 @@ namespace Capstone_Xavier.Controllers
 
             
         }
+
+        #endregion monster
 
     }
 }
