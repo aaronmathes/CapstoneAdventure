@@ -5,35 +5,40 @@
 @{
     ViewBag.Title = "CreateCharacter";
 }
-<div class="row">
+<div class="row" style="margin-top: 3%;">
     <div class="col-md-4 ml-md-auto d-flex justify-content-center">
         <h3>CreateCharacter</h3>
     </div>
-    <div class="col-md-4 d-flex justify-content-center" id="menu-button-style">
-        <div class="nav-side">
-            <div class="dropdown">
-                <button onclick="dropDown()" class="dropBtn">More</button>
-                <div id="myDropdown" class="dropdown-item">
-                    <a onclick="location.href='@Url.Action("Users", "Home")'">User Home</a>
-                    <a onclick="location.href='@Url.Action("UserInfo", "User")'">Profile</a>
-                    @{
-                        string role = Session["Role"].ToString();
+    @*<div class="col-md-4 d-flex justify-content-center" id="menu-button-style">*@
+    <div class="col-md-4 " id="menu-button-style">
+        <div class="row">
+            <div class="row">
+                <div class="nav-side" id="user-menu-button" style="margin-top: 3%;">
+                    <div class="dropdown">
+                        <button onclick="dropDown()" class="dropBtn">More</button>
+                        <div id="myDropdown" class="dropdown-item">
+                            <a onclick="location.href='@Url.Action("Users", "Home")'">User Home</a>
+                            <a onclick="location.href='@Url.Action("UserInfo", "User")'">Profile</a>
+                            @{
+                                string role = Session["Role"].ToString();
 
-                        if (role == "1")
-                        {
-                            <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
-                        }
-                        else if (role == "3")
-                        {
-                            <a onclick="location.href='@Url.Action("Gamemaster", "Admin")'">GameMaster</a>
-                        }
-                    }
-                    @*<a>@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
-                    <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a> @*this makes no extra spaces while @Html.ActionLink creates spaces*@
+                                if (role == "1")
+                                {
+                                    <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
+                                }
+                                else if (role == "3")
+                                {
+                                    <a onclick="location.href='@Url.Action("Gamemaster", "Admin")'">GameMaster</a>
+                                }
+                            }
+                            @*<a>@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
+                            <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a> @*this makes no extra spaces while @Html.ActionLink creates spaces*@
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        </div>
 </div>
 <div class="row justify-content-center" id="content">
     <div class="col-md-3">
