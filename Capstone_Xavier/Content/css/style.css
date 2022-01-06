@@ -53,7 +53,7 @@
 
 .dropdown-item {
     display: none;
-   position: absolute;
+   /*position: absolute;*/
     background-color: darkolivegreen;
     /*left: 100%;
     min-width: 160px;*/
