@@ -1,4 +1,14 @@
 ﻿
+
+.container{
+    width: 100%;
+    min-width: 85%;
+    margin-right: 0;
+    margin-left: 10%;
+}
+.row{
+    width: 100%;
+}
 /*Dropdown*/
 
 .dropBtn {
@@ -8,10 +18,11 @@
     background-color: darkolivegreen;
     border: none;
     cursor: pointer;
-    width: 400%;
+   /* width: 400%;*/
+    width: 100%;
     border: 2px solid white;
     margin-right: 0;
-    position: relative;
+    position: inherit;
     left: 100%;
     border-radius: 10px;
     display: inline-block;
@@ -23,17 +34,18 @@
     }
 
 .dropdown {
-    position: relative;
+    position: unset;
     display: inline-block;
+    width:100%;
 }
 
 .dropdown-item {
     display: none;
     position: absolute;
     background-color: darkolivegreen;
-    left: 100%;
+    /*left: 100%;
     min-width: 160px;
-    width: 400%;
+    width: 400%;*/
     text-align: center;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -58,22 +70,26 @@
 /*Other*/
 
 .nav-side {
-    width: 33%;
+    /*width: 33%;*/
+    width: 60%;
     margin: 0 auto;
-    margin-top: 2vw;
+    /*margin-top: 2vw;*/
     padding: 3px;
-    position: absolute;
-    right: 5vw;
+    position: inherit;
+    /*right: 5vw;*/
     display: inline-block;
+    align-self: center;
 }
 .nav-side2 {
-    width: 33%;
+    /* width: 33%;*/
+    width: 60%;
     margin: 0 auto;
-    margin-top: 7vw;
+    /* margin-top: 7vw;*/
     padding: 3px;
-    position: absolute;
-    right: 5vw;
+    position: inherit;
+    /*  right: 5vw;*/
     display: inline-block;
+    align-self: center;
 }
 
 .title {
@@ -107,17 +123,20 @@
 }
 
 .input {
-    position: relative;
+    position: inherit;
     display: inline-block;
     width: 25vw;
-    margin: 1vw;
+    /*margin: 1vw;*/
+    margin-bottom: 0.5em;
 }
 
 .input-list {
-    margin-top: 25%;
+    /*margin-top: 25%;*/
     margin-bottom: .5em;
 }
-
+#edit-text-field {
+    text-align: center;
+}
 .btn:hover {
     background-color: chocolate;
     background-image: linear-gradient(to bottom right, chocolate, saddlebrown);
@@ -198,9 +217,9 @@ label {
 
 h2 {
     width: auto;
-    position: absolute;
+    position: unset;
     margin-top: 1em;
-    left: 40vw;
+    /*left: 40vw;*/
     display: block;
     float: left;
     padding: 1.5em;
@@ -334,16 +353,18 @@ button {
 
 .info-box {
     border: 1px solid white;
-    height: 300px;
-    width: 350px;
+    height: 100%;
+    width: 100%;
     background-color: saddlebrown;
     display: block;
-    position: absolute;
-    bottom: 1vw;
+    position: inherit;
+   /* bottom: 1vw;*/
     overflow-y: scroll;
     overflow-x: visible;
 }
-
+#info-box-rows {
+    margin-left: 0;
+}
 .shop-item {
     border: 1px solid black;
     width: 100%;
@@ -424,12 +445,14 @@ button {
     border: 2px solid saddlebrown;
     padding: 3px;
     margin: 3px;
-    height: auto;
+    /*height: auto;*/
     display: block;
     background-image: linear-gradient(palegoldenrod, gray);
     border-radius: 7px;
     text-align: center;
     font-size: 15px;
+    margin-bottom: 0.5vw;
+    height: calc(2.25rem + 2px);
 }
 
 
