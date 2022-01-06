@@ -12,21 +12,19 @@
     <div class="dropdown">
         <button onclick="dropDown()" class="dropBtn">More</button>
         <div id="myDropdown" class="dropdown-item">
-            <a href="#">About</a>
-            <a onclick="location.href='@Url.Action("Users", "Home")'">Home</a>
+            <a onclick="location.href='@Url.Action("Users", "Home")'">User Home</a>
             @{
                 string role = Session["Role"].ToString();
 
                 if (role == "1")
                 {
-                    <a onclick="location.href='@Url.Action("Admin", "Admin")'">GameMaster</a>
+                    <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
                 }
                 else if (role == "3")
                 {
-                    <a onclick="location.href='@Url.Action("GameMaster", "Admin")'">Admin</a>
+                    <a onclick="location.href='@Url.Action("GameMaster", "Admin")'">Gamemaster</a>
                 }
             }
-            <a href="#">@Html.ActionLink("FAQS", "FAQS", "Home")</a>
             <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a>
         </div>
     </div>

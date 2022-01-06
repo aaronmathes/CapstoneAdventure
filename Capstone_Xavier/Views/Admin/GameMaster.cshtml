@@ -3,7 +3,7 @@
     ViewBag.Title = "GameMaster";
 }
 
-<h2>GameMaster</h2>
+@*<h2>GameMaster</h2>*@
 
 @using Capstone_Xavier.Models
 @model AdminModel
@@ -13,7 +13,7 @@
 
 }
 
-<h2>GameMaster</h2>
+@*<h2>GameMaster</h2>
 
 
 
@@ -31,32 +31,102 @@
 
 
 <label style="left: 28vw; top: 27vw; position: absolute">Click the quil to edit monsters.</label>
-
-
-<div class="list" id="Monsters" style="display: inline-block; width:50%; overflow-x: visible; display: inline-block">
-    <label style="top: -5vw;">Monsters List</label>
-    @foreach (MonsterModel monster in Model.monsters)
-    {
-
-        <div class="list-item-character" style="width: auto; ">
-            <div style="width: auto">
-                <p style=" display:inline; ">@monster.monsterName</p>
-                <div class="info" style="border: none; width: 80% ; display: inline; color: black; right: -5vw ">
-                    Health: @monster.health | Armor: @monster.armor | Damage: @monster.damage | Danger: @monster.danger
-                    <br>
+<div class="row" style="margin-top: 2%;">
+    <div class="col-md-4 ml-md-auto d-flex justify-content-center">
+        <h2>Admin</h2>
+    </div>
+    <div class="col-md-4" id="menu-button-style">
+        <div class="row">
+            <div class="row">
+                <div class="nav-side" id="user-menu-button">
+                    <div class="dropdown">
+                        <button onclick="dropDown()" class="dropBtn">More</button>
+                        <div id="myDropdown" class="dropdown-item">
+                            <a onclick="location.href='@Url.Action("Users", "Home")'">Home</a>
+                            <a onclick="location.href='@Url.Action("UserInfo", "User")'">Profile</a>
+                            <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a>
+                        </div>
+                    </div>
                 </div>
-                <button class="btn-change" style="float: left; margin: 3px;" value="@monster.monsterID" onclick="location.href='@Url.Action("MonsterAlter", "Admin", monster)'"></button>
 
             </div>
-
         </div>
-        <hr>
-    }
-</div>
-<div id="ComabatBtn" class="" style="display: inline-block; float: right; right: 10vw; top: 23vw; position: absolute;">
+    </div>
+</div>*@
+<div class="row" style="margin-top: 2%;">
+    <div class="col-md-4 ml-md-auto d-flex justify-content-center">
+        <h2>GameMaster</h2>
+    </div>
+    <div class="col-md-4" id="menu-button-style">
+        <div class="row">
+            <div class="row">
+                <div class="nav-side" id="user-menu-button">
+                    <div class="dropdown">
+                        <button onclick="dropDown()" class="dropBtn">More</button>
+                        <div id="myDropdown" class="dropdown-item">
+                            <a onclick="location.href='@Url.Action("Users", "Home")'">User Home</a>
+                            <a onclick="location.href='@Url.Action("UserInfo", "User")'">Profile</a>
+                            <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a>
+                        </div>
+                    </div>
+                </div>
 
-    <button class="btn-user" id="MButton" style="display:inline-block;" onclick="location.href='@Url.Action("CreateMonster", "Admin")'">Create Monster</button>
-   
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center" id="content">
+    <div class="row justify-content-center" @*style="margin-bottom: 1%;"*@>
+        <div class="col-sm-2 d-flex justify-content-center" style="margin-right: 1%; margin-left: 0;">
+            <label style="height: fit-content;">Click the quil to edit monsters.</label>
+        </div>
+        <div class="col-sm-2 d-flex justify-content-center" style="margin-left: 5%; padding-left: 3%;">
+            <div id="ComabatBtn" class="" style="display: inline-block; float: right;">
+                <button class="btn-user" id="MButton" style="display:inline-block;" onclick="location.href='@Url.Action("CreateMonster", "Admin")'">Create Monster</button>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center" @*style="margin-bottom: 1%;"*@>
+        <div class="col-sm-6">
+            <div class="list" id="Monsters" style="display: inline-block; width:100%; overflow-x: visible;">
+                <label style=" margin-bottom: 2%;">Monsters List</label>
+                @foreach (MonsterModel monster in Model.monsters)
+                {
+                    <div class="row" style="margin-left: 0;">
+                        <div class="col-md-1">
+                            <button class="btn-change" style="float: left; margin: 3px;" value="@monster.monsterID" onclick="location.href='@Url.Action("MonsterAlter", "Admin", monster)'"></button>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="list-item-character" style="width: auto; ">
+                                @*<div style="width: auto">*@
+                                <p style=" display:inline; padding: 4%; margin-top:1%;">@monster.monsterName</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7">
+                            <div class="info" style="margin-top: 0; float: none" @*style="border: none; width: 80% ; display: inline; color: black; right: -5vw "*@>
+                                Health: @monster.health | Armor: @monster.armor | Damage: @monster.damage | Danger: @monster.danger
+                                <br>
+                            </div>
+                        </div>
+
+
+
+                        @*</div>*@
+
+
+
+                    </div>
+                    <hr>
+                }
+            </div>
+        </div>
+
+        @*<div id="ComabatBtn" class="" style="display: inline-block; float: right; right: 10vw; top: 23vw; position: absolute;">
+
+            <button class="btn-user" id="MButton" style="display:inline-block;" onclick="location.href='@Url.Action("CreateMonster", "Admin")'">Create Monster</button>*@
+
+    </div>
 </div>
 
 
