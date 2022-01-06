@@ -3,78 +3,90 @@
 @{
     ViewBag.Title = "AdminUserAlter";
 }
+<!--Title and menu bar-->
+<div class="row" style="margin-top: 3%">
+    <div class="col-md-4 ml-md-auto d-flex justify-content-center">
+        <h3>@ViewData["Title"]</h3>
+    </div>
+    <div class="col-md-4 " id="menu-button-style">
+        <div class="row">
+            <div class="row">
+                <div class="nav-side" id="user-menu-button" style="margin-top: 3%;">
+                    <div class="dropdown">
+                        <button onclick="dropDown()" class="dropBtn">More</button>
+                        <div id="myDropdown" class="dropdown-item">
+                            <a onclick="location.href='@Url.Action("Users", "Home")'">Home</a>
+                            @{
+                                string role = Session["Role"].ToString();
 
-<h3>Alter User</h3>
-
-<div class="nav-side" style="margin: 2vw;">
-    <div class="dropdown">
-        <button onclick="dropDown()" class="dropBtn">More</button>
-        <div id="myDropdown" class="dropdown-item">
-            <a href="#">About</a>
-            <a onclick="location.href='@Url.Action("Users", "Home")'">Home</a>
-            @{
-                string role = Session["Role"].ToString();
-
-                if (role == "1" || role == "2")
-                {
-                    <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
-                }
-            }
-            <a href="#">@Html.ActionLink("FAQS", "FAQS", "Home")</a>
-            <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a>
+                                if (role == "1" || role == "2")
+                                {
+                                    <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
+                                }
+                            }
+                            <a href="#">@Html.ActionLink("FAQS", "FAQS", "Home")</a>
+                            <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<br>
 
 
 <div id="Update" style="top: 4vw;">
-    @using (Html.BeginForm("AdminUserAlter", "Admin", FormMethod.Post))
-    {
-
-        <div class="input-list">
-            <div class="input">
-                <label>Password</label>
-                @Html.EditorFor(m => m.password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter new password" } })
-                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(m => m.password, null, new { @class = "validation" }).ToHtmlString()))
+    <div class="row justify-content-center" id="content">
+        @using (Html.BeginForm("AdminUserAlter", "Admin", FormMethod.Post))
+        {
+            <div class="col-12">
+                <div class="input-list">
+                    <div class="input">
+                        <label>Password</label>
+                        @Html.EditorFor(m => m.password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter new password" } })
+                        @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(m => m.password, null, new { @class = "validation" }).ToHtmlString()))
+                    </div>
+                    <br>
+                    <div class="input">
+                        <label>Confirm Password</label>
+                        @Html.EditorFor(m => m.confirmPassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter confirm password" } })
+                        @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(m => m.confirmPassword, null, new { @class = "validation" }).ToHtmlString()))
+                    </div>
+                    <br>
+                    <div class="input">
+                        <label>Email</label>
+                        @Html.EditorFor(m => m.email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter email" } })
+                        @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(m => m.email, null, new { @class = "validation" }).ToHtmlString()))
+                    </div>
+                    <br>
+                    <div class="input">
+                        <label>Username</label>
+                        @Html.EditorFor(m => m.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter new username" } })
+                        @Html.ValidationMessageFor(m => m.username, null, new { @class = "validation" })
+                    </div>
+                    <br>
+                    <div class="input">
+                        <label>Role</label>
+                        @Html.DropDownListFor(Model => Model.roleID, new SelectList(Model.roles, "roleID", "roleName"), new { @id = "Roles", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.roleID, null, new { @class = "validation" })
+                    </div>
+                    <br>
+                    @Html.HiddenFor(m => m.roleID)
+                    @Html.HiddenFor(m => m.userID)
+                </div>
+                <button type="submit" class="btn-user" style="margin: 20px">Update</button>
             </div>
-            <br>
-            <div class="input">
-                <label>Confirm Password</label>
-                @Html.EditorFor(m => m.confirmPassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter confirm password" } })
-                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(m => m.confirmPassword, null, new { @class = "validation" }).ToHtmlString()))
-            </div>
-            <br>
-            <div class="input">
-                <label>Email</label>
-                @Html.EditorFor(m => m.email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter email" } })
-                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(m => m.email, null, new { @class = "validation" }).ToHtmlString()))
-            </div>
-            <br>
-            <div class="input">
-                <label>Username</label>
-                @Html.EditorFor(m => m.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter new username" } })
-                @Html.ValidationMessageFor(m => m.username, null, new { @class = "validation" })
-            </div>
-            <br>
-            <div class="input">
-                <label>Role</label>
-                @Html.DropDownListFor(Model => Model.roleID, new SelectList(Model.roles, "roleID", "roleName"), new { @id = "Roles", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.roleID, null, new { @class = "validation" })
-            </div>
-            <br>
-            @Html.HiddenFor(m => m.roleID)
-            @Html.HiddenFor(m => m.userID)
-        </div>
-        <button type="submit" class="btn-user" style="margin: 20px">Update</button>
+        
     }
 
-    @using (Html.BeginForm("RemoveUser", "Admin", new { id = Model.userID }, FormMethod.Post))
-    {
+        @using (Html.BeginForm("RemoveUser", "Admin", new { id = Model.userID }, FormMethod.Post))
+        {
+    <div class="col-12">
         <button type="submit" class="btn-user" style="margin: 20px">Delete this user</button>
-    }
-
-</div>
+    </div>
+        }
+        </div>
+    </div>
 
 
 
