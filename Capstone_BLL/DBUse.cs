@@ -65,7 +65,7 @@ namespace Capstone_BLL
             Mapper map = new Mapper();
             ModifyUsers _user = new ModifyUsers();
 
-            _user.UpdateUser(user.UserID,map.UserBO_To_DO(user));
+            _user.UpdateUser(map.UserBO_To_DO(user));
         }
 
         public List<UsersBO> GetAllUsers() {

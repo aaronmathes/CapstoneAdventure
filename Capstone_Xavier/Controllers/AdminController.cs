@@ -58,40 +58,53 @@ namespace Capstone_Xavier.Controllers
         [HttpGet]
         [MustBeLoggedIn]
         [MustBeInRole(Roles = "Admin")]
-        public ActionResult ReturnUserInfo(UserModel user) {
-            Mapper map = new Mapper();
-            DBUse data = new DBUse();
+        public ActionResult AdminUserAlter(int id) 
+        {
+            Mapper _map = new Mapper();
+            DBUse _data = new DBUse();
+            var _getUser = _data.GetAllUsers().Where(u => u.UserID == id).FirstOrDefault();
 
-            user.roles = map.RoleBO_To_List(data.GetRoles());
+            UserModel _user = _map.UserBOToUserModel(_getUser);
 
-            return View("AdminUserAlter", user);
+            _user.roles = _map.RoleBO_To_List(_data.GetRoles());
+
+            return View("AdminUserAlter", _user);
         }
 
         [HttpPost]
-        public ActionResult UpdateUser(UserModel user) {
-            DBUse data = new DBUse();
-            Mapper map = new Mapper();
+        [MustBeLoggedIn]
+        [MustBeInRole(Roles = "Admin")]
+        public ActionResult AdminUserAlter(UserModel user) 
+        {
 
-                if (user.password == user.confirmPassword)
-                {
-                    data.UpdateUserInfo(map.UserModel_To_BO(user));
-                    user.alertType = 1;
-                }
-                else {
-                    user.alertType = 2;
-                }
+            DBUse _data = new DBUse();
+            Mapper _map = new Mapper();
 
-            if (user.changeRole == true) {
-                data.ChangeUserRole(user.userID, user.roleID);
+            if (ModelState.IsValid)
+            {
+                       
+                _data.UpdateUserInfo(_map.UserModel_To_BO(user));                          
+                return RedirectToAction("Admin", "Admin");
+              
+            }
+            else 
+            {
+                user.roles = _map.RoleBO_To_List(_data.GetRoles());
+                return View(user);
+
             }
 
-            return RedirectToAction("Admin", "Admin");
+         
         }
 
-        public ActionResult RemoveUser(UserModel user) {
+        [HttpPost]
+        [MustBeLoggedIn]
+        [MustBeInRole(Roles = "Admin")]
+        public ActionResult RemoveUser(int id) 
+        {
             DBUse data = new DBUse();
 
-            data.RemoveUser(user.userID);
+            data.RemoveUser(id);
 
             return RedirectToAction("Admin", "Admin");
         }

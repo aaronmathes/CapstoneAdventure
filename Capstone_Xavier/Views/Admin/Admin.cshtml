@@ -50,8 +50,7 @@
                 </div>
 
             </div>
-                <button class="btn-change" style="float: left; margin: 3px;" value="@user.userID" onclick="location.href='@Url.Action("ReturnUserInfo", "Admin",  user)'"></button>
-                
+                <button class="btn-change" style="float: left; margin: 3px;" value="@user.userID" onclick="location.href='@Url.Action("AdminUserAlter", "Admin", new { id = user.userID })'"></button>
             </div>
         <hr>
 
@@ -89,6 +88,7 @@
 
 
 <script>
+
     function Toggle() {
         var monsters = document.getElementById("Monsters");
         var users = document.getElementById("Users");

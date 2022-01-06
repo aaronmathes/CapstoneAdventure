@@ -30,9 +30,11 @@ function Delete() {
     }
 }
 
+
 //For toggling the update user role
 function ChangeRole() {
     var role = document.getElementById("Roles");
+
 
     if (role.style.display === "none") {
         role.style.display = "inline-block";
