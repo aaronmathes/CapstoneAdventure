@@ -1,16 +1,55 @@
 ﻿@using Capstone_Xavier.Models
 @model GameModel
 
-<!--First row with game text output, character stats, and hidden boxes: merchant,regions to travel, monster combat-->
+<!--Row with two columns: First col: game text output (buttons below), Second col: character stats,hidden boxes: merchant,regions to travel, and monster combat, and bag-->
 <div class="row">
-    <!--The game view. Where text responses are put-->
-    <div class="col-md-6 col-sm-12">
-        <div class="text-UI" id="text-UI" style="width:100%; position:relative;"></div>
+    <!--The game view. Where text responses are put and buttons can be clicked-->
+    <div class="col-md-6 col-sm-12" >
+        <div class="row">
+            <div class="col-12" style="padding-right:1%">
+                <div class="text-UI" id="text-UI" style="width:100%; position:relative;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <!--Buttons-->
+            <div class="col-12">
+
+                <!--The default buttons. Showed automatically-->
+                <div id="defaultBtn" class="btn-block">
+                    <button class="btn-user" id="Travel">Travel</button>
+                    <button class="btn-user" id="Look" onclick="Travel(0,2)">Look Around</button>
+                    <button class="btn-user" onclick="location.href='@Url.Action("Users", "Home")'">Exit</button>
+                </div>
+
+                <!--Merchant Buttons. Called on merchant events-->
+                <div id="MerchantBtns" class="btn-block" style="display: none;">
+                    <button class="btn-user" id="SellClose" style="display: none;" onclick="closeSellBag()">Sell (Close Bag)</button>
+                    <button class="btn-user" id="SellOpen" onclick="openSellBag()">Sell (Open Bag)</button>
+                    <button class="btn-user" id="btn-merchant" onclick="LeaveMerchant()">Leave Merchant</button>
+                </div>
+
+
+                <!--For combat events only. Shows during monster events-->
+                <div id="ComabatBtn" class="btn-block" style="display: none;">
+                    <button class="btn-user" onclick="combatAction(0)">Attack</button>
+                    <button class="btn-user" onclick="combatAction(1)">Defend</button>
+                    <button class="btn-user" onclick="combatAction(2)">Flee</button>
+                    <button class="btn-user" onclick="location.href='@Url.Action("Users", "Home")'">Exit</button>
+                </div>
+
+                <!--For player death events. Shows only when the healt is less or = to 0-->
+                <div id="Lost" class="btn-block" style="display: none;">
+                    <button class="btn-user" onclick="location.href='@Url.Action("Users", "Home")'">I accept my fate</button>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!--The character UI/stats, three hidden boxes (merchant, travel, combat)-->
     <div class="col-md-6 col-sm-12">
+        <!--The character UI/stats-->
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" style="padding-left:1%; padding-bottom:1%">
                 <div class="info-UI" style="height:fit-content; padding-bottom: 1%;width:100%;position:relative;">
                     <div class="row">
                         <div class="col-md-4 col-sm-12">
@@ -22,8 +61,8 @@
                                     <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Class: @Model.character.className</h6>
                                 </div>
                                 @*<div class="col-7">
-                                        <button class="btn-user" style="width: 50%; margin-left: 1vw;" type="submit" onclick="OpenBag()">Bag</button>
-                                    </div>*@
+                                    <button class="btn-user" style="width: 50%; margin-left: 1vw;" type="submit" onclick="OpenBag()">Bag</button>
+                                </div>*@
                             </div>
                         </div>
                         <div class="col-md-8 col-sm-12">
@@ -71,10 +110,11 @@
                 </div>
             </div>
         </div>
+        <!--Merchant items-->
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" style="padding-left:1%;">
                 <!--For merchant events only. Refreshed every time the event is triggered-->
-                <div id="merchant" class="info-box" style="left:55vw; height: 15vw; width:45vw; top: 7vw; display: none;"></div>
+                <div id="merchant" class="info-box" style="left:55vw; height: 15vw; width:100%; top: 7vw; display: none;"></div>
                 <!--Opened and used for a list of available regions to travel to.-->
                 <div class="list-bag" id="list-regions" style="display: none;">
 
@@ -104,65 +144,17 @@
                 </div>
             </div>
         </div>
+        <!--Bag-->
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12" style="padding-left:1%;">
+                <!--The character bag items. Refreshed every time the bag button is clicked.-->
+                <div id="Bag-List" class="list-bag" style="bottom: 0;height: 20vw; width:100%; top:28vw; display: none;"></div>
+            </div>
+        </div>
     </div>
 
 </div>
-
-<!--Second row with buttons and character bag items-->
-<div class="row">
-    <!--Buttons-->
-    <div class="col-md-6 col-sm-12">
-        <!--The default buttons. Showed automatically-->
-        <div id="defaultBtn" class="btn-block">
-            <button class="btn-user" id="Travel">Travel</button>
-            <button class="btn-user" id="Look" onclick="Travel(0,2)">Look Around</button>
-            <button class="btn-user" onclick="location.href='@Url.Action("Users", "Home")'">Exit</button>
-        </div>
-
-        <!--Merchant Buttons. Called on merchant events-->
-        <div id="MerchantBtns" class="btn-block" style="display: none;">
-            <button class="btn-user" id="SellClose" style="display: none;" onclick="closeSellBag()">Sell (Close Bag)</button>
-            <button class="btn-user" id="SellOpen" onclick="openSellBag()">Sell (Open Bag)</button>
-            <button class="btn-user" id="btn-merchant" onclick="LeaveMerchant()">Leave Merchant</button>
-        </div>
-
-
-        <!--For combat events only. Shows during monster events-->
-        <div id="ComabatBtn" class="btn-block" style="display: none;">
-            <button class="btn-user" onclick="combatAction(0)">Attack</button>
-            <button class="btn-user" onclick="combatAction(1)">Defend</button>
-            <button class="btn-user" onclick="combatAction(2)">Flee</button>
-            <button class="btn-user" onclick="location.href='@Url.Action("Users", "Home")'">Exit</button>
-        </div>
-
-        <!--For player death events. Shows only when the healt is less or = to 0-->
-        <div id="Lost" class="btn-block" style="display: none;">
-            <button class="btn-user" onclick="location.href='@Url.Action("Users", "Home")'">I accept my fate</button>
-        </div>
-    </div>
-    <!--Bag-->
-    <div class="col-md-6 col-sm-12">
-        <!--The character bag items. Refreshed every time the bag button is clicked.-->
-        <div id="Bag-List" class="list-bag" style="bottom: 0;height: 20vw; top:28vw; display: none;"></div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-@*height: 183px; overflow-y: auto; border: 1px solid white;*@
-
-
-
-
-
-
-
-
 
 
 <script type="text/javascript">
