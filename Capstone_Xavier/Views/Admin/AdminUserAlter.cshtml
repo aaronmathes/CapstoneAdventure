@@ -4,7 +4,7 @@
     ViewBag.Title = "AdminUserAlter";
 }
 
-<h3>Alter User @Model.roleID</h3>
+<h3>Alter User</h3>
 
 <div class="nav-side" style="margin: 2vw;">
     <div class="dropdown">
@@ -27,133 +27,54 @@
 </div>
 <br>
 
-<div class="info-box" style="top: 12vw; height: 15vw;">
-    <label>Name</label>
-    <p class="c-info">@Model.username</p>
-    <label>Email</label>
-    <p class="c-info">@Model.email</p>
-    <label>Role</label>
-    @if (Model.roleID == 0)
+
+<div id="Update" style="top: 4vw;">
+    @using (Html.BeginForm("AdminUserAlter", "Admin", FormMethod.Post))
     {
-        <p class="c-info">User</p>
-    }
-    else if (Model.roleID == 1)
-    {
-        <p class="c-info">Administrator</p>
-    }
-    else {
-        <p class="c-info">GameMaster</p>
-    }
-</div>
-<div class="" style="display: inline-block; float: left; left: 13vw; top: 28vw; position: absolute;">
-    <button class="btn-user" id="MButton" onclick="Update()">Update User</button>
-    <button class="btn-user" id="Toggle" onclick="Delete()">Remove</button>
-</div>
 
-@using (Html.BeginForm("UpdateUser", "Admin", Model))
-{
-<div id="Update" class="nav-side" style="top: 4vw; display: none;">
-    <div class="input-list">
-
-        <div class="input">
-            <label>Password</label>
-            <span class="icon-input"></span>
-
-            @Html.EditorFor(UserModel => UserModel.password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
-
-        </div>
-        <br>
-        <div class="input">
-            <label>Confirm Password</label>
-            <span class="icon-input"></span>
-
-            @Html.EditorFor(UserModel => UserModel.confirmPassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
-
-        </div>
-        <br>
-        <div class="input">
-            <label>Email</label>
-            <span class="icon-input"></span>
-
-            @Html.EditorFor(UserModel => UserModel.email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
-
-        </div>
-        <br>
-        <div class="input">
-            <label>Username</label>
-            <span class="icon-input"></span>
-
-            @Html.EditorFor(UserModel => UserModel.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
-
-        </div>
-        <br>
+        <div class="input-list">
             <div class="input">
-                <label>Confirm Password</label>
-                <span class="icon-input"></span>
-
-                @Html.DropDownListFor(Model => Model.roleID, new SelectList(Model.roles, "roleID", "roleName"), new { @id = "Roles", @class = "form-control" })
-
+                <label>Password</label>
+                @Html.EditorFor(m => m.password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter new password" } })
+                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(m => m.password, null, new { @class = "validation" }).ToHtmlString()))
             </div>
             <br>
-        
+            <div class="input">
+                <label>Confirm Password</label>
+                @Html.EditorFor(m => m.confirmPassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter confirm password" } })
+                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(m => m.confirmPassword, null, new { @class = "validation" }).ToHtmlString()))
+            </div>
+            <br>
+            <div class="input">
+                <label>Email</label>
+                @Html.EditorFor(m => m.email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter email" } })
+                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(m => m.email, null, new { @class = "validation" }).ToHtmlString()))
+            </div>
+            <br>
+            <div class="input">
+                <label>Username</label>
+                @Html.EditorFor(m => m.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter new username" } })
+                @Html.ValidationMessageFor(m => m.username, null, new { @class = "validation" })
+            </div>
+            <br>
+            <div class="input">
+                <label>Role</label>
+                @Html.DropDownListFor(Model => Model.roleID, new SelectList(Model.roles, "roleID", "roleName"), new { @id = "Roles", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.roleID, null, new { @class = "validation" })
+            </div>
+            <br>
+            @Html.HiddenFor(m => m.roleID)
+            @Html.HiddenFor(m => m.userID)
+        </div>
+        <button type="submit" class="btn-user" style="margin: 20px">Update</button>
+    }
 
-    </div>
+    @using (Html.BeginForm("RemoveUser", "Admin", new { id = Model.userID }, FormMethod.Post))
+    {
+        <button type="submit" class="btn-user" style="margin: 20px">Delete this user</button>
+    }
 
-    <button type="submit" class="btn-user" onclick="">Submit</button>
 </div>
 
-    }
-
-    
-
-
-<div class="warning" style=" bottom: 20vw; right: 15vw; display: none;" id="Warning">
-    <h3 style="position: absolute">Warning!</h3>
-    <p>Are you sure you want to permanetly remove this user?</p>
-    <button class="btn-user" onclick="location.href='@Url.Action("RemoveUser", "Admin",  Model)'" >Confirm</button>
-    <button class="btn-user" onclick="Delete()">Cancel</button>
-</div>
-
-
-<script>
-    //For toggling the update user password
-    function Update() {
-        var update = document.getElementById("Update");
-        var warning = document.getElementById("Warning");
-
-        if (update.style.display == "none") {
-            update.style.display = "inline-block";
-            warning.style.display = "none";
-        } else {
-            update.style.display = "none";
-        }
-    }
-
-    //For toggling the remove confirm
-    function Delete() {
-        var warning = document.getElementById("Warning");
-        var update = document.getElementById("Update");
-        if (warning.style.display == "none") {
-            warning.style.display = "inline-block";
-            update.style.display = "none";
-        } else {
-            warning.style.display = "none";
-        }
-    }
-
-    //For toggling the update user role
-    function ChangeRole() {
-        var role = document.getElementById("Roles");
-
-        if (role.style.display === "none") {
-            role.style.display = "inline-block";
-        } else {
-            role.style.display = "none";
-        }
-
-
-    }
-
-</script>
 
 

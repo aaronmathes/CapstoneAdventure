@@ -37,6 +37,46 @@
         </div>
     </div>
 
+
+<div class="list">
+    @foreach (CharacterModel ch in Model)
+    {
+    <div id="@ch.id">
+        <div class="row" style="margin-right: 0px; margin-left: 0px;">
+            <div class="col-sm-6">
+                <div class="list-item-character">
+                    <p onclick="location.href='@Url.Action("Game", "Game", ch)'" style="cursor: pointer">@ch.name</p>
+                    <h6 class="sub-num">@ch.level</h6>
+                    <button class="btn-change" id="@ch.id" onclick="location.href='@Url.Action("UpdateCharacter", "User", ch)'"></button>
+                    <button class="btn-remove" id="CharacterRemoveButton" onclick="DeleteCharacterAlert('@ch.name', '@ch.id')"></button>
+                </div>
+                <div class="row" style="margin-right: 0px; margin-left: 0px;">
+                    <div class="info" style="margin-left: 2%;">@ch.className</div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="info">
+                    Health: @ch.health / @ch.maxHP
+                    <br>
+                    Xp: @ch.xp / @ch.maxXp
+                    <br>
+                    Gold: @ch.gold
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+    }
+</div>
+
+<div id="deleteAlert" style="display: none; position: fixed; right: 40vw; top: 17vw; font-size: 1.5rem; width: fit-content; padding: 2%; background-color: palegoldenrod; background-image: linear-gradient(#ee3f3f, #961111); border-radius: 12px; ">
+
+</div>
+
+<div>
+    <button class="btn-user" id="User" onclick="location.href='@Url.Action("createCharacter", "User", null)'">Create Character</button>
+    <label style="position: absolute; top:20vw; right:25vw;">Click the character name to play!</label>
+</div>
     <div class="row justify-content-center" id="content">
         <div class="row justify-content-center">
             @*justify-content-center*@
@@ -103,12 +143,57 @@
 </div>
 
 
-
-
-
-
-
 <script type="text/javascript">
+    function DeleteCharacterAlert(name, id) {
+        $.ajax({
+            url: "../../User/DeleteAlert",
+            type: "Post",
+            data: { name: name, id: id},
+            cache: false,
+            async: true,
+            success: function (data) {
+                var alert = document.getElementById("deleteAlert");
+                /*console.log("deleteAlert");*/
+                alert.style.display = "inline-block";
+                alert.innerHTML = data;
+                console.log(data);
+            }
+        });
 
-</script>
+    }
+
+    function cancelDelete() {
+        var alert = document.getElementById("deleteAlert");
+        console.log(alert.innerHTML);
+        alert.style.display = "none";
+
+    }
+    function removeCharacter(id) {
+        console.log(id);
+        //<!--var button = document.getElementById("delete");
+        //var id = charId;
+         @*button.onclick = "location.href='@Url.Action("RemoveCharacter", "User", Model[id] )'"-->*@
+        @*button.onclick = "location.href='@Url.Action("RemoveCharacter", "User", cha )'"*@
+
+        $.ajax({
+            url: "../../User/RemoveCharacter",
+            type: "Post",
+            data: { characterId: id },
+            cache: false,
+            async: true,
+            success: function (data) {
+                console.log(id);
+                var list = document.getElementById(data);
+                list.style.display = "none";
+                var alert = document.getElementById("deleteAlert");
+                alert.style.display = "none";
+                //var alert = document.getElementById("deleteAlert");
+                ///*console.log("deleteAlert");*/
+                //alert.style.display = "inline-block";
+                //alert.innerHTML = data;
+                //console.log(data);
+            }
+        });
+    }
+        </script>
 

@@ -147,7 +147,13 @@
     background-color: chocolate;
     background-image: linear-gradient(to bottom right, chocolate, saddlebrown);
 }
+#delete:hover {
+    background-image: linear-gradient(to bottom right, #faf550, #bcb600);
+}
 
+#deleteCancel:hover {
+    background-image: linear-gradient(to bottom right, #4442f2, blue);
+}
 .form-control {
     display: inline-block;
     background-color: lightgoldenrodyellow;
