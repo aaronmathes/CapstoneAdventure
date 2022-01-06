@@ -1,34 +1,51 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-    <div class="text-center">
-        <div>
-            <h3>Capstone: A text based adventure.</h3>
-        </div>
-    </div>
 
-        <br>
-        <div class="title">
-            
-            <p>
-                Welcome to the land of Capstone. Where adventure awaits. Explore the expansive world, and fend off monsters of all shapes and sizes as you search for gold and glory. Everyone is their own
-                person. Make a character suited to your liking and go explore. Find hidden treasures, fight dragons of mythical proportions, and loot amazing gear to stand higher than any other. Each story is differnt
-                and every ending thier own. Will you tell a tale of grandur and fame? or will you be forgotten among the rest? Only you will find what story you tell in the fantasy land of Capstone.
-            </p>
-        </div>
-        <br>
-        <div class="nav-side">
-            <!--<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>-->
-
-            <a onclick="location.href='@Url.Action("Register", "Home")'" class="btn">Register</a>
-            <a onclick="location.href='@Url.Action("Login", "Home")'" class="btn">Login</a>
-            <br>
-
-            <!--Dropdown menu-->
-            <div class="dropdown">
-                <button onclick="dropDown()" class="dropBtn">More</button>
-                <div id="myDropdown" class="dropdown-item">
-                    <a onclick="location.href='@Url.Action("FAQS", "Home")'"> FAQS</a>
-                </div>
+<div class="row" style=" margin-top: 3%;">
+    <div class="col-md-4 ml-md-auto d-flex justify-content-center">
+        <div class="text-center">
+            <div>
+                <h3>Capstone: A text based adventure.</h3>
             </div>
         </div>
+    </div>
+    <div class="col-md-4 d-flex justify-content-center" id="menu-button-style">
+        <div class="row">
+            <div class="row">
+                <div class="nav-side">
+                    <!--<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>-->
+                    <!--Dropdown menu-->
+                    <div class="dropdown">
+                        <button onclick="dropDown()" class="dropBtn">More</button>
+                        <div id="myDropdown" class="dropdown-item">
+                            <a onclick="location.href='@Url.Action("FAQS", "Home")'"> FAQS</a>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="row justify-content-center" style="margin-top:1.5%;">
+                <a id="home-buttons" onclick="location.href='@Url.Action("Register", "Home")'" class="btn" style="margin-right:2%;">Register</a>
+                <a id="home-buttons" onclick="location.href='@Url.Action("Login", "Home")'" class="btn">Login</a>
+            </div>
+        </div> 
+       
+
+    </div>
+</div>
+<div class="row justify-content-center" id="content">
+    <div class="title">
+
+        <p>
+            Welcome to the land of Capstone. Where adventure awaits. Explore the expansive world, and fend off monsters of all shapes and sizes as you search for gold and glory. Everyone is their own
+            person. Make a character suited to your liking and go explore. Find hidden treasures, fight dragons of mythical proportions, and loot amazing gear to stand higher than any other. Each story is differnt
+            and every ending thier own. Will you tell a tale of grandur and fame? or will you be forgotten among the rest? Only you will find what story you tell in the fantasy land of Capstone.
+        </p>
+    </div>
+</div>
+
+

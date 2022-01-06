@@ -12,6 +12,12 @@
 .row{
     width: 100%;
 }
+
+#home-buttons {
+    width: 35%;
+    height: fit-content;
+    margin-right: 1%;
+}
 /*Dropdown*/
 #menu-button-style {
     margin-left: 10%;
@@ -47,7 +53,7 @@
 
 .dropdown-item {
     display: none;
-    position: absolute;
+   /* position: absolute;*/
     background-color: darkolivegreen;
     /*left: 100%;
     min-width: 160px;
@@ -67,7 +73,9 @@
         .dropdown-item a:hover {
             background-color: lightgreen;
         }
-
+#user-menu-button {
+    margin-top: 10%;
+}
 .show {
     display: block;
 }
@@ -206,10 +214,11 @@ p {
 h3 {
     width: auto;
     float: left;
-    margin: 25px;
+    height: fit-content;
+    /*margin: 25px;*/
     padding: 1.5em;
     padding-top: 1em;
-    margin-top: 2em;
+    /*margin-top: 2em;*/
     margin-left: 0;
     background-image: url("css/lib/Images/Capstone_Title.png");
     background-size: 100% 100%;
@@ -230,13 +239,14 @@ label {
 h2 {
     width: auto;
     position: unset;
-    margin-top: 1em;
+    /*margin-top: 1em;*/
     /*left: 40vw;*/
     display: block;
     float: left;
     padding: 1.5em;
     padding-top: 1em;
-    font-size: 3vw;
+    font-size: 2vw;
+    height: fit-content;
     text-align: center;
     background-image: url("css/lib/Images/Capstone_Title.png");
     background-size: 100% 100%;
