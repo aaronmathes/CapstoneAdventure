@@ -230,17 +230,24 @@
         //used for calculating percentages
         var max_value = parseInt(pb.getAttribute('aria-valuemax'));
         console.log("max health: " + pb.getAttribute('aria-valuemax'));
-        var current_val = parseInt(pb.getAttribute('aria-valuenow'));
+        //var current_val = parseInt(pb.getAttribute('aria-valuenow'));
         var new_val = parseInt(pb.getAttribute('aria-valuenow')) - parseInt(increment);
         //var i;
         var id = setInterval(animateBardown, 20);
         function animateBardown() {
-            //console.log(current_val + ">" + new_val);
-            var current_val = parseInt(pb.getAttribute('aria-valuenow'));
-
-            if (current_val > new_val) {
+            if (new_val < 0) {
+                pb.setAttribute('aria-valuenow', 0);
+                pb.style.width = "0%";
+                //change display
+                let displayid = element + "Display";
+                let display = document.getElementById(displayid);
+                let _display = pb.getAttribute('aria-valuenow') + "/" + max_value;
+                display.innerHTML = _display;
+                return;
+            }
+            if (parseInt(pb.getAttribute('aria-valuenow')) > new_val) {
                 //increment down one
-                current_val = current_val - 1;
+                var current_val = parseInt(pb.getAttribute('aria-valuenow')) - 1;
                 //attributes need to be set
                 pb.setAttribute('aria-valuenow', current_val);
                 //calculate percent to view
@@ -249,31 +256,14 @@
                 var width_string = health_rounded.toString() + "%";
                 //set calculated value to progress-bar
                 pb.style.width = width_string;
-                if (element == "Health") { //we will update the character's health
-                    let display = document.getElementById("HealthDisplay");
-                    let _display = current_val + "/" + max_value;
-                    display.innerHTML = _display;
-                }
-                if (element == "MHealth") { //we will update the monster's health
-                    let display = document.getElementById("MHealthDisplay");
-                    let _display = current_val + "/" + max_value;
-                    display.innerHTML = _display;
-                }
-                if (element == "Stamina") { //we will update the stamina
-                    let display = document.getElementById("StaminaDisplay");
-                    let _display = current_val + "/" + max_value;
-                    console.log("Stamina alterbar() called");
-                    display.innerHTML = _display;
-                }
-                if (element == "Magica") { //we will update the magica
-                    let display = document.getElementById("MagicaDisplay");
-                    let _display = current_val + "/" + max_value;
-                    console.log("Magica alterbar() called");
-                    display.innerHTML = _display;
-                }
+                //change display
+                let displayid = element + "Display";
+                let display = document.getElementById(displayid);
+                let _display = pb.getAttribute('aria-valuenow') + "/" + max_value;
+                display.innerHTML = _display;
 
             }
-            else if (current_val == new_val) {
+            else if (parseInt(pb.getAttribute('aria-valuenow')) == new_val) {
                 console.log("ClearInterval() called");
                 //if (element == "Health") { //we will update the character's health, throws undefined here
                 //    let display = document.getElementById("HealthDisplay");
@@ -283,7 +273,7 @@
             }
             else {
                 console.log("Incrementation did not stop");
-                console.log("Current_val:" + current_val + ".New_val:" + new_val);//current_val < new_val
+                console.log("Current_val:" + parseInt(pb.getAttribute('aria-valuenow')) + ".New_val:" + new_val);//current_val < new_val
                 clearInterval(id);
             }
         };
@@ -293,22 +283,23 @@
     function increaseAlterBar(increment, element) {
         console.log("increaseAlterBar() for " + element +" by "+increment);
         var h = document.getElementById(element);
-        var min = h.getAttribute('aria-valuenow') + increment;
+        var new_val = parseInt(h.getAttribute('aria-valuenow')) + parseInt(increment);
         //var i;
-        var id = setInterval(animateBarup, 90);
+        var id = setInterval(animateBarup, 20);
         function animateBarup() {
-            if (h.getAttribute('aria-valuenow') === min || h.getAttribute('aria-valuenow') === h.getAttribute('aria-valuemax')) {
-                console.log("min: " + min);
+            if (parseInt(h.getAttribute('aria-valuenow')) == new_val || parseInt(h.getAttribute('aria-valuenow')) == parseInt(h.getAttribute('aria-valuemax'))) {
+                console.log("new_val: " + new_val);
                 console.log("h.getAttribute('aria-valuenow') " + h.getAttribute('aria-valuenow'));
                 console.log("stopped increaseAlterBar()");
                 clearInterval(id);
             } else {
-                console.log("increaseAlterBar()  by one");
-                let current_value = h.getAttribute('aria-valuenow');
+                console.log("increaseAlterBar() "+element+" by one");
+                let current_value = parseInt(h.getAttribute('aria-valuenow'));
                 let max_value = h.getAttribute('aria-valuemax');
-                h.SetAttribute('aria-valuenow', current_value + 1);
+                let add_one = current_value + 1;
+                h.setAttribute('aria-valuenow',add_one);
                 //calculate percentage to display value with bootstrap
-                let health_percent = (h.getAttribute('aria-valuenow') / h.getAttribute('aria-valuemax')) * 100;
+                let health_percent = (parseInt(h.getAttribute('aria-valuenow')) / parseInt(h.getAttribute('aria-valuemax'))) * 100;
                 let health_rounded = Math.round(health_percent);
                 let width_string = health_rounded.toString() + "%";
                 //set calculated value to progress-bar
@@ -316,7 +307,7 @@
                 //change display
                 let displayid = element + "Display";
                 let display = document.getElementById(displayid);
-                let _display = current_value + "/" + max_value;
+                let _display = h.getAttribute('aria-valuenow') + "/" + max_value;
                 display.innerHTML = _display;
             }
         };
@@ -362,7 +353,7 @@
             mHealth.setAttribute("aria-valuenow",response.monsterHealth);
             mHealth.setAttribute("aria-valuemax", response.monsterHealth);
             //calculate the health percentage
-            let health_percent = (response.monsterHealth / response.monsterHealth) * 100;
+            let health_percent = (parseInt(response.monsterHealth) / parseInt(response.monsterHealth)) * 100;
             let health_rounded = Math.round(health_percent);
             let width_string = health_rounded.toString() + "%";
             //set calculated value to progress-bar
@@ -489,7 +480,7 @@
 
                 //used for altering the mosnterbar
                 var monsterHBar = document.getElementById("MHealth");
-                var monsterIncrement = monsterHBar.getAttribute("aria-valuenow") - response.monsterH;
+                var monsterIncrement = parseInt(monsterHBar.getAttribute("aria-valuenow")) - parseInt(response.monsterH);
 
                 if (increment < 0) {
                     increment = (increment - increment) - increment;
@@ -499,14 +490,14 @@
                     monsterIncrement = (monsterIncrement - monsterIncrement) - monsterIncrement;
                 }
                 console.log("monsterIncrement:" + monsterIncrement);
-                console.log("monsterhealth: " + monsterHBar);
+                console.log("monsterhealth: " + monsterHBar.getAttribute('aria-valuenow'));
                 alterBar(monsterIncrement, monsterHBar.id);
 
-                if (monsterIncrement >= monsterHBar.getAttribute("aria-valuenow")) {
+                if (monsterIncrement >= monsterHBar.getAttribute("aria-valuenow") || monsterHBar.getAttribute("aria-valuenow") == 0) {
 
                     monsterDeathEvent(playerHealth - increment);
                 }
-                if (increment >= playerHBar.getAttribute('aria-valuenow')) {
+                if (increment >= playerHBar.getAttribute('aria-valuenow') || playerHBar.getAttribute('aria-valuenow') == 0) {
                     playerDeathEvent();
 
                 }
