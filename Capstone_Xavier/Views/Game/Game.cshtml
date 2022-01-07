@@ -228,13 +228,13 @@
     function alterBar(increment, element) {
         var pb = document.getElementById(element);
         //used for calculating percentages
-        var max_health = parseInt(pb.getAttribute('aria-valuemax'));
+        var max_value = parseInt(pb.getAttribute('aria-valuemax'));
         console.log("max health: " + pb.getAttribute('aria-valuemax'));
         var current_val = parseInt(pb.getAttribute('aria-valuenow'));
         var new_val = parseInt(pb.getAttribute('aria-valuenow')) - parseInt(increment);
         //var i;
-        var id = setInterval(animateBar, 20);
-        function animateBar() {
+        var id = setInterval(animateBardown, 20);
+        function animateBardown() {
             //console.log(current_val + ">" + new_val);
             var current_val = parseInt(pb.getAttribute('aria-valuenow'));
 
@@ -244,22 +244,33 @@
                 //attributes need to be set
                 pb.setAttribute('aria-valuenow', current_val);
                 //calculate percent to view
-                let health_percent = (current_val / max_health) * 100;
+                let health_percent = (current_val / max_value) * 100;
                 let health_rounded = Math.round(health_percent);
                 var width_string = health_rounded.toString() + "%";
                 //set calculated value to progress-bar
                 pb.style.width = width_string;
                 if (element == "Health") { //we will update the character's health
                     let display = document.getElementById("HealthDisplay");
-                    let health_display = current_val + "/" + max_health;
-                    display.innerHTML = health_display;
+                    let _display = current_val + "/" + max_value;
+                    display.innerHTML = _display;
                 }
                 if (element == "MHealth") { //we will update the monster's health
                     let display = document.getElementById("MHealthDisplay");
-                    let health_display = current_val + "/" + max_health;
-                    display.innerHTML = health_display;
+                    let _display = current_val + "/" + max_value;
+                    display.innerHTML = _display;
                 }
-                //console.log("percentage decreasing: " +width_string);
+                if (element == "Stamina") { //we will update the stamina
+                    let display = document.getElementById("StaminaDisplay");
+                    let _display = current_val + "/" + max_value;
+                    console.log("Stamina alterbar() called");
+                    display.innerHTML = _display;
+                }
+                if (element == "Magica") { //we will update the magica
+                    let display = document.getElementById("MagicaDisplay");
+                    let _display = current_val + "/" + max_value;
+                    console.log("Magica alterbar() called");
+                    display.innerHTML = _display;
+                }
 
             }
             else if (current_val == new_val) {
@@ -280,22 +291,31 @@
 
     //For increasing specific bar values based on amount and bar
     function increaseAlterBar(increment, element) {
+        console.log("increaseAlterBar() for " + element +" by "+increment);
         var h = document.getElementById(element);
         var min = h.getAttribute('aria-valuenow') + increment;
         //var i;
-        var id = setInterval(animateBar, 90);
-        function animateBar() {
+        var id = setInterval(animateBarup, 90);
+        function animateBarup() {
             if (h.getAttribute('aria-valuenow') === min || h.getAttribute('aria-valuenow') === h.getAttribute('aria-valuemax')) {
+                console.log("stopped increaseAlterBar()");
                 clearInterval(id);
             } else {
-                let health_value = h.getAttribute('aria-valuenow');
-                health_value = health_value + 1;
+                console.log("increaseAlterBar()  by one");
+                let current_value = h.getAttribute('aria-valuenow');
+                let max_value = h.getAttribute('aria-valuemax');
+                h.SetAttribute('aria-valuenow', current_value + 1);
                 //calculate percentage to display value with bootstrap
                 let health_percent = (h.getAttribute('aria-valuenow') / h.getAttribute('aria-valuemax')) * 100;
                 let health_rounded = Math.round(health_percent);
                 let width_string = health_rounded.toString() + "%";
                 //set calculated value to progress-bar
                 h.style.width = width_string;
+                //change display
+                let displayid = element + "Display";
+                let display = document.getElementById(displayid);
+                let _display = current_value + "/" + max_value;
+                display.innerHTML = _display;
             }
         };
     };
@@ -452,10 +472,12 @@
                 var increment = playerHealth - response.playerH;
                 if (response.Stamina != null) {
                     var staminaIncrement = stamina - response.Stamina;
+                    console.log("Stamina change called: "+staminaIncrement);
                     alterBar(staminaIncrement, playerStamina.id);
                 }
                 if (response.Magica != null) {
                     var magicaIncrememnt = magica - response.Magica;
+                    console.log("Magica change called: " + magicaIncrememnt);
                     alterBar(magicaIncrememnt, playerMagica.id);
 
                 }
@@ -694,16 +716,16 @@
     function UseItem(item, itemType) {
         var bar;
         var value;
-        var bag = document.getElementById("Bag-List");
+        //var bag = document.getElementById("Bag-List");
         if (itemType === 0) {
             bar = document.getElementById("Health").getAttribute('aria-valuenow');;
             value = bar;
         } else if (itemType === 1) {
-            bar = document.getElementById("Stamina");
-            value = bar.value;
+            bar = document.getElementById("Stamina").getAttribute('aria-valuenow');
+            value = bar;
         } else if (itemType === 2) {
-            bar = document.getElementById("Magica");
-            value = bar.value;
+            bar = document.getElementById("Magica").getAttribute('aria-valuenow');
+            value = bar;
         }
 
         $.getJSON("../../User/UseItem", { inventoryID: item, itemType: itemType, bar: value }, function (response) {
@@ -717,7 +739,7 @@
             }
             increaseAlterBar(response.value, element);
         });
-        bag.style.display = "none";
+        //bag.style.display = "none";
     }
 
     //For using weapons and armors

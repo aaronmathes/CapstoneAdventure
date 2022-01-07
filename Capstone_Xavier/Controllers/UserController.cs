@@ -375,17 +375,17 @@ namespace Capstone_Xavier.Controllers
                 case 0:
                     modifier = item.healthMod;
                     game.character.health = game.character.health + modifier;
-                    barID = 0;
+                    barID = itemType;
                     break;
                 case 1:
                     modifier = item.staminaMod;
                     game.character.stamina = game.character.stamina + modifier;
-                    barID = 1;
+                    barID = itemType;
                     break;
                 case 2:
                     modifier = item.magicaMod;
                     game.character.magica = game.character.magica + modifier;
-                    barID = 2;
+                    barID = itemType;
                     break;
             }
 
