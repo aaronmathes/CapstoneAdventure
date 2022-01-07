@@ -66,5 +66,13 @@ window.onclick = function (event) {
     }
 }
 
+//register script
+//function Clearform() {
+//    var username = document.getElementById("usernamebox");
+//    var password = document.getElementById("passwordbox");
+//    var email = document.getElementById("emailbox");
+//    console.log("hi");
+//}
+
 
 

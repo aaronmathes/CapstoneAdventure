@@ -28,40 +28,65 @@
     </div>
 </div>
 <div class="row justify-content-center" id="content">
-    @using (Html.BeginForm("Register", "Home"))
+    @*@using (Html.BeginForm("Register", "Home", FormMethod.Post, new { id="register-form" }))*@
+    @using (Ajax.BeginForm("Register", "Home", new AjaxOptions { HttpMethod = "Post", OnSuccess = "OnSuccess" }, new { id = "register-form" })) 
     {
 
 
         <div class="input-list">
             <div class="input">
                 <label>Username</label>
-                <span class="icon-input"></span>
-                @Html.EditorFor(RegisterModel => RegisterModel.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
+                @Html.EditorFor(RegisterModel => RegisterModel.username, new { htmlAttributes = new { @id = "usernamebox", @class = "form-control", @placeholder = "Enter First Name" } })
                 @Html.ValidationMessageFor(RegisterModel => RegisterModel.username, null, new { @class = "validation" })
             </div>
             <br>
             <div class="input">
                 <label>Password</label>
-                <span class="icon-input"></span>
-                @Html.EditorFor(RegisterModel => RegisterModel.password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Enter Password." } })
+                @Html.EditorFor(RegisterModel => RegisterModel.password, new { htmlAttributes = new { @id = "passwordbox", @class = "form-control", @type = "password", @placeholder = "Enter Password." } })
                 @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.password, "", new { @class = "validation" }).ToHtmlString()))
             </div>
             <br>
             <div class="input">
                 <label>Email</label>
-                <span class="icon-input"></span>
-                @Html.EditorFor(RegisterModel => RegisterModel.email, new { htmlAttributes = new { @type = "text", @class = "form-control", @placeholder = "Enter Email" } })
+                @Html.EditorFor(RegisterModel => RegisterModel.email, new { htmlAttributes = new { @id = "emailbox", @type = "text", @class = "form-control", @placeholder = "Enter Email" } })
                 <br />
                 @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @class = "validation" }).ToHtmlString()))
             </div>
         </div>
 
         <button class="btn-user" type="submit">Submit</button>
-        <button class="btn-user" type="reset">Clear</button>
+        <button class="btn-user" type="reset" onclick="Clearform()">Clear</button>
 
 
     }
 </div>
+<script>
+    function Clearform() {
+        //var username = document.getElementById("usernamebox");
+        //var password = document.getElementById("passwordbox");
+        //var email = document.getElementById("emailbox");
+        //console.log(username.innerHTML);
+        //if (email.value != null | email.value != "") {
+        //    console.log(email.value);
+        //    email.value = "";
+        //}
+        //console.log(email.value);
+    /*username.*/
+        /*username.nodeValue = "";*/
+        var form = document.getElementById("register-form");
+        document.getElementById("register-form").reset();
+    }
+    function OnSuccess(data) {
+        if (data.url) {
+            // if the server returned a JSON object containing an url 
+            // property we redirect the browser to that url
+            window.location.href = data.url;
+        }
+
+    }
+
+
+</script>
 
 
 
