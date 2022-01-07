@@ -228,7 +228,7 @@ h3 {
 label {
     margin: 3px;
     /*width: 10vw;*/
-    max-width: 70%;
+    max-width: 75%;
     min-width: 160px;
     width: fit-content;
     padding: 5px;
@@ -699,4 +699,14 @@ button {
     background-color: blue;
 }
 
+@media only screen and (max-width: 1080px) {
+    .container {
+        margin-left: 0;
+    }
+
+    .list {
+        width: 100%;
+        margin-left: 4%;
+    }
+}
 

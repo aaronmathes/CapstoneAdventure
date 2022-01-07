@@ -18,7 +18,7 @@ function Update() {
         monsterInfoBox.style.width = "100%";
     } else {
         update.style.display = "none";
-        monsterInfo.className = "col-md-12";
+        monsterInfo.className = "col-md-12 d-flex justify-content-center";
         monsterInfoBox.style.width = "50%";
     }
 }

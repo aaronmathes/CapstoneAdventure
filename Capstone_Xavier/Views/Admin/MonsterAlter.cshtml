@@ -5,7 +5,7 @@
 }
 <div class="row" style="margin-top: 2%;">
     <div class="col-md-4 ml-md-auto d-flex justify-content-center">
-        <h3>MonsterAlter</h3>
+        <h3>Monster Alter</h3>
     </div>
     <div class="col-md-4" id="menu-button-style">
         <div class="row">
@@ -51,16 +51,22 @@
                 Monster failed to update. Please check your values.
             </div>
         }
-        <div class="warning" style=" bottom: 20vw; right: 15vw; display: none;" id="Warning">
-            <h3 style="position: absolute">Warning!</h3>
+        @*<div class="warning" style=" display: none;" id="Warning">
+            <h3 style="">Warning!</h3>
             <p style="height:7vw">Are you sure you want to permanetly remove this Monster?</p>
             <button class="btn-user" onclick="location.href='@Url.Action("RemoveMonster", "Admin",  Model)'">Confirm</button>
             <button class="btn-user" onclick="Delete()">Cancel</button>
-        </div>
+        </div>*@
+    <div id="Warning" style="display: none; font-size: 1.5rem; width: fit-content; height: fit-content; padding: 2%; background-color: palegoldenrod; background-image: linear-gradient(#ee3f3f, #961111); border-radius: 12px; ">
+        Are you sure you wish to delete @Model.monsterName?
+        <br />
+        <button class='btn-user' id='delete' style='display: inline-block; font-size: .9em; margin-right: 3%; background-color: #f0eb37;' onclick="location.href='@Url.Action("RemoveMonster", "Admin",  Model)'"> Delete</button>
+        <button class='btn-user' id='deleteCancel' style='display: inline-block; font-size: 1em; font-size: .9em; margin-right: 3%; background-color: #4442f2;' onclick='Delete()'>Cancel</button>
+    </div>
     </div>
     <div class="row justify-content-center">
         <div id="monster-info" class="col-md-12 d-flex justify-content-center">
-            <div id="monster-info-box" class="info-box" style=" width: 50%;">
+            <div id="monster-info-box" class="info-box" style=" width: 50%; overflow-y: hidden; overflow-x: hidden;">
                 <label>Name</label>
                 <p class="c-info">@Model.monsterName</p>
                 <label>Health</label>
@@ -160,46 +166,46 @@
 
 <script>
     //For toggling the update user password
-    function Update() {
-        var update = document.getElementById("Update");
-        var warning = document.getElementById("Warning");
-        var monsterInfo = document.getElementById("monster-info");
-        var monsterInfoBox = document.getElementById("monster-info-box");
-        if (update.style.display == "none") {
-            update.style.display = "inline-block";
-            warning.style.display = "none";
-            monsterInfo.className = "col-md-6";
-            monsterInfoBox.style.width = "100%";
-        } else {
-            update.style.display = "none";
-            monsterInfo.className = "col-md-12";
-            monsterInfoBox.style.width = "50%";
-        }
-    }
+    //function Update() {
+    //    var update = document.getElementById("Update");
+    //    var warning = document.getElementById("Warning");
+    //    var monsterInfo = document.getElementById("monster-info");
+    //    var monsterInfoBox = document.getElementById("monster-info-box");
+    //    if (update.style.display == "none") {
+    //        update.style.display = "inline-block";
+    //        warning.style.display = "none";
+    //        monsterInfo.className = "col-md-6";
+    //        monsterInfoBox.style.width = "100%";
+    //    } else {
+    //        update.style.display = "none";
+    //        monsterInfo.className = "col-md-12";
+    //        monsterInfoBox.style.width = "50%";
+    //    }
+    //}
 
-    //For toggling the remove confirm
-    function Delete() {
-        var warning = document.getElementById("Warning");
-        var update = document.getElementById("Update");
-        if (warning.style.display == "none") {
-            warning.style.display = "inline-block";
-            update.style.display = "none";
-        } else {
-            warning.style.display = "none";
-        }
-    }
+    ////For toggling the remove confirm
+    //function Delete() {
+    //    var warning = document.getElementById("Warning");
+    //    var update = document.getElementById("Update");
+    //    if (warning.style.display == "none") {
+    //        warning.style.display = "inline-block";
+    //        update.style.display = "none";
+    //    } else {
+    //        warning.style.display = "none";
+    //    }
+    //}
 
-    //For toggling the update user role
-    function ChangeRole() {
-        var role = document.getElementById("Roles");
+    ////For toggling the update user role
+    //function ChangeRole() {
+    //    var role = document.getElementById("Roles");
 
-        if (role.style.display === "none") {
-            role.style.display = "inline-block";
-        } else {
-            role.style.display = "none";
-        }
+    //    if (role.style.display === "none") {
+    //        role.style.display = "inline-block";
+    //    } else {
+    //        role.style.display = "none";
+    //    }
 
 
-    }
+    //}
 
 </script>
