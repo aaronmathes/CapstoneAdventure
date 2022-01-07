@@ -398,6 +398,7 @@ button {
     width: 100%;
     height: 1vw;
     margin: 1px;
+    display: table
 }
 
 .shop-item h6 {
@@ -410,7 +411,7 @@ button {
 .item-stats {
     display: inline-block;
     height: 100%;
-    width: 25%;
+    width: 50%;
 }
 
 .info-box-alt {
