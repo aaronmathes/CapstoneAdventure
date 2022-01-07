@@ -298,6 +298,8 @@
         var id = setInterval(animateBarup, 90);
         function animateBarup() {
             if (h.getAttribute('aria-valuenow') === min || h.getAttribute('aria-valuenow') === h.getAttribute('aria-valuemax')) {
+                console.log("min: " + min);
+                console.log("h.getAttribute('aria-valuenow') " + h.getAttribute('aria-valuenow'));
                 console.log("stopped increaseAlterBar()");
                 clearInterval(id);
             } else {
@@ -472,7 +474,8 @@
                 var increment = playerHealth - response.playerH;
                 if (response.Stamina != null) {
                     var staminaIncrement = stamina - response.Stamina;
-                    console.log("Stamina change called: "+staminaIncrement);
+                    console.log("Stamina change called: " + staminaIncrement);
+                    console.log("stamina - response.Stamina; "+stamina+"-"+response.Stamina);
                     alterBar(staminaIncrement, playerStamina.id);
                 }
                 if (response.Magica != null) {
@@ -716,7 +719,7 @@
     function UseItem(item, itemType) {
         var bar;
         var value;
-        //var bag = document.getElementById("Bag-List");
+        var bag = document.getElementById("Bag-List");
         if (itemType === 0) {
             bar = document.getElementById("Health").getAttribute('aria-valuenow');;
             value = bar;
@@ -739,7 +742,7 @@
             }
             increaseAlterBar(response.value, element);
         });
-        //bag.style.display = "none";
+        bag.style.display = "none"; //needs to be opened again, which repopuluates inventory
     }
 
     //For using weapons and armors
