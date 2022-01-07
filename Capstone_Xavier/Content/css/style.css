@@ -227,7 +227,10 @@ h3 {
 
 label {
     margin: 3px;
-    width: 10vw;
+    /*width: 10vw;*/
+    max-width: 75%;
+    min-width: 160px;
+    width: fit-content;
     padding: 5px;
     text-align: center;
     background-color: chocolate;
@@ -387,11 +390,15 @@ button {
 #info-box-rows {
     margin-left: 0;
 }
+#edit-info{
+
+}
 .shop-item {
     border: 1px solid black;
     width: 100%;
     height: 1vw;
     margin: 1px;
+    display: table
 }
 
 .shop-item h6 {
@@ -404,7 +411,7 @@ button {
 .item-stats {
     display: inline-block;
     height: 100%;
-    width: 25%;
+    width: 50%;
 }
 
 .info-box-alt {
@@ -693,4 +700,14 @@ button {
     background-color: blue;
 }
 
+@media only screen and (max-width: 1080px) {
+    .container {
+        margin-left: 0;
+    }
+
+    .list {
+        width: 100%;
+        margin-left: 4%;
+    }
+}
 

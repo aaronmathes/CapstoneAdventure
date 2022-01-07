@@ -9,12 +9,17 @@
 function Update() {
     var update = document.getElementById("Update");
     var warning = document.getElementById("Warning");
-
+    var monsterInfo = document.getElementById("monster-info");
+    var monsterInfoBox = document.getElementById("monster-info-box");
     if (update.style.display == "none") {
         update.style.display = "inline-block";
         warning.style.display = "none";
+        monsterInfo.className = "col-md-6";
+        monsterInfoBox.style.width = "100%";
     } else {
         update.style.display = "none";
+        monsterInfo.className = "col-md-12 d-flex justify-content-center";
+        monsterInfoBox.style.width = "50%";
     }
 }
 

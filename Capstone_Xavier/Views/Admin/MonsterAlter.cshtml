@@ -3,186 +3,211 @@
 @{
     ViewBag.Title = "MonsterAlter";
 }
+<div class="row" style="margin-top: 2%;">
+    <div class="col-md-4 ml-md-auto d-flex justify-content-center">
+        <h3>Monster Alter</h3>
+    </div>
+    <div class="col-md-4" id="menu-button-style">
+        <div class="row">
+            <div class="row">
+                <div class="nav-side" id="menu-button-style">
+                    <div class="dropdown">
+                        <button onclick="dropDown()" class="dropBtn">More</button>
+                        <div id="myDropdown" class="dropdown-item">
+                            <a onclick="location.href='@Url.Action("Users", "Home")'">Home</a>
+                            @{
+                                string role = Session["Role"].ToString();
 
-<h3>MonsterAlter</h3>
+                                if (role == "1" || role == "2")
+                                {
+                                    <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
+                                }
+                                else if (role == "3")
+                                {
+                                    <a onclick="location.href='@Url.Action("GameMaster", "Admin")'">GameMaster</a>
+                                }
+                            }
+                            <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a>
 
-<div class="nav-side" style="margin: 2vw;">
-    <div class="dropdown">
-        <button onclick="dropDown()" class="dropBtn">More</button>
-        <div id="myDropdown" class="dropdown-item">
-            <a href="#">About</a>
-            <a onclick="location.href='@Url.Action("Users", "Home")'">Home</a>
-            @{
-                string role = Session["Role"].ToString();
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center" id="content">
+    <div class="row justify-content-center">
 
-                if (role == "1" || role == "2")
+        @if (Model.alertType == 1)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" style="height: 5vw; width:15vw;">
+                Monster Updated Successfully!
+            </div>
+        }
+        else if (Model.alertType == 2)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" style="height: 5vw; width:20vw;">
+                Monster failed to update. Please check your values.
+            </div>
+        }
+        @*<div class="warning" style=" display: none;" id="Warning">
+            <h3 style="">Warning!</h3>
+            <p style="height:7vw">Are you sure you want to permanetly remove this Monster?</p>
+            <button class="btn-user" onclick="location.href='@Url.Action("RemoveMonster", "Admin",  Model)'">Confirm</button>
+            <button class="btn-user" onclick="Delete()">Cancel</button>
+        </div>*@
+    <div id="Warning" style="display: none; font-size: 1.5rem; width: fit-content; height: fit-content; padding: 2%; background-color: palegoldenrod; background-image: linear-gradient(#ee3f3f, #961111); border-radius: 12px; ">
+        Are you sure you wish to delete @Model.monsterName?
+        <br />
+        <button class='btn-user' id='delete' style='display: inline-block; font-size: .9em; margin-right: 3%; background-color: #f0eb37;' onclick="location.href='@Url.Action("RemoveMonster", "Admin",  Model)'"> Delete</button>
+        <button class='btn-user' id='deleteCancel' style='display: inline-block; font-size: 1em; font-size: .9em; margin-right: 3%; background-color: #4442f2;' onclick='Delete()'>Cancel</button>
+    </div>
+    </div>
+    <div class="row justify-content-center">
+        <div id="monster-info" class="col-md-12 d-flex justify-content-center">
+            <div id="monster-info-box" class="info-box" style=" width: 50%; overflow-y: hidden; overflow-x: hidden;">
+                <label>Name</label>
+                <p class="c-info">@Model.monsterName</p>
+                <label>Health</label>
+                <p class="c-info">@Model.health</p>
+                <label>Armor</label>
+                <p class="c-info">@Model.armor</p>
+                <label>Base Damage</label>
+                <p class="c-info">@Model.damage</p>
+                <label>Danger Level</label>
+                <p class="c-info">@Model.danger</p>
+                <label>Behaviour</label>
+                @if (Model.behaviour == 0)
                 {
-                    <a onclick="location.href='@Url.Action("Admin", "Admin")'">Admin</a>
+                    <p class="c-info">Passive</p>
                 }
-                else if (role == "3")
+                else if (Model.behaviour == 1)
                 {
-                    <a onclick="location.href='@Url.Action("GameMaster", "Admin")'">GameMaster</a>
+                    <p class="c-info">Neutral</p>
                 }
+                else
+                {
+                    <p class="c-info">Agressive</p>
+                }
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            @using (Html.BeginForm("MonsterAlterPost", "Admin", Model))
+            {
+
+
+                <div id="Update" class="nav-side" style="top: 5vw; display: none;">
+                    <div class="input-list">
+
+                        <div class="input">
+                            <label>Monster Name</label>
+                            @Html.EditorFor(MonsterModel => Model.monsterName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
+                        </div>
+                        <br>
+                        <div class="input">
+                            <div contenteditable="true">
+                                <label>Monster Health  <br /> 300 (max)</label>
+                            </div>
+                            @*<small  class="form-text text-muted"> 1 (min) - 300 (max)</small>*@
+                            @Html.EditorFor(MonsterModel => Model.health, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
+                        </div>
+                        <br>
+                        <div class="input">
+                            <div contenteditable="true">
+                                <label>Monster Armor <br />  40 (max)</label>
+                            </div>
+                            @*<small id="edit-info" class="form-text text-muted"> 1 (min) - 40 (max)</small>*@
+                            @Html.EditorFor(MonsterModel => Model.armor, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
+                        </div>
+                        <br>
+                        <div class="input">
+                            <div contenteditable="true">
+                                <label>Monster Damage  <br /> (Max 100)</label>
+                            </div>
+                            @Html.EditorFor(MonsterModel => Model.damage, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
+                        </div>
+                        <br>
+                        <div class="input">
+                            <div contenteditable="true">
+                                <label>Monster Danger  <br /> (Max 10)</label>
+                            </div>
+                                @Html.EditorFor(MonsterModel => Model.danger, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
+                            </div>
+                        <br>
+                        <div class="input">
+                            <div contenteditable="true">
+                                <label>Monster Behaviour <br/> (Higher Num = More Agressive)</label>
+                            </div>
+                            @Html.DropDownListFor(MonsterModel => Model.behaviour, new SelectList(Model.monsterBehaviours), new { @id = "classID", @class = "form-control" })
+
+                        </div>
+                        <br>
+                    </div>
+
+                    <button type="submit" class="btn-user" onclick="">Submit</button>
+                </div>
+
             }
-            <a href="#">@Html.ActionLink("FAQS", "FAQS", "Home")</a>
-            <a onclick="location.href='@Url.Action("Logout", "Home")'">Logout</a>
-
         </div>
     </div>
-</div>
-<br>
-@if (Model.alertType == 1)
-{
-    <div class="alert alert-warning alert-dismissible fade show" style="height: 5vw; width:15vw; left: 35vw; position: absolute; ">
-        Monster Updated Successfully!
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>
-    </div>
-}
-else if (Model.alertType == 2)
-{
-    <div class="alert alert-warning alert-dismissible fade show" style="height: 5vw; width:20vw; left: 35vw; position: absolute; ">
-        Monster failed to update. Please check your values. 
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span> </button>
-    </div>
-}
-
-
-<div class="info-box" style="top: 12vw; height: 25vw;">
-    <label>Name</label>
-    <p class="c-info">@Model.monsterName</p>
-    <label>Health</label>
-    <p class="c-info">@Model.health</p>
-    <label>Armor</label>
-    <p class="c-info">@Model.armor</p>
-    <label>Base Damage</label>
-    <p class="c-info">@Model.damage</p>
-    <label>Danger Level</label>
-    <p class="c-info">@Model.danger</p>
-    <label>Behaviour</label>
-    @if (Model.behaviour == 0)
-    {
-        <p class="c-info">Passive</p>
-    }
-    else if (Model.behaviour == 1)
-    {
-        <p class="c-info">Neutral</p>
-    }
-    else
-    {
-        <p class="c-info">Agressive</p>
-    }
-</div>
-<div class="" style="display: inline-block; float: left; left: 13vw; top: 40vw; position: absolute;">
-    <button class="btn-user" id="MButton" onclick="Update()">Update Monster</button>
-    <button class="btn-user" id="Toggle" onclick="Delete()">Remove</button>
-</div>
-
-@using (Html.BeginForm("MonsterAlterPost", "Admin", Model))
-{
-
-
-    <div id="Update" class="nav-side" style="top: 5vw; display: none;">
-        <div class="input-list">
-
-            <div class="input">
-                <span class="icon-input"></span>
-                <label>Monster Name</label>
-                @Html.EditorFor(MonsterModel => Model.monsterName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
-
+        <div class="row justify-content-center" style="margin-top: 2%;">
+            <div class="" style="display: inline-block; float: left; left: 13vw;">
+                <button class="btn-user" id="MButton" onclick="Update()">Update Monster</button>
+                <button class="btn-user" id="Toggle" onclick="Delete()">Remove</button>
             </div>
-            <br>
-            <div class="input">
-                <span class="icon-input"></span>
-                <label>Monster Health(Max 300)</label>
-                @Html.EditorFor(MonsterModel => Model.health, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
-
-            </div>
-            <br>
-            <div class="input">
-                <span class="icon-input"></span>
-                <label>Monster Armor(Max 40)</label>
-                @Html.EditorFor(MonsterModel => Model.armor, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
-
-            </div>
-            <br>
-            <div class="input">
-                <span class="icon-input"></span>
-                <label>Monster Damage(Max 100)</label>
-                @Html.EditorFor(MonsterModel => Model.damage, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
-
-            </div>
-            <br>
-            <div class="input">
-                <span class="icon-input"></span>
-                <label>Monster Danger(Max 10)</label>
-                @Html.EditorFor(MonsterModel => Model.danger, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
-
-            </div>
-            <br>
-
-            <div class="input">
-                <span class="icon-input"></span>
-                <label>Monster Behaviour(Higher Num = More Agressive)</label>
-                @Html.DropDownListFor(MonsterModel => Model.behaviour, new SelectList(Model.monsterBehaviours), new { @id = "classID", @class = "form-control" })
-
-
-            </div>
-            <br>
         </div>
 
-        <button type="submit" class="btn-user" onclick="">Submit</button>
+
+
     </div>
-
-}
-
-
-
-
-<div class="warning" style=" bottom: 20vw; right: 15vw; display: none;" id="Warning">
-    <h3 style="position: absolute">Warning!</h3>
-    <p style="height:7vw">Are you sure you want to permanetly remove this Monster?</p>
-    <button class="btn-user" onclick="location.href='@Url.Action("RemoveMonster", "Admin",  Model)'">Confirm</button>
-    <button class="btn-user" onclick="Delete()">Cancel</button>
-</div>
 
 
 <script>
+    //SCRIPT IS IN SCRIPT.JS
+
     //For toggling the update user password
-    function Update() {
-        var update = document.getElementById("Update");
-        var warning = document.getElementById("Warning");
+    //function Update() {
+    //    var update = document.getElementById("Update");
+    //    var warning = document.getElementById("Warning");
+    //    var monsterInfo = document.getElementById("monster-info");
+    //    var monsterInfoBox = document.getElementById("monster-info-box");
+    //    if (update.style.display == "none") {
+    //        update.style.display = "inline-block";
+    //        warning.style.display = "none";
+    //        monsterInfo.className = "col-md-6";
+    //        monsterInfoBox.style.width = "100%";
+    //    } else {
+    //        update.style.display = "none";
+    //        monsterInfo.className = "col-md-12";
+    //        monsterInfoBox.style.width = "50%";
+    //    }
+    //}
 
-        if (update.style.display == "none") {
-            update.style.display = "inline-block";
-            warning.style.display = "none";
-        } else {
-            update.style.display = "none";
-        }
-    }
+    ////For toggling the remove confirm
+    //function Delete() {
+    //    var warning = document.getElementById("Warning");
+    //    var update = document.getElementById("Update");
+    //    if (warning.style.display == "none") {
+    //        warning.style.display = "inline-block";
+    //        update.style.display = "none";
+    //    } else {
+    //        warning.style.display = "none";
+    //    }
+    //}
 
-    //For toggling the remove confirm
-    function Delete() {
-        var warning = document.getElementById("Warning");
-        var update = document.getElementById("Update");
-        if (warning.style.display == "none") {
-            warning.style.display = "inline-block";
-            update.style.display = "none";
-        } else {
-            warning.style.display = "none";
-        }
-    }
+    ////For toggling the update user role
+    //function ChangeRole() {
+    //    var role = document.getElementById("Roles");
 
-    //For toggling the update user role
-    function ChangeRole() {
-        var role = document.getElementById("Roles");
-
-        if (role.style.display === "none") {
-            role.style.display = "inline-block";
-        } else {
-            role.style.display = "none";
-        }
+    //    if (role.style.display === "none") {
+    //        role.style.display = "inline-block";
+    //    } else {
+    //        role.style.display = "none";
+    //    }
 
 
-    }
+    //}
 
 </script>
