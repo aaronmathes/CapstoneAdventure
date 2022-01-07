@@ -17,9 +17,6 @@
                             <a onclick="location.href='@Url.Action("Index", "Home")'"> Home</a>
                             <a onclick="location.href='@Url.Action("Login", "Home")'"> Login</a>
                             <a onclick="location.href='@Url.Action("FAQS", "Home")'"> FAQS</a>
-                            @*<a>@Html.ActionLink("Home", "Index", "Home")</a>
-                    <a>@Html.ActionLink("Login", "Login", "Home")</a>
-                    <a>@Html.ActionLink("FAQS", "FAQS", "Home")</a>*@
                         </div>
                     </div>
                 </div>
@@ -45,9 +42,9 @@
             <div class="input">
                 <label>Password</label>
                 <div id="passwordbox">
-                    @Html.EditorFor(RegisterModel => RegisterModel.password, new { htmlAttributes = new {  @class = "form-control", @type = "password", @placeholder = "Enter Password." } })
+                    @Html.EditorFor(RegisterModel => RegisterModel.password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Enter Password." } })
                 </div>
-                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.password, "", new { @id = "passwordval", @class = "validation" }).ToHtmlString()))
+                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.password, "", new { @id = "passwordval", @class = "validation" }).ToHtmlString())) @*@onload = "setNoPadding()"*@
             </div>
             <br>
             <div class="input">
@@ -94,14 +91,10 @@
         //var form = document.getElementById("register-form");
         //document.getElementById("register-form").reset();
     }
-    function OnSuccess(data) {
-        if (data.url) {
-            // if the server returned a JSON object containing an url
-            // property we redirect the browser to that url
-            window.location.href = data.url;
-        }
-
-    }
+    //function setNoPadding() {
+    //    var passwordval = document.getElementById("passwordval");
+    //    passwordval.style.display = "none";
+    //}
 
 
 </script>
