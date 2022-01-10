@@ -77,11 +77,22 @@ namespace Capstone_Xavier.Controllers
         {
             DBUse data = new DBUse();
             Mapper map = new Mapper();
-
-            character.classes = map.ClassBO_To_ModelList(data.GetClassList());
+            CharacterModel _SessionCharacter;
+            if (Session["Character"] == null) //if we had valid edit
+            {
+                Session["Character"] = character; //set the session's character to be the character passed 
+                _SessionCharacter = (CharacterModel)Session["Character"];
+            }
+            else //we did not have valid edit so keep session character as it is and set the alert message to nothing
+            {
+                _SessionCharacter = (CharacterModel)Session["Character"];
+                _SessionCharacter.alertMessage = "";
+            }
+            
+            _SessionCharacter.classes = map.ClassBO_To_ModelList(data.GetClassList());
             //Session["Character"] = character.id.ToString();
 
-            return View(character);
+            return View(_SessionCharacter);
         }
 
         [HttpPost]
@@ -91,6 +102,7 @@ namespace Capstone_Xavier.Controllers
             DBUse data = new DBUse();
             Mapper map = new Mapper();
             ClassModel _class = new ClassModel();
+            CharacterModel sessionCharacter = (CharacterModel)Session["Character"];
             if (ModelState.IsValid)
             {
                 _class = map.ClassBO_To_Model(data.GetClassInfo(character.classID));
@@ -107,11 +119,16 @@ namespace Capstone_Xavier.Controllers
 
                 Session["Character"] = null;
 
-                return RedirectToAction("Users", "Home");
+                //return RedirectToAction("Users", "Home");
+                character.alertMessage = "Successfully updated "+character.name;
+                return RedirectToAction("UpdateCharacter", "User", character);
             }
             else
             {
-                return RedirectToAction("Users", "Home");
+                character.alertMessage = "";
+                //return RedirectToAction("Users", "Home");
+                
+                return RedirectToAction("UpdateCharacter", "User", character);
             }
 
         }
