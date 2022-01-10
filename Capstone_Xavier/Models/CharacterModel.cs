@@ -12,8 +12,9 @@ namespace Capstone_Xavier.Models
     {
         public int id { get; set; }
         public int userID { get; set; }
-
-        [MaxLength(15, ErrorMessage = "Name cannot be above 15 characters")]
+        [Required]
+        [StringLength(20, MinimumLength = 4, ErrorMessage = "Character name must be at least 4 and no more than 20 characters long.")]
+        [RegularExpression(@"^[a-zA-Z0-9_-+()]{4,20}$", ErrorMessage = "Character name cannot contain spaces or special characters")]
         public string name { get; set; }
         public int classID { get; set; }
         public string className { get; set; }
