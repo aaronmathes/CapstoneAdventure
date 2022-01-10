@@ -30,7 +30,7 @@
 {
     <div class="row justify-content-center" id="content" >
         <div class="col-5">
-            <label for="error" id="error" class="validation">@Model.alertMessage</label>
+            <p for="error" id="error" class="validation">@Model.alertMessage</p>
             <div class="input-list">
                 <div class="input">
                     <label>Username</label>
@@ -44,9 +44,16 @@
                 <div class="input">
                     <label>Password</label>
                     <div id="passwordbox">
-                        @Html.EditorFor(LoginModel => LoginModel.password, new { htmlAttributes = new { @class = "form-control", @type = "password", @placeholder = "Enter Password." } })
+                        @Html.EditorFor(LoginModel => LoginModel.password, new { htmlAttributes = new { @id = "PasswordBox", @class = "form-control", @type = "password", @placeholder = "Enter Password." } })
                     </div>
-                    @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(LoginModel => LoginModel.password, "", new { @id = "passwordval", @class = "validation" }).ToHtmlString()))
+                    <div class="show-password-group">
+                        <input type="checkbox" id="passwordshow" value="show" onclick="ShowPassword('PasswordBox')">
+                        <label for="passwordshow" class="show-password-label" @*style="display: inline-block; "*@> Show Password </label> <br />
+                    </div>
+                    <div class="row" style="margin-left: 0px;">
+                        @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(LoginModel => LoginModel.password, "", new { @id = "passwordval", @class = "validation" }).ToHtmlString()))
+                    </div>
+                   
                 </div>
             </div>
             <button class="btn-user" type="submit">Submit</button>
@@ -76,5 +83,13 @@
         /*username.nodeValue = "";*/
         //var form = document.getElementById("register-form");
         //document.getElementById("register-form").reset();
+    }
+    function ShowPassword() {
+        var show = document.getElementById("PasswordBox")
+        if (show.type === "password") {
+            show.type = "text";
+        } else {
+            show.type = "password";
+        }
     }
 </script>

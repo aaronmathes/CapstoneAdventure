@@ -38,7 +38,7 @@ namespace Capstone_Xavier.Models
         public string confirmPassword { get; set; }
 
         [Required]
-        [RegularExpression(@"^\w+@[A-z]+\.\w{2,3}$", ErrorMessage = "Email invlaid. Email must be in the form of: " +
+        [RegularExpression(@"^\w+\.*\w*@[A-z]+\.\w{2,3}$", ErrorMessage = "Email invlaid. Email must be in the form of: " +
             "<br> &ensp; \u2022 One or more letters " +
             "<br> &ensp; \u2022 @" +
             "<br> &ensp; \u2022 One or more letters" +
