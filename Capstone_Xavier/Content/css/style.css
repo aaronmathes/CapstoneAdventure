@@ -360,6 +360,31 @@ button {
     margin: 2px;
     display: inline-block;
     border-radius: 6px;
+    margin-top: 2%
+}
+.show-password-group {
+    background-color: papayawhip;
+    border-radius: 10px;
+    display: inline-block;
+    /*border: 1px solid brown;*/
+    padding: 0px;
+    margin-top: 2%
+}
+#passwordshow {
+    margin-left: 5px;
+}
+.show-password-label {
+    margin: 3px;
+    /* width: 10vw; */
+    max-width: 75%;
+    min-width: 160px;
+    width: fit-content;
+    padding: 0px;
+    text-align: center;
+    background-color: papayawhip;
+    border-radius: 10px;
+    display: inline-block;
+    border: none;
 }
 
 .icon-warning {
