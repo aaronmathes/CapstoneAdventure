@@ -82,7 +82,7 @@ namespace Capstone_Xavier.Controllers
             if (magica == 0 && weapon != null)
             {
                 health = health + magicaMod;
-                story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> Due to your lack of magical experience, you to use your own life energy to cast the spell costing you, " + magicaMod.ToString() + " Damge</div><br>";
+                story = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> Due to your lack of magical experience, you to use your own health to cast the spell. This has cost you " + magicaMod.ToString() + " Damge</div><br>";
             }
             else {
                  _magica = magica + magicaMod;
