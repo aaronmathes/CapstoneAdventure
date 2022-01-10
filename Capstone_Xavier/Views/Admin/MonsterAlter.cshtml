@@ -39,7 +39,7 @@
 <div class="row justify-content-center" id="content">
     <div class="row justify-content-center">
 
-        @if (Model.alertType == 1)
+        @*@if (Model.alertType == 1)
         {
             <div class="alert alert-warning alert-dismissible fade show" style="height: 5vw; width:15vw;">
                 Monster Updated Successfully!
@@ -50,19 +50,27 @@
             <div class="alert alert-warning alert-dismissible fade show" style="height: 5vw; width:20vw;">
                 Monster failed to update. Please check your values.
             </div>
-        }
+        }*@
         @*<div class="warning" style=" display: none;" id="Warning">
             <h3 style="">Warning!</h3>
             <p style="height:7vw">Are you sure you want to permanetly remove this Monster?</p>
             <button class="btn-user" onclick="location.href='@Url.Action("RemoveMonster", "Admin",  Model)'">Confirm</button>
             <button class="btn-user" onclick="Delete()">Cancel</button>
         </div>*@
-    <div id="Warning" style="display: none; font-size: 1.5rem; width: fit-content; height: fit-content; padding: 2%; background-color: palegoldenrod; background-image: linear-gradient(#ee3f3f, #961111); border-radius: 12px; ">
-        Are you sure you wish to delete @Model.monsterName?
-        <br />
-        <button class='btn-user' id='delete' style='display: inline-block; font-size: .9em; margin-right: 3%; background-color: #f0eb37;' onclick="location.href='@Url.Action("RemoveMonster", "Admin",  Model)'"> Delete</button>
-        <button class='btn-user' id='deleteCancel' style='display: inline-block; font-size: 1em; font-size: .9em; margin-right: 3%; background-color: #4442f2;' onclick='Delete()'>Cancel</button>
-    </div>
+        <div class="row justify-content-center">
+            @if (Model.alertMessage != "")
+            {
+                <div class="alert alert-success" role="alert">
+                    @Model.alertMessage
+                </div>
+            }
+        </div>
+        <div id="Warning" style="display: none; font-size: 1.5rem; width: fit-content; height: fit-content; padding: 2%; background-color: palegoldenrod; background-image: linear-gradient(#ee3f3f, #961111); border-radius: 12px; ">
+            Are you sure you wish to delete @Model.monsterName?
+            <br />
+            <button class='btn-user' id='delete' style='display: inline-block; font-size: .9em; margin-right: 3%; background-color: #f0eb37;' onclick="location.href='@Url.Action("RemoveMonster", "Admin",  Model)'"> Delete</button>
+            <button class='btn-user' id='deleteCancel' style='display: inline-block; font-size: 1em; font-size: .9em; margin-right: 3%; background-color: #4442f2;' onclick='Delete()'>Cancel</button>
+        </div>
     </div>
     <div class="row justify-content-center">
         <div id="monster-info" class="col-md-12 d-flex justify-content-center">
@@ -104,6 +112,7 @@
                         <div class="input">
                             <label>Monster Name</label>
                             @Html.EditorFor(MonsterModel => Model.monsterName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
+                            
                         </div>
                         <br>
                         <div class="input">
@@ -112,6 +121,7 @@
                             </div>
                             @*<small  class="form-text text-muted"> 1 (min) - 300 (max)</small>*@
                             @Html.EditorFor(MonsterModel => Model.health, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter New Password" } })
+                            @Html.ValidationMessageFor(MonsterModel => Model.health, null, new { @class = "validation" })
                         </div>
                         <br>
                         <div class="input">

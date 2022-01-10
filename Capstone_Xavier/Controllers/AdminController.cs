@@ -142,7 +142,7 @@ namespace Capstone_Xavier.Controllers
         [MustBeInRole(Roles = "Admin,GameMaster")]
         [MustBeLoggedIn]
         public ActionResult MonsterAlter(MonsterModel monster) {
-
+            //monster.alertMessage = "";
             return View(monster);
         }
 
@@ -150,14 +150,17 @@ namespace Capstone_Xavier.Controllers
         public ActionResult MonsterAlterPost(MonsterModel monster) {
             DBUse data = new DBUse();
             Mapper map = new Mapper();
+            //monster.alertMessage = "";
             if (ModelState.IsValid)
             {
                 data.UpdateMonster(map.MonsterModel_To_BO(monster));
-                monster.alertType = 1;
+                monster.alertMessage = "Sucessfully altered " + monster.monsterName;
                 return RedirectToAction("MonsterAlter", "Admin", monster);
             }
             else {
-                monster.alertType = 2;
+                //monster.alertType = 2;
+                monster.alertMessage = "";
+                
                 return RedirectToAction("MonsterAlter", "Admin", monster);
             }
             

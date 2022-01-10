@@ -25,6 +25,11 @@ namespace Capstone_Xavier.Models
         public int danger { get; set; }
 
         public int behaviour { get; set; }
-        public List<int> monsterBehaviours = new List<int> {0, 1, 2 };
+        public List<int> monsterBehaviours = new List<int> { 0, 1, 2 };
+        public MonsterModel()
+        {
+            base.alertMessage = "";
+
+        }
     }
 }
