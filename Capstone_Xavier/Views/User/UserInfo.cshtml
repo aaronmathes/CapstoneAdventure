@@ -58,25 +58,25 @@
                         <div class="input">
                             <label>Username</label>
                             @Html.EditorFor(UserModel => UserModel.username, new { htmlAttributes = new { @id = "edit-text-field", @class = "form-control", @placeholder = "Enter new username" } })
-
+                            @Html.ValidationMessageFor(m => m.username, null, new { @class = "validation" })
                         </div>
                         <br>
                         <div class="input">
                             <label>Email</label>
                             @Html.EditorFor(UserModel => UserModel.email, new { htmlAttributes = new { @id = "edit-text-field", @class = "form-control", @placeholder = "Enter New Email" } })
-
+                            @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(m => m.email, null, new { @class = "validation" }).ToHtmlString()))
                         </div>
                         <br>
                         <div class="input">
                             <label>Password</label>
                             @Html.EditorFor(UserModel => UserModel.password, new { htmlAttributes = new { @id = "edit-text-field", @class = "form-control", @placeholder = "Enter New Password" } })
-
+                            @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(m => m.password, null, new { @class = "validation" }).ToHtmlString()))
                         </div>
                         <br>
                         <div class="input">
                             <label>Confirm Password</label>
-                            @Html.EditorFor(UserModel => UserModel.confirmPassword, new { htmlAttributes = new { @id = "edit-text-field", @class = "form-control", @placeholder = "Enter New Password" } })
-
+                            @Html.EditorFor(UserModel => UserModel.confirmPassword, new { htmlAttributes = new { @id = "edit-text-field", @class = "form-control", @placeholder = "Enter your Password to submit changes" } })
+                            @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(m => m.confirmPassword, null, new { @class = "validation" }).ToHtmlString()))
                         </div>
                     </div>
                     <button type="submit" class="btn-user" onclick="">Submit</button>
