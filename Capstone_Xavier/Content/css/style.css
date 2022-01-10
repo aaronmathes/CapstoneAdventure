@@ -353,8 +353,8 @@ button {
 
 .validation {
     background-color: palegoldenrod !important;
-    border: 2px solid saddlebrown !important;
-    padding: 2px;
+   /* border: 2px solid saddlebrown !important;
+    padding: 2px;*/
     font-size: medium;
     color: darkred;
     margin: 2px;

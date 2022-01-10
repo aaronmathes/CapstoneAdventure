@@ -53,19 +53,12 @@
                     @Html.EditorFor(RegisterModel => RegisterModel.email, new { htmlAttributes = new { @type = "text", @class = "form-control", @placeholder = "Enter Email" } })
                 </div>
                 @*<br />*@
-                @if ((Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @id = "emailval", @class = "validation", @style = "padding: 0; border: 0px solid saddlebrown !important;" })) == (MvcHtmlString.Empty))
-                {
-                    @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @id = "emailval", @class = "validation", @style = "padding: 0; border: 0px solid saddlebrown !important;" }).ToHtmlString()))
-                }
-                else
-                {
-                    @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @id = "emailval", @class = "validation" }).ToHtmlString()))
-                }
+                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @id = "emailval", @class = "validation", @style = "padding: 0; border: 0px solid saddlebrown !important;" }).ToHtmlString()))
                 @*@Html.Raw(HttpUtility.HtmlDecode(Html.ValidationMessageFor(RegisterModel => RegisterModel.email, "", new { @id = "emailval", @class = "validation", @style = "padding: 0; border: 0px solid saddlebrown !important;" }).ToHtmlString()))*@
             </div>
         </div>
 
-        <button class="btn-user" type="submit" onclick="Validation()">Submit</button>
+        <button class="btn-user" type="submit" @*onclick="Validation()"*@>Submit</button>
         <button class="btn-user" type="reset" onclick="Clearform()">Clear</button>
 
 
@@ -102,13 +95,21 @@
     //function setNoPadding() {
     //    var passwordval = document.getElementById("passwordval");
     //    passwordval.style.display = "none";
-    //}
-    function Validation() {
-        var emailval = document.getElementById("emailval");
-        console.log("padding = "+emailval.style.padding);
-        if (emailval.style.padding == "0px") {
-            emailval.style.padding = "2px";
-        }
+    //}a
+
+
+    //function Validation() {
+    //    var emailval = document.getElementById("emailval");
+    //    console.log("inner = " + emailval.innerHTML);
+    //    //if (emailval.innerHTML != "") {
+
+    //    //}
+    //    if (emailval.style.padding == "0px") {
+    //        emailval.style.padding = "2px";
+    //    }
+    //    if (emailval.style.border == "0px solid saddlebrown !important") {
+    //        emailval.style.border = "2px solid saddlebrown !important";
+    //    }
     }
 
 </script>
