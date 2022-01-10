@@ -12,7 +12,7 @@ namespace Capstone_Xavier.Models
     {
         public List<UserModel> users { get; set; }
         public List<MonsterModel> monsters { get; set; }
-
+        public string alertMessage { get; set; } = "";
        
     }
 }

@@ -15,7 +15,7 @@ namespace Capstone_Xavier.Controllers
     {
         // GET: Admin
         [MustBeLoggedIn]
-        [MustBeInRole(Roles="Admin")]
+        [MustBeInRole(Roles = "Admin")]
         public ActionResult Admin()
         {
             Mapper map = new Mapper();
@@ -23,7 +23,8 @@ namespace Capstone_Xavier.Controllers
             DBUse data = new DBUse();
 
             admin.users = map.UserBO_To_List(data.GetAllUsers());
-            foreach (UserModel user in admin.users) {
+            foreach (UserModel user in admin.users)
+            {
                 user.characters = map.CharacterModel_To_List(data.GetCharacters(user.userID));
             }
 
@@ -32,6 +33,26 @@ namespace Capstone_Xavier.Controllers
 
             return View(admin);
         }
+        //[MustBeLoggedIn]
+        //[MustBeInRole(Roles = "Admin")]
+        //public ActionResult Admin2(string alertText)
+        //{
+        //    Mapper map = new Mapper();
+        //    AdminModel admin = new AdminModel();
+        //    admin.alertMessage = alertText;
+        //    DBUse data = new DBUse();
+
+        //    admin.users = map.UserBO_To_List(data.GetAllUsers());
+        //    foreach (UserModel user in admin.users)
+        //    {
+        //        user.characters = map.CharacterModel_To_List(data.GetCharacters(user.userID));
+        //    }
+
+        //    admin.monsters = map.MonsterBO_To_List(data.GetAllMonsters());
+
+
+        //    return View(admin);
+        //}
 
         [MustBeLoggedIn]
         [MustBeInRole(Roles = "GameMaster")]
@@ -81,14 +102,18 @@ namespace Capstone_Xavier.Controllers
 
             if (ModelState.IsValid)
             {
-                       
-                _data.UpdateUserInfo(_map.UserModel_To_BO(user));                          
-                return RedirectToAction("Admin", "Admin");
+
+                _data.UpdateUserInfo(_map.UserModel_To_BO(user));
+                user.roles = _map.RoleBO_To_List(_data.GetRoles());
+                user.alertMessage = "you have sucessfully updated "+user.username;
+                //return RedirectToAction("Admin", "Admin");
+                return View(user);
               
             }
             else 
             {
                 user.roles = _map.RoleBO_To_List(_data.GetRoles());
+                user.alertMessage = "";
                 return View(user);
 
             }
