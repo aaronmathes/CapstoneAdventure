@@ -8,6 +8,7 @@ namespace Capstone_DAL
     using System.Data;
     using System.Text;
     using System.Configuration;
+    using Capstone_DAL.DataObjects;
 
     /// <summary>
     /// This class is used to do CRUD functions to the characters table.
@@ -124,6 +125,7 @@ namespace Capstone_DAL
         }
 
         //Update:  Changes the character values.
+        //TODO:  Check value passed in to figure out when to raise character level
         public bool UpdateCharacterData(CharacterDO character) {
             try {
                 using (SqlConnection connection = new SqlConnection(_connection)) {
@@ -131,7 +133,7 @@ namespace Capstone_DAL
                     using (SqlCommand command = new SqlCommand("SP_UpdateCharacter", connection)) {
                         command.CommandType = CommandType.StoredProcedure;
                         command.CommandTimeout = 10;
-
+                        CheckForLevelUp(character);
                         //Parameters: _characterLocation(INT), _characterGold(INT), _characterLvl(INT), _characterXp(INT), _characterHealth(INT), _characterID(INT)
                         command.Parameters.AddWithValue("@parm_characterLocation", SqlDbType.Int).Value = character.Location;
                         command.Parameters.AddWithValue("@parm_characterGold", SqlDbType.Int).Value = character.Gold;
@@ -143,6 +145,7 @@ namespace Capstone_DAL
                         command.Parameters.AddWithValue("@parm_classID", SqlDbType.Int).Value = character.Class;
                         command.Parameters.AddWithValue("@parm_charcterName", SqlDbType.NVarChar).Value = character.Name;
                         command.ExecuteNonQuery();
+                        
                     }
                     connection.Close();
                     connection.Dispose();
@@ -153,6 +156,41 @@ namespace Capstone_DAL
                 error.LogError(ex.ToString(), ex.Message,ex.Source.ToString());
                 return false;
             }
+        }
+
+        private CharacterDO CheckForLevelUp(CharacterDO character) { 
+     
+            List<LevelDO> _charLevel = new List<LevelDO>();
+                
+            using (SqlConnection connection = new SqlConnection(_connection))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("SP_GetLevels", connection))
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        LevelDO level = new LevelDO();
+                        level.characterLvl = (int)reader["characterLevel"];
+                        level.minXP = (int)reader["minXP"];
+                        level.maxXP = (int)reader["maxXP"];
+                        _charLevel.Add(level);
+                    }
+                }
+                connection.Close();
+                connection.Dispose();
+            }
+
+            foreach(var item in _charLevel)
+            {
+                if (character.Xp >= item.maxXP)
+                {
+                    character.Lvl = item.characterLvl;
+                }   
+            }   
+
+            return character;
+
         }
 
         public bool updateUserCharacter(CharacterDO character) {
