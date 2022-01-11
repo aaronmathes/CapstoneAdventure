@@ -139,6 +139,8 @@ namespace Capstone_BLL
             _character.UpdateCharacterData(map.CharacterBO_To_DO(character));
         }
 
+
+
         //Removes a character by user and character id
         public void RemoveCharacter(int characterID, int userID) {
             ModifyCharacters _character = new ModifyCharacters();

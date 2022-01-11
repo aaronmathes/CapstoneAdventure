@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataObjects\CharacterDO.cs" />
+    <Compile Include="DataObjects\LevelDO.cs" />
     <Compile Include="DataObjects\ClassDO.cs" />
     <Compile Include="DataObjects\ItemDO.cs" />
     <Compile Include="DataObjects\LevelDO.cs" />
