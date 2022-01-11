@@ -8,8 +8,8 @@ namespace Capstone_BLL.BusinessObjects
 {
     public class LevelBO
     {
-        public int characterLvl;
-        public int minXP;
-        public int maxXP;
+        public int CharacterLvl;
+        public int MinXP;
+        public int MaxXP;
     }
 }

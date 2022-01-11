@@ -8,8 +8,10 @@ namespace Capstone_DAL.DataObjects
 {
     public class LevelDO
     {
-        public int characterLvl;
-        public int minXP;
-        public int maxXP;
+
+        public int CharacterLevel { get; set; }
+        public int MaxXP { get; set; }
+        public int MinXP { get; set; }
+
     }
 }

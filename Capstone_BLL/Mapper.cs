@@ -46,9 +46,9 @@ namespace Capstone_BLL
         {
             LevelBO _returnLevel = new LevelBO();
 
-            _returnLevel.characterLvl = level.characterLvl;
-            _returnLevel.minXP = level.minXP;
-            _returnLevel.maxXP = level.maxXP;
+            _returnLevel.CharacterLvl = level.CharacterLevel;
+            _returnLevel.MinXP = level.MinXP;
+            _returnLevel.MaxXP = level.MaxXP;
 
             return _returnLevel;
         }
