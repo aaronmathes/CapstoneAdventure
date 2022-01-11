@@ -176,10 +176,10 @@ namespace Capstone_Xavier.Controllers
                 mHealth = mHealth - damage;
                 if (actionID == 1) {
                     story = story + "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'>You manage to strike the monster doing " + damage.ToString() + " damage." +
-                              "but the " + monster.monsterName + "was ready and attacks you doing " + monsterDamage.ToString() + "damage.</div><br>";
+                              "but the " + monster.monsterName + "was ready and attacks you doing " + monsterDamage.ToString() + " damage.</div><br>";
                 } else if (actionID == -1) {
-                    story = story + "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The monster attempted to flee, but you easily keep up. With this advantage you strike for " + damage.ToString() + "damage."+
-                            "The monster wasnt ready and weakly attempt to strike only doing " + monsterDamage.ToString() + "damage. </div><br>";
+                    story = story + "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px;'> The monster attempted to flee, but you easily keep up. With this advantage you strike for " + damage.ToString() + " damage."+
+                            "The monster wasnt ready and weakly attempt to strike only doing " + monsterDamage.ToString() + " damage. </div><br>";
                 }
                 
 

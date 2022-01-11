@@ -198,7 +198,6 @@ namespace Capstone_Xavier.Controllers
             DBUse data = new DBUse();
             string _returnString = "";
             int gold = monster.danger * 10;
-            game.monster = null;
             player.gold = gold + player.gold;
             int xp = monster.danger * xp_mult;
             player.xp = xp + player.xp;
@@ -206,7 +205,16 @@ namespace Capstone_Xavier.Controllers
             data.UpdateUserCharacter(map.CharacterModel_To_BO(player));
             // get updated character and reset session variable
             CharacterModel updated_char = map.CharacterBO_To_Model(data.GetCharacter(player.id));
+            ClassModel _class = map.ClassBO_To_Model(data.GetClassInfo(player.classID));
             updated_char.id = player.id;
+            game.inventory = map.ItemBO_To_List(data.GetCharacterInventory(player.id));
+            updated_char.className = _class.className;
+            updated_char.stamina = _class.classStamina;
+            updated_char.magica = _class.classMagica;
+            updated_char.damage = _class.classDamage;
+            updated_char.armor = _class.classArmor;
+            
+            game.monster = null;
             game.character = updated_char;
             Session["Game"] = game;
             //int updated_level = data.GetCharacterLevel(player.id);
@@ -217,7 +225,7 @@ namespace Capstone_Xavier.Controllers
             {
                 _returnString += "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> You've levelled up to level " + game.character.level.ToString()+ "!</div><br>";
             }
-
+            
             return _returnString;
         }
 

@@ -131,7 +131,7 @@ namespace Capstone_BLL
 
             return _returnCharacter;
         }
-        //Gets a single characters values for use
+        //Gets a single characters level for use
         public int GetCharacterLevel(int characterID)
         {
             CharacterBO _returnCharacter = new CharacterBO();

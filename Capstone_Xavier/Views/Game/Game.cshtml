@@ -68,7 +68,7 @@
                                 </div>*@
                             </div>
                         </div>
-                        <div class="col-md-7 col-sm-12" >
+                        <div class="col-md-7 col-sm-12">
                             <div class="row">
                                 <div class="col-12" style="width:100%;">
                                     <div class="progress" style="height: 2rem;border:2px solid black;">
@@ -104,6 +104,19 @@
                                         </div>
                                     </div>
                                     <div style="font-size: 10px; font-weight: bold;">Magica</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12" style="width:100%;">
+                                    <div class="progress" style="height: 2rem;border:2px solid black;">
+                                        <div id="XPDisplay" style="color: black; position: absolute; left: 42%; top: 20%;">
+                                            XP
+                                        </div>
+                                        <div style="position: absolute; right: 11%; top: 25%; font-size: 10px; font-weight: bold;">XP</div>
+                                        <div class="progress-bar bg-warning" id="XP" role="progressbar" aria-valuenow="70"
+                                             aria-valuemin="0" aria-valuemax="200" style="width:70%;">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -184,6 +197,8 @@
         var magica = @Html.Raw(Json.Encode(Model.character.magica));
         var stamina = @Html.Raw(Json.Encode(Model.character.stamina));
         var name = @Html.Raw(Json.Encode(Model.character.name));
+        let xp = @Html.Raw(Json.Encode(Model.character.xp));
+        let maxXp = @Html.Raw(Json.Encode(Model.character.maxXp));
         var ob = {
             hp: health,
             maxhp: maxHP,
@@ -222,8 +237,9 @@
         var mdisplay = document.getElementById("MagicaDisplay");
         let magica_display = magica + "/" + magica;
         mdisplay.innerHTML = magica_display;
-        //m.max = ob.Magica;
-        //m.value = ob.Magica;
+
+        //setting the XP bar (values based on current level)
+        setDisplay("XP", xp, maxXp);
     });
     //########################/*Misc and UI*/#######################################
 
@@ -253,7 +269,7 @@
                 var current_val = parseInt(pb.getAttribute('aria-valuenow')) - 1;
                 //attributes need to be set
                 setDisplay(element, current_val, max_value);
-                
+
 
             }
             else if (parseInt(pb.getAttribute('aria-valuenow')) == new_val) {
@@ -331,7 +347,7 @@
 
         let list = document.getElementById("list-regions");
         list.style.display = "none";
-        
+
     };
 
     function MerchantEvent() {
@@ -356,7 +372,7 @@
             addHTMLToTextUI(merchantText)
 
         })
-        
+
     }
 
     function addHTMLToTextUI(html) {
@@ -468,9 +484,10 @@
                 //reset monster values
                 var monsterHBar = document.getElementById("MHealth");
                 monsterHBar.style.width = "100%"
-                //update character level 
+                //update character level and xp
                 let current_level = document.getElementById("currentlevel");
                 current_level.innerHTML = @Model.character.level;
+                setDisplay("XP",@Model.character.xp,@Model.character.maxXp);
             }
         });
         }
@@ -594,7 +611,7 @@
     function OpenBag() {
         var elem = document.getElementById("Bag-List");
         var merchant = document.getElementById("merchant");
-        var sellBtnOpen = document.getElementById("SellOpen");        
+        var sellBtnOpen = document.getElementById("SellOpen");
         console.log("first sell open: " + sellBtnOpen.style.display);
         var sellBtnClose = document.getElementById("SellClose");
         console.log("first sell close: " + sellBtnClose.style.display);
@@ -605,7 +622,7 @@
             data: {},
             cache: false,
             async: true,
-            success: function (data) {                
+            success: function (data) {
                 elem.innerHTML = "<div style=\"color: #ffbf00; padding-left: 10px; position: absolute;\">Gold: "+ gold +"</div>" + data;
                                 if (elem.style.display === "none") { //if the bag is closed
                     elem.style.display = "inline-block"; //display bag
@@ -633,7 +650,7 @@
             cache: false,
             async: false,
             success: function (data) {
-                gold = data.gold;                
+                gold = data.gold;
             }
         });
         return gold;
