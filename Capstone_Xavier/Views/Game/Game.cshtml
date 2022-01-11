@@ -52,20 +52,23 @@
             <div class="col-12" style="padding-left:1%; padding-bottom:1%">
                 <div class="info-UI" style="height:fit-content; padding-bottom: 1%;width:100%;position:relative;">
                     <div class="row">
-                        <div class="col-md-4 col-sm-12">
+                        <div class="col-md-5 col-sm-12">
                             <div class="row">
                                 <div class="col-12">
-                                    <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Name: @Model.character.name</h6>
+                                    <div class="list-item-character">
+                                        <p>@Model.character.name</p>
+                                        <h6 class="sub-num">@Model.character.level</h6>
+                                    </div>
                                 </div>
                                 <div class="col-12">
-                                    <h6 style=" display: block; width: 100%; float: left; font-size: x-large; text-align: center">Class: @Model.character.className</h6>
+                                    <h6 style=" display: block; width: 100%; float: left; font-size: large; text-align: center">Class: @Model.character.className</h6>
                                 </div>
                                 @*<div class="col-7">
                                     <button class="btn-user" style="width: 50%; margin-left: 1vw;" type="submit" onclick="OpenBag()">Bag</button>
                                 </div>*@
                             </div>
                         </div>
-                        <div class="col-md-8 col-sm-12" >
+                        <div class="col-md-7 col-sm-12" >
                             <div class="row">
                                 <div class="col-12" style="width:100%;">
                                     <div class="progress" style="height: 2rem;border:2px solid black;">
