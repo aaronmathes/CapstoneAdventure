@@ -161,23 +161,9 @@ namespace Capstone_DAL
             }
         }
 
-        private void CheckForLevelUp(CharacterDO character)
+        public List<LevelDO> GetCharacterLevel()
         {
-
-            List<LevelDO> _charLevel = GetLevelLookup();
-
-            foreach (var item in _charLevel)
-            {
-                if (character.Xp > item.MinXP)
-                {
-                    character.Lvl = item.CharacterLevel;
-                }
-            }
-        }
-
-        public List<LevelDO> GetLevelLookup()
-        {
-            List<LevelDO> _returnList = new List<LevelDO>();
+            List<LevelDO> _charLevel = new List<LevelDO>();
 
             using (SqlConnection connection = new SqlConnection(_connection))
             {
@@ -191,15 +177,31 @@ namespace Capstone_DAL
                         level.CharacterLevel = (int)reader["characterLevel"];
                         level.MinXP = (int)reader["minXP"];
                         level.MaxXP = (int)reader["maxXP"];
-                        _returnList.Add(level);
+                        _charLevel.Add(level);
                     }
                 }
                 connection.Close();
                 connection.Dispose();
             }
 
-            return _returnList;
+            return _charLevel;
         }
+
+        private void CheckForLevelUp(CharacterDO character)
+        {
+            List<LevelDO> _charLevel = GetCharacterLevel();
+
+            foreach (var item in _charLevel)
+            {
+                if (character.Xp >= item.MaxXP)
+                {
+                    character.Lvl = item.CharacterLevel;
+                }
+            }
+        }
+
+        
+   
 
 
         public bool updateUserCharacter(CharacterDO character) {

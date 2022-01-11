@@ -13,6 +13,5 @@ namespace Capstone_DAL.DataObjects
         public int MaxXP { get; set; }
         public int MinXP { get; set; }
 
-
     }
 }
