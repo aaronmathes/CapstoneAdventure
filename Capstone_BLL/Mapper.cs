@@ -42,6 +42,17 @@ namespace Capstone_BLL
             return _returnUser;
         }
 
+        public LevelBO LevelDO_To_BO(LevelDO level)
+        {
+            LevelBO _returnLevel = new LevelBO();
+
+            _returnLevel.characterLvl = level.characterLvl;
+            _returnLevel.minXP = level.minXP;
+            _returnLevel.maxXP = level.maxXP;
+
+            return _returnLevel;
+        }
+
         public List<UsersBO> UserDO_To_List(List<UsersDO> list) {
             List<UsersBO> _returnList = new List<UsersBO>();
 
@@ -51,6 +62,19 @@ namespace Capstone_BLL
                 _returnList.Add(_user);
             }
 
+            return _returnList;
+        }
+
+        public List<LevelBO> ListLevelDO_To_ListLevelBO(List<LevelDO> list)
+        {
+            List<LevelBO> _returnList = new List<LevelBO>();
+
+            foreach (LevelDO level in list)
+            {
+                LevelBO _level = new LevelBO();
+                _level = LevelDO_To_BO(level);
+                _returnList.Add(_level);
+            }
             return _returnList;
         }
 

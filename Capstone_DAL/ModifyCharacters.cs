@@ -158,6 +158,32 @@ namespace Capstone_DAL
             }
         }
 
+        public List<LevelDO> GetCharacterLevel()
+        {
+            List<LevelDO> _charLevel = new List<LevelDO>();
+
+            using (SqlConnection connection = new SqlConnection(_connection))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("SP_GetLevels", connection))
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        LevelDO level = new LevelDO();
+                        level.characterLvl = (int)reader["characterLevel"];
+                        level.minXP = (int)reader["minXP"];
+                        level.maxXP = (int)reader["maxXP"];
+                        _charLevel.Add(level);
+                    }
+                }
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return _charLevel;
+        }
+
         private CharacterDO CheckForLevelUp(CharacterDO character) { 
      
             List<LevelDO> _charLevel = new List<LevelDO>();
@@ -183,7 +209,7 @@ namespace Capstone_DAL
 
             foreach(var item in _charLevel)
             {
-                if (character.Xp >= item.maxXP)
+                if (character.Xp > item.minXP)
                 {
                     character.Lvl = item.characterLvl;
                 }   
@@ -192,6 +218,10 @@ namespace Capstone_DAL
             return character;
 
         }
+
+
+   
+
 
         public bool updateUserCharacter(CharacterDO character) {
             try
