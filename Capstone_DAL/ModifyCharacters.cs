@@ -174,7 +174,6 @@ namespace Capstone_DAL
 
                 // Are we Changing levels ?
                 int _level = CheckForUpdateLevel(character);
-
                 using (SqlConnection connection = new SqlConnection(_connection)) {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("SP_UpdateCharacter", connection)) {
