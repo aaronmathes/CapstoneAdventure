@@ -138,10 +138,23 @@ namespace Capstone_Xavier.Controllers
             int userID = (int)Session["UserID"];
 
             var userCharacterBOs = data.GetCharacters(userID);
-
+                        
             List<CharacterModel> characters = mapper.CharacterModel_To_List(userCharacterBOs);
 
             List<LevelBO> levels = data.GetListofLevels();
+            
+            foreach (CharacterModel model in characters)
+            {
+                var nextLevel = model.level + 1;
+                foreach (LevelBO level in levels)
+                {
+                    if (level.CharacterLvl == nextLevel)
+                    {
+                        model.maxXp = level.MinXP;
+                        break;
+                    }
+                }
+            }
 
             return View(characters);
         }
