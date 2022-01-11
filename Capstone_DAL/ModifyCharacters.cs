@@ -124,67 +124,71 @@ namespace Capstone_DAL
             }
         }
 
+
+        // GSR version
         // Update: Changes the character values.
         // TODO: need to update XP FROM HERE.
 
-        private int CheckForUpdateLevel(CharacterDO inCharacter)
-        {
-            int _resultLevel = inCharacter.Lvl;
+        //private int CheckForUpdateLevel(CharacterDO inCharacter)
+        //{
+        //    int _resultLevel = inCharacter.Lvl;
 
-            // get all the levels and store in collection
-            LevelDO _level;
-            List<LevelDO> _list = new List<LevelDO>();
-            using (SqlConnection connection = new SqlConnection(_connection))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("SP_GetLevels", connection))
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        _level = new LevelDO();
-                        _level.CharacterLevel = (int)reader["characterLevel"];
-                        _level.MinXP = (int)reader["minXP"];
-                        _level.MaxXP = (int)reader["maxXP"];
-                        _list.Add(_level);
-                    }                   
-                }
-            }
+        //    // get all the levels and store in collection
+        //    LevelDO _level;
+        //    List<LevelDO> _list = new List<LevelDO>();
+        //    using (SqlConnection connection = new SqlConnection(_connection))
+        //    {
+        //        connection.Open();
+        //        using (SqlCommand command = new SqlCommand("SP_GetLevels", connection))
+        //        using (SqlDataReader reader = command.ExecuteReader())
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                _level = new LevelDO();
+        //                _level.CharacterLevel = (int)reader["characterLevel"];
+        //                _level.MinXP = (int)reader["minXP"];
+        //                _level.MaxXP = (int)reader["maxXP"];
+        //                _list.Add(_level);
+        //            }                   
+        //        }
+        //    }
 
-            // code for the logic, comparison.
-            // the value passed in chacterXP will be new value , could have xp +
+        //    // code for the logic, comparison.
+        //    // the value passed in chacterXP will be new value , could have xp +
 
-            // look up in the table, what level this corresponsds to
-            foreach (LevelDO _current in _list)
-            {
-                if (_current.MinXP <= inCharacter.Xp && _current.MaxXP >= inCharacter.Xp) 
-                {
-                    _resultLevel = _current.CharacterLevel;
-                    return _resultLevel;
-                }
-            }
+        //    // look up in the table, what level this corresponsds to
+        //    foreach (LevelDO _current in _list)
+        //    {
+        //        if (_current.MinXP <= inCharacter.Xp && _current.MaxXP >= inCharacter.Xp) 
+        //        {
+        //            _resultLevel = _current.CharacterLevel;
+        //            return _resultLevel;
+        //        }
+        //    }
 
-            // pass new level  back
-            return _resultLevel;
-        }
+        //    // pass new level  back
+        //    return _resultLevel;
+        //}
 
         //Update:  Changes the character values.
         public bool UpdateCharacterData(CharacterDO character) {
             try {
 
                 // Are we Changing levels ?
-                int _level = CheckForUpdateLevel(character);
+                //int _level = CheckForUpdateLevel(character); GSR
+                CheckForLevelUp(character);
+
                 using (SqlConnection connection = new SqlConnection(_connection)) {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("SP_UpdateCharacter", connection)) {
                         command.CommandType = CommandType.StoredProcedure;
                         command.CommandTimeout = 10;
-                        CheckForLevelUp(character);
+
                         //Parameters: _characterLocation(INT), _characterGold(INT), _characterLvl(INT), _characterXp(INT), _characterHealth(INT), _characterID(INT)
                         command.Parameters.AddWithValue("@parm_characterLocation", SqlDbType.Int).Value = character.Location;
                         command.Parameters.AddWithValue("@parm_characterGold", SqlDbType.Int).Value = character.Gold;
-                        //command.Parameters.AddWithValue("@parm_characterLvl", SqlDbType.Int).Value = character.Lvl;
-                        command.Parameters.AddWithValue("@parm_characterLvl", SqlDbType.Int).Value = _level;
+                        command.Parameters.AddWithValue("@parm_characterLvl", SqlDbType.Int).Value = character.Lvl;
+                        //command.Parameters.AddWithValue("@parm_characterLvl", SqlDbType.Int).Value = _level;
                         command.Parameters.AddWithValue("@parm_characterXp", SqlDbType.Int).Value = character.Xp;
                         command.Parameters.AddWithValue("@parm_characterHealth", SqlDbType.Int).Value = character.Health;
                         command.Parameters.AddWithValue("@parm_maxHealth", SqlDbType.Int).Value = character.maxHP;
@@ -207,10 +211,25 @@ namespace Capstone_DAL
             }
         }
 
-        private CharacterDO CheckForLevelUp(CharacterDO character) { 
-     
-            List<LevelDO> _charLevel = new List<LevelDO>();
-                
+        private void CheckForLevelUp(CharacterDO character)
+        {
+
+            List<LevelDO> _charLevel = GetLevelLookup();
+
+            foreach (var item in _charLevel)
+            {
+                if (character.Xp >= item.MaxXP)
+                {
+                    character.Lvl = item.CharacterLevel;
+                    break;
+                }
+            }
+        }
+
+        public List<LevelDO> GetLevelLookup()
+        {
+            List<LevelDO> _returnList = new List<LevelDO>();
+
             using (SqlConnection connection = new SqlConnection(_connection))
             {
                 connection.Open();
@@ -223,26 +242,16 @@ namespace Capstone_DAL
                         level.CharacterLevel = (int)reader["characterLevel"];
                         level.MinXP = (int)reader["minXP"];
                         level.MaxXP = (int)reader["maxXP"];
-                        _charLevel.Add(level);
+                        _returnList.Add(level);
                     }
                 }
                 connection.Close();
                 connection.Dispose();
             }
 
-            foreach(var item in _charLevel)
-            {
-                if (character.Xp >= item.MaxXP)
-                {
-                    character.Lvl = item.CharacterLevel;
-                }   
-            }   
-
-            return character;
-
+            return _returnList;
         }
 
-       
 
         public bool updateUserCharacter(CharacterDO character) {
             try
