@@ -8,6 +8,7 @@ namespace Capstone_DAL
     using System.Data;
     using System.Text;
     using System.Configuration;
+    using Capstone_DAL.DataObjects;
 
     /// <summary>
     /// This class is used to do CRUD functions to the characters table.
@@ -123,9 +124,57 @@ namespace Capstone_DAL
             }
         }
 
-        //Update:  Changes the character values.
+        // Update: Changes the character values.
+        // TODO: need to update XP FROM HERE.
+
+        private int CheckForUpdateLevel(CharacterDO inCharacter)
+        {
+            int _resultLevel = inCharacter.Lvl;
+
+            // get all the levels and store in collection
+            LevelDO _level;
+            List<LevelDO> _list = new List<LevelDO>();
+            using (SqlConnection connection = new SqlConnection(_connection))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("SP_GetLevels", connection))
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        _level = new LevelDO();
+                        _level.CharacterLevel = (int)reader["characterLevel"];
+                        _level.MinXP = (int)reader["minXP"];
+                        _level.MaxXP = (int)reader["maxXP"];
+                        _list.Add(_level);
+                    }                   
+                }
+            }
+
+            // code for the logic, comparison.
+            // the value passed in chacterXP will be new value , could have xp +
+
+            // look up in the table, what level this corresponsds to
+            foreach (LevelDO _current in _list)
+            {
+                if (_current.MinXP <= inCharacter.Xp && _current.MaxXP >= inCharacter.Xp) 
+                {
+                    _resultLevel = _current.CharacterLevel;
+                    return _resultLevel;
+                }
+            }
+
+            // pass new level  back
+            return _resultLevel;
+        }
+
+
         public bool UpdateCharacterData(CharacterDO character) {
             try {
+
+                // Are we Changing levels ?
+                int _level = CheckForUpdateLevel(character);
+
                 using (SqlConnection connection = new SqlConnection(_connection)) {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("SP_UpdateCharacter", connection)) {
@@ -135,7 +184,8 @@ namespace Capstone_DAL
                         //Parameters: _characterLocation(INT), _characterGold(INT), _characterLvl(INT), _characterXp(INT), _characterHealth(INT), _characterID(INT)
                         command.Parameters.AddWithValue("@parm_characterLocation", SqlDbType.Int).Value = character.Location;
                         command.Parameters.AddWithValue("@parm_characterGold", SqlDbType.Int).Value = character.Gold;
-                        command.Parameters.AddWithValue("@parm_characterLvl", SqlDbType.Int).Value = character.Lvl;
+                        //command.Parameters.AddWithValue("@parm_characterLvl", SqlDbType.Int).Value = character.Lvl;
+                        command.Parameters.AddWithValue("@parm_characterLvl", SqlDbType.Int).Value = _level;
                         command.Parameters.AddWithValue("@parm_characterXp", SqlDbType.Int).Value = character.Xp;
                         command.Parameters.AddWithValue("@parm_characterHealth", SqlDbType.Int).Value = character.Health;
                         command.Parameters.AddWithValue("@parm_maxHealth", SqlDbType.Int).Value = character.maxHP;
@@ -148,12 +198,16 @@ namespace Capstone_DAL
                     connection.Dispose();
                 }
                 return true;
-            }catch (Exception ex) {
+            }
+            catch (Exception ex) 
+            {
                 LoggingError error = new LoggingError();
                 error.LogError(ex.ToString(), ex.Message,ex.Source.ToString());
                 return false;
             }
         }
+
+       
 
         public bool updateUserCharacter(CharacterDO character) {
             try
