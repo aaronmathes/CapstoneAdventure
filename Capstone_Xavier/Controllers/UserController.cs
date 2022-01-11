@@ -154,7 +154,7 @@ namespace Capstone_Xavier.Controllers
 
         [HttpPost]
         public ActionResult CreateNewCharacter(CharacterModel character)
-        {
+        {   
             DBUse data = new DBUse();
             Mapper map = new Mapper();
             if (ModelState.IsValid)
@@ -170,7 +170,8 @@ namespace Capstone_Xavier.Controllers
             }
             else
             {
-                return RedirectToAction("Users", "Home");
+                character.classes = map.ClassBO_To_ModelList(data.GetClassList());
+                return View("CreateCharacter",character);
             }
 
         }

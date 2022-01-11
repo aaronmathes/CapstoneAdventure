@@ -78,10 +78,11 @@
                         <label>Character Name</label>
                         @Html.EditorFor(CharacterModel => CharacterModel.name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name", required="required"}})
                     </div>
+                    @Html.ValidationMessageFor(CharacterModel => CharacterModel.name, "", new { @class = "validation" })
                     <br>
                     <div class="input">
                         <label>Class</label>
-                        @Html.DropDownListFor(Model => Model.classID, new SelectList(Model.classes, "classID", "className"), htmlAttributes: new { @id = "classID", @class = "form-control", @onchange = "displayClassInfo()" })
+                        @Html.DropDownListFor(CharacterModel => CharacterModel.classID, new SelectList(Model.classes, "classID", "className"), htmlAttributes: new { @id = "classID", @class = "form-control", @onchange = "displayClassInfo()" })
                     </div>
                 </div>
                 <button class="btn-user" type="submit">Submit</button>

@@ -74,5 +74,12 @@ window.onclick = function (event) {
 //    console.log("hi");
 //}
 
-
+function ShowPassword(id) {
+    var show = document.getElementById(id)
+    if (show.type === "password") {
+        show.type = "text";
+    } else {
+        show.type = "password";
+    }
+}
 
