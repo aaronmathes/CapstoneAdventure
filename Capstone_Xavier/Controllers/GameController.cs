@@ -204,14 +204,18 @@ namespace Capstone_Xavier.Controllers
             player.xp = xp + player.xp;
             int current_level = player.level;
             data.UpdateUserCharacter(map.CharacterModel_To_BO(player));
-            // get updated level from database
-            int updated_level = data.GetCharacterLevel(player.id);
+            // get updated character and reset session variable
+            CharacterModel updated_char = map.CharacterBO_To_Model(data.GetCharacter(player.id));
+            updated_char.id = player.id;
+            game.character = updated_char;
+            Session["Game"] = game;
+            //int updated_level = data.GetCharacterLevel(player.id);
             //
             _returnString = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> Your combat was strong. After a good battle you land the final strike killing the monster. As the body turns to dust a small pile of gold can be seen. " +
                             "+" + gold.ToString() + " gold +" + xp.ToString() + " experience </div><br>";
-            if(current_level != updated_level)
+            if(current_level != game.character.level)
             {
-                _returnString += "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> You've levelled up to level " + updated_level.ToString()+ "!</div><br>";
+                _returnString += "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> You've levelled up to level " + game.character.level.ToString()+ "!</div><br>";
             }
 
             return _returnString;

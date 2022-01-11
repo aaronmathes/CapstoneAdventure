@@ -57,7 +57,7 @@
                                 <div class="col-12">
                                     <div class="list-item-character">
                                         <p>@Model.character.name</p>
-                                        <h6 class="sub-num">@Model.character.level</h6>
+                                        <h6 class="sub-num" id="currentlevel">@Model.character.level</h6>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -468,6 +468,9 @@
                 //reset monster values
                 var monsterHBar = document.getElementById("MHealth");
                 monsterHBar.style.width = "100%"
+                //update character level 
+                let current_level = document.getElementById("currentlevel");
+                current_level.innerHTML = @Model.character.level;
             }
         });
         }
