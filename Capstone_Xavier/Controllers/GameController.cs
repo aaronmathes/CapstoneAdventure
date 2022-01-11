@@ -211,7 +211,7 @@ namespace Capstone_Xavier.Controllers
                             "+" + gold.ToString() + " gold +" + xp.ToString() + " experience </div><br>";
             if(current_level != updated_level)
             {
-                _returnString += "You've levelled up to level " + updated_level.ToString()+"!";
+                _returnString += "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> You've levelled up to level " + updated_level.ToString()+ "!</div><br>";
             }
 
             return _returnString;
