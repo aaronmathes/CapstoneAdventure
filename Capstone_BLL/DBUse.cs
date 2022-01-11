@@ -4,6 +4,7 @@ namespace Capstone_BLL
 {
     using Capstone_BLL.BusinessObjects;
     using Capstone_DAL;
+    using Capstone_DAL.DataObjects;
     using System;
     using System.Collections.Generic;
     using System.Text;
@@ -131,6 +132,18 @@ namespace Capstone_BLL
             return _returnCharacter;
         }
 
+
+        public List<LevelBO> GetListofLevels()
+        {
+            List<LevelBO> _returnLevel = new List<LevelBO>();
+            Mapper map = new Mapper();
+            ModifyCharacters character = new ModifyCharacters();
+
+            _returnLevel = map.ListLevelDO_To_ListLevelBO(character.GetCharacterLevel());
+
+            return _returnLevel;
+        }
+
         //Updates a characters old data replacing it with user inputted
         public void UpdateUserCharacter(CharacterBO character) {
             Mapper map = new Mapper();
@@ -138,6 +151,8 @@ namespace Capstone_BLL
 
             _character.UpdateCharacterData(map.CharacterBO_To_DO(character));
         }
+
+
 
         //Removes a character by user and character id
         public void RemoveCharacter(int characterID, int userID) {

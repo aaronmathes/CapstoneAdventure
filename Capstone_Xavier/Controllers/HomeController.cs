@@ -141,11 +141,10 @@ namespace Capstone_Xavier.Controllers
 
             List<CharacterModel> characters = mapper.CharacterModel_To_List(userCharacterBOs);
 
+            List<LevelBO> levels = data.GetListofLevels();
+
             return View(characters);
         }
-
-
-       
 
         //-------------Misc-------------
         private bool ValidatePassword(string password) {

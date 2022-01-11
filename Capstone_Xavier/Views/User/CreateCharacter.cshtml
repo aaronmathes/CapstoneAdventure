@@ -76,7 +76,7 @@
                 <div class="input-list">
                     <div class="input" style="margin-bottom: 1em;">
                         <label>Character Name</label>
-                        @Html.EditorFor(CharacterModel => CharacterModel.name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
+                        @Html.EditorFor(CharacterModel => CharacterModel.name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name", required="required"}})
                     </div>
                     @Html.ValidationMessageFor(CharacterModel => CharacterModel.name, "", new { @class = "validation" })
                     <br>

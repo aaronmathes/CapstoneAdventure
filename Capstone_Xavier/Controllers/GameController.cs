@@ -12,6 +12,8 @@ namespace Capstone_Xavier.Controllers
     using System.Web.Mvc;
     using System.Web.Script.Serialization;
     using Capstone_Xavier.Common;
+    using System.Configuration;
+
 
     /// <summary>
     /// Used for all the game functions like combat and random events.
@@ -189,6 +191,17 @@ namespace Capstone_Xavier.Controllers
         [HttpPost]
         public string MonsterDeathEvent(int playerHealth)
         {
+            string _webconfigxp = ConfigurationManager.AppSettings["XPMultiplier"];
+            int xp_mult;
+            try {
+                xp_mult = Int32.Parse(_webconfigxp);
+            }
+            catch (Exception ex)
+            {
+                xp_mult = 15;
+                //LoggingError error = new LoggingError();
+                //error.LogError(ex.ToString(), ex.Message, ex.Source.ToString());
+            }
             GameModel game = (GameModel)Session["Game"];
             MonsterModel monster = game.monster;
             CharacterModel player = game.character;
@@ -198,13 +211,14 @@ namespace Capstone_Xavier.Controllers
             string _returnString = "";
             int gold = monster.danger * 10;
             game.monster = null;
-
             player.gold = gold + player.gold;
+            int xp = monster.danger * xp_mult;
+            player.xp = xp + player.xp;
 
             data.UpdateUserCharacter(map.CharacterModel_To_BO(player));
 
             _returnString = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> Your combat was strong. After a good battle you land the final strike killing the monster. As the body turns to dust a small pile of gold can be seen. " +
-                            "+" + gold.ToString() + "gold </div><br>";
+                            "+" + gold.ToString() + " gold +" + xp.ToString() + " experience </div><br>";
 
             return _returnString;
         }

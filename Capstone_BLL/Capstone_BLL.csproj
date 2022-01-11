@@ -44,6 +44,7 @@
     <Compile Include="BusinessObjects\CharacterBO.cs" />
     <Compile Include="BusinessObjects\ClassBO.cs" />
     <Compile Include="BusinessObjects\ItemBO.cs" />
+    <Compile Include="BusinessObjects\LevelBO.cs" />
     <Compile Include="BusinessObjects\MonsterBO.cs" />
     <Compile Include="BusinessObjects\RoleBO.cs" />
     <Compile Include="BusinessObjects\UsersBO.cs" />
