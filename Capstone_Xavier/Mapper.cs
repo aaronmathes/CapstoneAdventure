@@ -89,6 +89,18 @@ namespace Capstone_Xavier
             return _um;
         }
 
+        //---------------------------Level Mapping----------------------------------
+        public LevelModel LevelBO_To_Model(LevelBO level)
+        {
+            LevelModel _returnLevel = new LevelModel();
+
+            _returnLevel.CharacterLvl = level.CharacterLvl;
+            _returnLevel.MaxXP = level.MaxXP;
+            _returnLevel.MinXP = level.MinXP;
+
+            return _returnLevel;
+        }
+
         //---------------------------Character Mapping------------------------------
 
         //Maps the values from a business object to a RegisterModel
@@ -126,6 +138,8 @@ namespace Capstone_Xavier
 
             return _returnList;
         }
+
+
 
         //Maps values from a existing character model to a business object
         public CharacterBO CharacterModel_To_BO(CharacterModel character) {

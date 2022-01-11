@@ -132,14 +132,27 @@ namespace Capstone_Xavier.Controllers
             List<MonsterModel> monster = map.MonsterBO_To_List(data.GetMonstersByDanger(maxDanger, minDanger));
             _monster = monster[rand.Next(monster.Count )];
             game.monster = _monster;
+            string danger_level;
+            if(_monster.danger <= 3)
+            {
+                danger_level = "You can see fear in its eyes. This will be an easy fight.";
+            }
+            else if (_monster.danger <= 6)
+            {
+                danger_level = "This fight will take focus, but it is not the hardest foe you've ever come across.";
+            }
+            else
+            {
+                danger_level = "It will probably be a hard fight.";
+            }
 
             if (initiative.Next(21) > 15)
             {
-                _returnString = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>You encountered a <strong>" + _monster.monsterName + "</strong> You seem to have caught the monster off guard. What will you do?</div><br>";
+                _returnString = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>You encountered a <strong>" + _monster.monsterName + "</strong> You seem to have caught the monster off guard. "+danger_level+" What will you do?</div><br>";
                 game.initiave = true;
             }
             else {
-                _returnString = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>You encountered a <strong>" + _monster.monsterName + "</strong> Your clumsy loud noise gave your position away. As you and the beast face off you decide what to do.</div><br>";
+                _returnString = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '>You encountered a <strong>" + _monster.monsterName + "</strong> Your clumsy loud noise gave your position away. "+danger_level+ " As you and the beast face off you decide what to do.</div><br>";
             }
 
             return _returnString;

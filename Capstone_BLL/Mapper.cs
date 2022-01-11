@@ -128,6 +128,7 @@ namespace Capstone_BLL
             return _returnCharacter;
         }
 
+
         //Maps character data objects to a list of business objects 
         public List<CharacterBO> CharacterDO_To_BOList(List<CharacterDO> characters) {
             List<CharacterBO> _returnList = new List<CharacterBO>();

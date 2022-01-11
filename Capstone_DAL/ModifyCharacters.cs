@@ -193,9 +193,10 @@ namespace Capstone_DAL
 
             foreach (var item in _charLevel)
             {
-                if (character.Xp >= item.MaxXP)
+                if (character.Xp >= item.MinXP && character.Xp <= item.MaxXP)
                 {
                     character.Lvl = item.CharacterLevel;
+                    break;
                 }
             }
         }
