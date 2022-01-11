@@ -13,6 +13,7 @@ namespace Capstone_Xavier.Controllers
     using System.Web.Script.Serialization;
     using Capstone_Xavier.Common;
     using System.Configuration;
+    using Capstone_BLL.BusinessObjects;
 
 
     /// <summary>
@@ -201,11 +202,17 @@ namespace Capstone_Xavier.Controllers
             player.gold = gold + player.gold;
             int xp = monster.danger * xp_mult;
             player.xp = xp + player.xp;
-
+            int current_level = player.level;
             data.UpdateUserCharacter(map.CharacterModel_To_BO(player));
-
+            // get updated level from database
+            int updated_level = data.GetCharacterLevel(player.id);
+            //
             _returnString = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> Your combat was strong. After a good battle you land the final strike killing the monster. As the body turns to dust a small pile of gold can be seen. " +
                             "+" + gold.ToString() + " gold +" + xp.ToString() + " experience </div><br>";
+            if(current_level != updated_level)
+            {
+                _returnString += "You've levelled up to level " + updated_level.ToString()+"!";
+            }
 
             return _returnString;
         }

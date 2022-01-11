@@ -130,6 +130,17 @@ namespace Capstone_BLL
 
             return _returnCharacter;
         }
+        //Gets a single characters values for use
+        public int GetCharacterLevel(int characterID)
+        {
+            CharacterBO _returnCharacter = new CharacterBO();
+            Mapper map = new Mapper();
+            ModifyCharacters character = new ModifyCharacters();
+
+            _returnCharacter = map.CharacterDO_To_BO(character.GetCharacter(characterID));
+
+            return _returnCharacter.Lvl;
+        }
 
         //Updates a characters old data replacing it with user inputted
         public void UpdateUserCharacter(CharacterBO character) {
