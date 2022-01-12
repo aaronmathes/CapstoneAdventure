@@ -218,6 +218,13 @@ namespace Capstone_Xavier.Controllers
             data.UpdateUserCharacter(map.CharacterModel_To_BO(player));
             // get updated character and reset session variable
             CharacterModel updated_char = map.CharacterBO_To_Model(data.GetCharacter(player.id));
+
+            // getting the next minXp level
+            List<LevelBO> _levels = data.GetListofLevels();
+            int _nextLevel = _levels.Where(l => l.MinXP <= player.xp && l.MaxXP >= player.xp).FirstOrDefault().CharacterLvl + 1;
+            int _minXPnextLevel = _levels.Where(l => l.CharacterLvl == _nextLevel).FirstOrDefault().MinXP;
+
+
             ClassModel _class = map.ClassBO_To_Model(data.GetClassInfo(player.classID));
             updated_char.id = player.id;
             game.inventory = map.ItemBO_To_List(data.GetCharacterInventory(player.id));
@@ -230,13 +237,13 @@ namespace Capstone_Xavier.Controllers
             game.monster = null;
             game.character = updated_char;
             Session["Game"] = game;
-            //int updated_level = data.GetCharacterLevel(player.id);
+            int updated_level = data.GetCharacterLevel(player.id);
             //
             _returnString = "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> Your combat was strong. After a good battle you land the final strike killing the monster. As the body turns to dust a small pile of gold can be seen. " +
-                            "+" + gold.ToString() + " gold +" + xp.ToString() + " experience </div><br>";
+                            "+" + gold.ToString() + " gold +" + xp.ToString() + " experience </div><label id='levelhidden' hidden='hidden'>" + _minXPnextLevel.ToString() + "</label><label id='xphidden' hidden='hidden'>" + game.character.level.ToString() + "</label><br>";
             if(current_level != game.character.level)
             {
-                _returnString += "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> You've levelled up to level " + game.character.level.ToString()+ "!</div><br>";
+                _returnString += "<br><div style=' width: 10 %; height: auto; display: block; float: left; margin: 3px; padding: 3px; '> You've levelled up to level " + game.character.level.ToString() + "!</div><br>";
             }
             
             return _returnString;

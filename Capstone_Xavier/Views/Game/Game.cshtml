@@ -470,6 +470,21 @@
             async: true,
             success: function (data) {
                 addHTMLToTextUI(data)
+                console.log("mosterDeathEvent" + data);
+
+                var _current = document.getElementById('XPDisplay').innerHTML;
+                console.log("XPDisplay: " + _current);
+
+                var _xp = document.getElementById('xphidden').innerHTML;
+                console.log("xphidden: " + _xp);
+
+                var _level = document.getElementById('levelhidden').innerHTML;
+                console.log("levelhidden: " + _level);
+
+                // set the status bar
+                document.getElementById('XPDisplay').innerHTML = _xp + "/" + _level;
+
+                // TODO: update the innerHTML based on the returned data
 
                 //Change the ui back to travel form
                 var monsterUI = document.getElementById("MonsterUI");
@@ -485,9 +500,9 @@
                 var monsterHBar = document.getElementById("MHealth");
                 monsterHBar.style.width = "100%"
                 //update character level and xp
-                let current_level = document.getElementById("currentlevel");
-                current_level.innerHTML = @Model.character.level;
-                setDisplay("XP",@Model.character.xp,@Model.character.maxXp);
+                //let current_level = document.getElementById("currentlevel");
+                //current_level.innerHTML = @Model.character.level;
+                //setDisplay("XP",@Model.character.xp,@Model.character.maxXp);
             }
         });
         }
