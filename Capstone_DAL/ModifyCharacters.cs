@@ -191,19 +191,19 @@ namespace Capstone_DAL
         {
             List<LevelDO> _charLevel = GetCharacterLevel();
 
-            foreach (var item in _charLevel)
+            foreach (var level in _charLevel)
             {
-                if (character.Xp >= item.MinXP && character.Xp <= item.MaxXP)
+                if (character.Xp >= level.MinXP && character.Xp <= level.MaxXP)
                 {
-                    character.Lvl = item.CharacterLevel;
+                    string _webconfigHealth = ConfigurationManager.AppSettings["LevelUpHealth"];
+
+                    character.Lvl = level.CharacterLevel;
+                    character.maxHP += Int32.Parse(_webconfigHealth);
+
                     break;
                 }
             }
         }
-
-        
-   
-
 
         public bool updateUserCharacter(CharacterDO character) {
             try
